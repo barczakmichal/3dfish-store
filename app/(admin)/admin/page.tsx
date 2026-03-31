@@ -1,5 +1,5 @@
 export const metadata = {
-  title: 'Dashboard - Panel Admina WędkarskaFabryka3D',
+  title: 'Dashboard - Panel Admina 3DFish',
 };
 
 const stats = [
@@ -14,7 +14,7 @@ export default function AdminDashboard() {
     <div className="p-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-600 mt-1">Witaj w panelu administracyjnym WędkarskaFabryka3D</p>
+        <p className="text-gray-600 mt-1">Witaj w panelu administracyjnym 3DFish</p>
       </div>
 
       {/* Stats grid */}

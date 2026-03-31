@@ -3,14 +3,14 @@ import ProductCard from '@/components/ProductCard';
 import prisma from '@/lib/prisma';
 
 export const metadata: Metadata = {
-  title: 'Produkty | WędkarskaFabryka3D',
+  title: 'Produkty | 3DFish',
   description:
     'Katalog akcesoriów wędkarskich drukowanych w technologii 3D – spławiki, haczyki, pudełka, kółka i więcej. Sprawdź naszą ofertę.',
   openGraph: {
-    title: 'Produkty | WędkarskaFabryka3D',
+    title: 'Produkty | 3DFish',
     description: 'Akcesoria wędkarskie drukowane w technologii 3D',
-    url: 'https://wedkarskafabryka3d.pl/products',
-    siteName: 'WędkarskaFabryka3D',
+    url: 'https://3dfish.pl/products',
+    siteName: '3DFish',
     locale: 'pl_PL',
     type: 'website',
   },

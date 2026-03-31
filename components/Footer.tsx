@@ -8,7 +8,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <h3 className="text-xl font-bold mb-3">
-              WedkarskaFabryka<span className="text-orange-500">3D</span>
+              3D<span className="text-orange-500">Fish</span>
             </h3>
             <p className="text-gray-400 text-sm">
               Najlepsze akcesoria wędkarskie drukowane w technologii 3D.
@@ -26,18 +26,18 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/products?category=kolowrotki" className="hover:text-white transition-colors">
-                  Kołowrotki
+                <Link href="/products" className="hover:text-white transition-colors">
+                  Organizacja i przechowywanie
                 </Link>
               </li>
               <li>
-                <Link href="/products?category=wedki" className="hover:text-white transition-colors">
-                  Wędki
+                <Link href="/products" className="hover:text-white transition-colors">
+                  Lury i przynęty
                 </Link>
               </li>
               <li>
-                <Link href="/products?category=splawiki" className="hover:text-white transition-colors">
-                  Spławiki
+                <Link href="/products" className="hover:text-white transition-colors">
+                  Akcesoria
                 </Link>
               </li>
             </ul>
@@ -47,7 +47,7 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold text-lg mb-3">Kontakt</h4>
             <ul className="space-y-2 text-gray-400 text-sm">
-              <li>kontakt@wedkarskafarryka3d.pl</li>
+              <li>kontakt@3dfish.pl</li>
               <li>+48 123 456 789</li>
               <li>Pon-Pt: 9:00 - 17:00</li>
             </ul>
@@ -55,7 +55,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-10 pt-6 text-center text-gray-500 text-sm">
-          <p>&copy; {new Date().getFullYear()} WędkarskaFabryka3D. Wszelkie prawa zastrzeżone.</p>
+          <p>&copy; {new Date().getFullYear()} 3DFish. Wszelkie prawa zastrzeżone.</p>
         </div>
       </div>
     </footer>

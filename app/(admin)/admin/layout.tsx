@@ -1,6 +1,15 @@
-import Link from 'next/link';
+import Link from 'next/link'
+import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
+import AdminLogoutButton from '@/components/admin/AdminLogoutButton'
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  const session = await getServerSession()
+
+  if (!session) {
+    redirect('/admin/login')
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 flex">
       {/* Sidebar */}
@@ -10,6 +19,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             Wedkarska<span className="text-orange-500">3D</span>
           </Link>
           <p className="text-gray-400 text-sm mt-1">Panel administratora</p>
+          {session.user?.name && (
+            <p className="text-gray-500 text-xs mt-1">Zalogowany: {session.user.name}</p>
+          )}
         </div>
 
         <nav className="flex-1 p-4">
@@ -50,15 +62,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </ul>
         </nav>
 
-        <div className="p-4 border-t border-gray-800">
-          <Link href="/" className="text-gray-400 hover:text-white text-sm transition-colors">
+        <div className="p-4 border-t border-gray-800 space-y-2">
+          <Link href="/" className="block text-gray-400 hover:text-white text-sm transition-colors">
             Wróć do sklepu
           </Link>
+          <AdminLogoutButton />
         </div>
       </aside>
 
       {/* Main content */}
       <main className="flex-1 overflow-auto">{children}</main>
     </div>
-  );
+  )
 }

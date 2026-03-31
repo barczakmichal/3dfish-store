@@ -31,11 +31,28 @@ export async function POST(req: NextRequest) {
       const session = event.data.object as Stripe.Checkout.Session;
 
       try {
-        // Zaktualizuj status zamówienia na PAID
-        await prisma.order.update({
+        // Spróbuj zaktualizować istniejące zamówienie
+        const existing = await prisma.order.findUnique({
           where: { stripeSessionId: session.id },
-          data: { status: 'PAID' },
         });
+
+        if (existing) {
+          await prisma.order.update({
+            where: { stripeSessionId: session.id },
+            data: { status: 'PAID' },
+          });
+        } else {
+          // Stwórz zamówienie jeśli nie zostało wcześniej utworzone
+          await prisma.order.create({
+            data: {
+              stripeSessionId: session.id,
+              customerEmail: session.customer_details?.email || '',
+              customerName: session.customer_details?.name || '',
+              total: (session.amount_total || 0) / 100,
+              status: 'PAID',
+            },
+          });
+        }
 
         console.log(`Zamówienie opłacone: ${session.id}`);
       } catch (error) {

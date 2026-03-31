@@ -13,15 +13,15 @@ export default async function sitemap() {
 
   return [
     {
-      url: 'https://wedkarskafabryka3d.pl',
+      url: 'https://3dfish.pl',
       lastModified: new Date(),
     },
     {
-      url: 'https://wedkarskafabryka3d.pl/products',
+      url: 'https://3dfish.pl/products',
       lastModified: new Date(),
     },
     ...products.map((p) => ({
-      url: `https://wedkarskafabryka3d.pl/products/${p.id}`,
+      url: `https://3dfish.pl/products/${p.id}`,
       lastModified: p.updatedAt,
     })),
   ]

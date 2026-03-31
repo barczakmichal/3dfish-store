@@ -8,10 +8,29 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: 'WędkarskaFabryka3D - Akcesoria wędkarskie drukowane w 3D',
+  title: {
+    default: '3DFish - Akcesoria wędkarskie drukowane w 3D',
+    template: '%s | 3DFish',
+  },
   description:
-    'Sklep internetowy z akcesoriami wędkarskimi drukowanymi w technologii 3D. Kołowrotki, wędki, spławiki, haczyki i zanęty.',
-  keywords: 'wędkarstwo, akcesoria wędkarskie, druk 3D, kołowrotki, spławiki, haczyki',
+    'Sklep internetowy z akcesoriami wędkarskimi drukowanymi w technologii 3D. Spławiki, uchwyty, organizery, lury i wiele więcej.',
+  keywords: ['wędkarstwo', 'akcesoria wędkarskie', 'druk 3D', 'spławiki', 'uchwyty na wędki', 'sklep wędkarski', '3DFish'],
+  authors: [{ name: '3DFish' }],
+  creator: '3DFish',
+  metadataBase: new URL('https://3dfish.pl'),
+  openGraph: {
+    type: 'website',
+    locale: 'pl_PL',
+    url: 'https://3dfish.pl',
+    siteName: '3DFish',
+    title: '3DFish - Akcesoria wędkarskie drukowane w 3D',
+    description:
+      'Sklep internetowy z akcesoriami wędkarskimi drukowanymi w technologii 3D. Spławiki, uchwyty, organizery, lury i wiele więcej.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

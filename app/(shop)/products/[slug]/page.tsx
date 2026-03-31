@@ -19,17 +19,17 @@ export async function generateMetadata({
   }
 
   if (!product) {
-    return { title: 'Produkt nie znaleziony | WędkarskaFabryka3D' };
+    return { title: 'Produkt nie znaleziony | 3DFish' };
   }
 
   return {
-    title: `${product.name} | WędkarskaFabryka3D`,
+    title: `${product.name} | 3DFish`,
     description: product.description.slice(0, 160),
     openGraph: {
-      title: `${product.name} | WędkarskaFabryka3D`,
+      title: `${product.name} | 3DFish`,
       description: product.description.slice(0, 160),
-      url: `https://wedkarskafabryka3d.pl/products/${product.slug}`,
-      siteName: 'WędkarskaFabryka3D',
+      url: `https://3dfish.pl/products/${product.slug}`,
+      siteName: '3DFish',
       locale: 'pl_PL',
       type: 'website',
       ...(product.images[0] ? { images: [{ url: product.images[0] }] } : {}),

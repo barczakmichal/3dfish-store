@@ -32,7 +32,7 @@ function OrderSuccessContent() {
 
       <h1 className="text-3xl font-bold text-gray-900 mb-4">Zamówienie zostało złożone!</h1>
       <p className="text-gray-600 text-lg mb-4">
-        Dziękujemy za zakupy w WędkarskaFabryka3D. Potwierdzenie zamówienia zostanie wysłane na
+        Dziękujemy za zakupy w 3DFish. Potwierdzenie zamówienia zostanie wysłane na
         Twój adres email.
       </p>
 

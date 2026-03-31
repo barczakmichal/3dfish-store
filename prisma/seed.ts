@@ -13,108 +13,108 @@ async function main() {
   await prisma.order.deleteMany();
   await prisma.product.deleteMany();
 
-  // Top 10 produktów z researchu marketingowego (SKL-3)
+  // Top 10 produktów 3DFish — dane z CMO (SKL-4)
   const products = await prisma.product.createMany({
     data: [
       {
-        name: 'Uchwyt na wędkę naścienny 3D',
+        name: '3DFish Uchwyt na Wędkę Universal',
         description:
-          'Solidny uchwyt na wędkę do montażu naściennego, drukowany z PETG odpornego na UV i wilgoć. Miękka wkładka chroniąca blank wędki. Montaż na 2 śruby, pasuje do wędek o średnicy blanku do 18mm. Idealny do garażu, piwnicy lub nad łóżko.',
-        price: 29.99,
+          'Uniwersalny uchwyt na wędkę z druku 3D. Montaż naścienny lub do łodzi. Pasuje do wędek o średnicy 8-30mm. Drukowany z PETG — odporny na UV, deszcz i mróz. Montaż na 2 śruby (w zestawie). Miękka wkładka chroniąca blank wędki. Waga: 45g. Idealne rozwiązanie dla spinningistów i wędkarzy karpiowych.',
+        price: 19.99,
         images: [],
         stock: 40,
-        category: 'Uchwyty na wędki',
-        slug: 'uchwyt-na-wedke-nascienny-3d',
+        category: 'Organizacja i przechowywanie',
+        slug: 'uchwyt-na-wedke-universal',
       },
       {
-        name: 'Uchwyt na wędkę łodziowy 3D',
+        name: '3DFish Organizer Tackle Box Pro',
         description:
-          'Wytrzymały uchwyt na wędkę do montażu na relingu łodzi. Drukowany z ASA — materiału odpornego na promieniowanie UV i wodę morską. Obrotowy mechanizm 360° pozwala na ustawienie wędki pod dowolnym kątem. Pasuje do relingów 22-32mm.',
-        price: 49.99,
-        images: [],
-        stock: 25,
-        category: 'Uchwyty na wędki',
-        slug: 'uchwyt-na-wedke-lodziowy-3d',
-      },
-      {
-        name: 'Organizer Tackle Box - wkładki Plano 3D',
-        description:
-          'Zestaw wkładek organizacyjnych do pudełek Plano 3600/3700. Drukowane z PLA+ w precyzyjnych wymiarach. Segregują przynęty, haczyki i akcesoria. Dostępne w 5 konfiguracjach przegródek. Łatwe do czyszczenia, odporne na wilgoć.',
-        price: 34.99,
+          'Modularny organizer do pudełek na przynęty. Pasuje do popularnych modeli Plano 3600/3700 i Meiho VS-3010/3020. Modularne przegródki — konfiguruj według potrzeb. Stabilne zamknięcia — nic się nie przesunie w transporcie. Drukowany z PLA+, dostępny w wielu kolorach.',
+        price: 24.99,
         images: [],
         stock: 35,
         category: 'Organizacja i przechowywanie',
-        slug: 'organizer-tackle-box-wkladki-plano-3d',
+        slug: 'organizer-tackle-box-pro',
       },
       {
-        name: 'Spławik UltraFloat 3D - zestaw 5 szt.',
+        name: '3DFish Spławik 3D — zestaw 5 szt.',
         description:
-          'Zestaw 5 spławików drukowanych w 3D z precyzyjnie dobranymi nośnościami (1g, 2g, 3g, 5g, 8g). Jaskrawe kolory widoczne z daleka. Aerodynamiczny kształt minimalizuje opór powietrza podczas rzutu. Materiał odporny na wodę i UV.',
-        price: 24.99,
+          'Zestaw 5 spławików z druku 3D w rozmiarach 1g, 2g, 3g, 5g, 8g. Neonowe kolory: czerwony, żółty, pomarańczowy — widoczne nawet o zmierzchu. Precyzyjne wyważenie — reagują na najdelikatniejsze branie. Trwały lakier UV — nie blakną. Drukowane z PLA+ i pokryte wodoodpornym lakierem.',
+        price: 14.99,
         images: [],
         stock: 60,
-        category: 'Spławiki',
-        slug: 'splawik-ultrafloat-3d-zestaw',
+        category: 'Akcesoria łowcze',
+        slug: 'splawik-3d-zestaw-5szt',
       },
       {
-        name: 'Lura Crankbait 3D - szczupak',
+        name: '3DFish Crankbait Hunter 7cm',
         description:
-          'Twarda przynęta typu crankbait drukowana w 3D, zaprojektowana na szczupaka. Długość 9cm, waga 12g. Realistyczny wzór łuski, wbudowana komora z kulkami stalowymi tworzącymi hałas podwodny. Zanurzenie 1.5-2.5m. Kolor: firetiger.',
-        price: 39.99,
+          'Lura typu crankbait 7cm z druku 3D. Waga: 12g, zanurzalność: 1-2m. Realistyczny wobbling imitujący ruch małej ryby. Komora grzechotkowa przyciąga drapieżniki dźwiękiem. Wzmocnione oczka na haczyki treblowe. Dostępne wzory: okoń, płoć, ukleja, firetiger. Testowana na Zalewie Zegrzyńskim.',
+        price: 12.99,
         images: [],
         stock: 30,
         category: 'Lury i przynęty',
-        slug: 'lura-crankbait-3d-szczupak',
+        slug: 'crankbait-hunter-7cm',
       },
       {
-        name: 'Główki jigowe 3D - zestaw 10 szt.',
+        name: '3DFish Jig Head — zestaw 10 szt.',
         description:
-          'Zestaw 10 główek jigowych drukowanych w 3D z osadzonym haczykiem ze stali nierdzewnej. Gramatury: 5g, 7g, 10g, 14g, 21g (po 2 szt.). Kształt typu Erie zapewniający naturalną prezentację. Malowane proszkowo, odporne na zarysowania.',
-        price: 44.99,
+          'Zestaw 10 główek jigowych: 2x3g, 2x5g, 2x7g, 2x10g, 2x14g. Haczyki VMC (rozmiar dopasowany do gramatury). Kształty: round head, football head. Jaskrawe kolory: chartreuse, red, white, glow. Kompatybilne z gumami 2-4". Idealne do jigowania na okonia, sandacza i szczupaka.',
+        price: 19.99,
         images: [],
         stock: 25,
         category: 'Lury i przynęty',
-        slug: 'glowki-jigowe-3d-zestaw',
+        slug: 'jig-head-zestaw-10szt',
       },
       {
-        name: 'Stojak na wędki bankowy 3D',
+        name: '3DFish Stojak Bankowy na 4 Wędki',
         description:
-          'Stojak brzeżny na 4 wędki, drukowany z PETG wzmocnionego włóknem węglowym. Stabilna podstawa z kolcami do gruntu. Regulowane widełki pasujące do różnych średnic blanku. Składany — mieści się w plecaku. Waga: 280g.',
-        price: 59.99,
+          'Stabilny stojak bankowy na 4 wędki. Składana konstrukcja, regulowana wysokość nóg, gumowe końcówki. Kompatybilny z sygnalizatorami brań (buzz bar). Drukowany z PETG. Waga: 280g. Przetestowany na sesjach 48h+ w deszczu, wietrze i słońcu.',
+        price: 39.99,
         images: [],
         stock: 20,
-        category: 'Stojaki na wędki',
-        slug: 'stojak-na-wedki-bankowy-3d',
+        category: 'Organizacja i przechowywanie',
+        slug: 'stojak-bankowy-4-wedki',
       },
       {
-        name: 'Uchwyt serwisowy na kołowrotek 3D',
+        name: '3DFish Uchwyt Serwisowy na Kołowrotek',
         description:
-          'Uchwyt do przechowywania i serwisowania kołowrotków. Drukowany z PLA+ z antypoślizgową podstawą. Pasuje do kołowrotków rozmiar 1000-6000. Ułatwia czyszczenie, smarowanie i wymianę żyłki. Stabilny montaż na biurku lub stole.',
-        price: 19.99,
-        images: [],
-        stock: 45,
-        category: 'Akcesoria',
-        slug: 'uchwyt-serwisowy-kolowrotek-3d',
-      },
-      {
-        name: 'Klipy na linkę i łączniki 3D - zestaw 20 szt.',
-        description:
-          'Uniwersalne klipy do zabezpieczania linki wędkarskiej i łączenia elementów zestawu. Drukowane z nylonu PA12 — elastyczne i wytrzymałe. Zestaw zawiera 20 klipów w 4 rozmiarach. Pasują do żyłek 0.15-0.50mm i plecionek do 0.30mm.',
+          'Uchwyt do bezpiecznego przechowywania i serwisowania kołowrotków. Pasuje do rozmiarów 1000-5000. Miękkie podkładki chroniące obudowę. Stabilna podstawa. Ułatwia czyszczenie i oliwienie mechanizmu. Drukowany z PETG. Świetny prezent dla wędkarza.',
         price: 14.99,
         images: [],
-        stock: 80,
-        category: 'Akcesoria',
-        slug: 'klipy-laczniki-3d-zestaw',
+        stock: 45,
+        category: 'Organizacja i przechowywanie',
+        slug: 'uchwyt-serwisowy-kolowrotek',
       },
       {
-        name: 'Panel ścienny na sprzęt wędkarski 3D',
+        name: '3DFish Klip na Linkę — zestaw 20 szt.',
         description:
-          'Modularny panel ścienny do organizacji sprzętu wędkarskiego. System haków i uchwytów drukowanych w 3D, montowany na płycie perforowanej. Pomieści 6 wędek, 4 kołowrotki i akcesoria. Wymiary panelu: 80x60cm. Materiał: PETG.',
+          'Zestaw klipów do organizacji i połączeń żyłki i plecionki. 20 szt. w 4 kolorach (po 5 sztuk). 3 rozmiary: S (do 0.20mm), M (do 0.35mm), L (do 0.50mm). Gładkie krawędzie nie uszkadzają żyłki. System snap-on — szybkie zakładanie i zdejmowanie. Drukowane z PLA+.',
+        price: 9.99,
+        images: [],
+        stock: 80,
+        category: 'Akcesoria drobne',
+        slug: 'klip-na-linke-zestaw-20szt',
+      },
+      {
+        name: '3DFish Fly Reel Classic #5/6',
+        description:
+          'Kołowrotek muchowy z druku 3D w klasycznym stylu. Rozmiar #5/6, system click & pawl. Waga: 95g — jeden z najlżejszych na rynku. Materiał ASA — odporny na UV, temperaturę i wilgoć. Duża spool mieści WF5 + 50m backing. Wymienne elementy. Produkt premium z dłuższym czasem produkcji.',
         price: 89.99,
         images: [],
         stock: 10,
+        category: 'Połowy muchowe',
+        slug: 'fly-reel-classic-5-6',
+      },
+      {
+        name: '3DFish Panel Organizacyjny na Sprzęt',
+        description:
+          'Modularny panel ścienny 40x60cm do zawieszenia wędek, kołowrotków i akcesoriów. System pegboard z 10 dedykowanymi uchwytami: 4x uchwyt na wędkę, 2x hak na siatkę, 2x półka na pudełka, 2x uchwyt na kołowrotek. Montaż na 4 śruby. Możliwość rozbudowy. Wytrzymałość: do 15kg na panel. PETG.',
+        price: 59.99,
+        images: [],
+        stock: 10,
         category: 'Organizacja i przechowywanie',
-        slug: 'panel-scienny-sprzet-wedkarski-3d',
+        slug: 'panel-organizacyjny-sprzet',
       },
     ],
   });

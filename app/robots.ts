@@ -5,6 +5,6 @@ export default function robots() {
       allow: '/',
       disallow: ['/admin/', '/api/'],
     },
-    sitemap: 'https://wedkarskafabryka3d.pl/sitemap.xml',
+    sitemap: 'https://3dfish.pl/sitemap.xml',
   }
 }
