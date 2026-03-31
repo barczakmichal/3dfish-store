@@ -1,35 +1,35 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
+import prisma from '@/lib/prisma';
 
-// Top 3 produkty z researchu marketingowego — najwyższy potencjał sprzedażowy
-const featuredProducts = [
-  {
-    id: '1',
-    name: 'Uchwyt na wędkę naścienny 3D',
-    price: 29.99,
-    image: '',
-    category: 'Uchwyty na wędki',
-    slug: 'uchwyt-na-wedke-nascienny-3d',
+export const metadata: Metadata = {
+  title: 'WędkarskaFabryka3D - Akcesoria wędkarskie drukowane w 3D',
+  description:
+    'Sklep z unikalnymi akcesoriami wędkarskimi drukowanymi w technologii 3D. Spławiki, haczyki, pudełka, kółka i wiele więcej – precyzja i jakość w każdym detalu.',
+  openGraph: {
+    title: 'WędkarskaFabryka3D',
+    description: 'Unikalne akcesoria wędkarskie drukowane w 3D',
+    url: 'https://wedkarskafabryka3d.pl',
+    siteName: 'WędkarskaFabryka3D',
+    locale: 'pl_PL',
+    type: 'website',
   },
-  {
-    id: '2',
-    name: 'Organizer Tackle Box - wkładki Plano 3D',
-    price: 34.99,
-    image: '',
-    category: 'Organizacja i przechowywanie',
-    slug: 'organizer-tackle-box-wkladki-plano-3d',
-  },
-  {
-    id: '3',
-    name: 'Stojak na wędki bankowy 3D',
-    price: 59.99,
-    image: '',
-    category: 'Stojaki na wędki',
-    slug: 'stojak-na-wedki-bankowy-3d',
-  },
-];
+};
 
-export default function HomePage() {
+export default async function HomePage() {
+  let featuredProducts: Awaited<ReturnType<typeof prisma.product.findMany>> = [];
+
+  try {
+    featuredProducts = await prisma.product.findMany({
+      where: { stock: { gt: 0 } },
+      orderBy: { createdAt: 'desc' },
+      take: 3,
+    });
+  } catch {
+    // Baza danych niedostępna
+  }
+
   return (
     <div>
       {/* Hero section */}
@@ -131,7 +131,15 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredProducts.map((product) => (
-              <ProductCard key={product.id} {...product} />
+              <ProductCard
+                key={product.id}
+                id={product.id}
+                name={product.name}
+                price={Number(product.price)}
+                image={product.images[0] || ''}
+                category={product.category}
+                slug={product.slug}
+              />
             ))}
           </div>
 

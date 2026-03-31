@@ -1,15 +1,60 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { useCartStore } from '@/lib/store';
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, getTotalPrice } = useCartStore();
+  const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const formattedTotal = new Intl.NumberFormat('pl-PL', {
     style: 'currency',
     currency: 'PLN',
   }).format(getTotalPrice());
+
+  const handleCheckout = async () => {
+    if (!email || !email.includes('@')) {
+      setError('Podaj poprawny adres email');
+      return;
+    }
+
+    setIsLoading(true);
+    setError('');
+
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: items.map((item) => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+          })),
+          customerEmail: email,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || 'Wystąpił błąd');
+        return;
+      }
+
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch {
+      setError('Wystąpił błąd połączenia. Spróbuj ponownie.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   if (items.length === 0) {
     return (
@@ -40,14 +85,12 @@ export default function CartPage() {
         <div className="lg:col-span-2 space-y-4">
           {items.map((item) => (
             <div key={item.id} className="bg-white rounded-xl p-4 shadow-sm flex items-center gap-4">
-              {/* Product image placeholder */}
               <div className="w-20 h-20 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 text-blue-200">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75 7.5 9l4.5 4.5 3-3.75 4.5 5.25H2.25Z" />
                 </svg>
               </div>
 
-              {/* Product info */}
               <div className="flex-1 min-w-0">
                 <Link href={`/products/${item.slug}`} className="font-semibold text-gray-900 hover:text-blue-700 transition-colors line-clamp-2">
                   {item.name}
@@ -57,7 +100,6 @@ export default function CartPage() {
                 </p>
               </div>
 
-              {/* Quantity controls */}
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => updateQuantity(item.id, item.quantity - 1)}
@@ -74,14 +116,12 @@ export default function CartPage() {
                 </button>
               </div>
 
-              {/* Item total */}
               <div className="text-right min-w-16">
                 <p className="font-bold text-gray-900">
                   {new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN' }).format(item.price * item.quantity)}
                 </p>
               </div>
 
-              {/* Remove button */}
               <button
                 onClick={() => removeItem(item.id)}
                 className="text-gray-400 hover:text-red-500 transition-colors ml-2"
@@ -121,8 +161,31 @@ export default function CartPage() {
               </div>
             </div>
 
-            <button className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-4 rounded-xl transition-colors text-lg">
-              Przejdź do płatności
+            {/* Email input */}
+            <div className="mb-4">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                Email do potwierdzenia
+              </label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="twoj@email.pl"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+              />
+            </div>
+
+            {error && (
+              <p className="text-red-500 text-sm mb-4">{error}</p>
+            )}
+
+            <button
+              onClick={handleCheckout}
+              disabled={isLoading}
+              className="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-xl transition-colors text-lg"
+            >
+              {isLoading ? 'Przetwarzanie...' : 'Przejdź do płatności'}
             </button>
 
             <Link

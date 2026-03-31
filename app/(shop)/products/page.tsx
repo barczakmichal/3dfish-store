@@ -1,65 +1,38 @@
+import type { Metadata } from 'next';
 import ProductCard from '@/components/ProductCard';
+import prisma from '@/lib/prisma';
 
-// Przykładowe produkty (będą pobierane z bazy danych po konfiguracji)
-const allProducts = [
-  {
-    id: '1',
-    name: 'Kołowrotek SpinMaster 3D',
-    price: 129.99,
-    image: '',
-    category: 'Kołowrotki',
-    slug: 'kolowrotek-spinmaster-3d',
+export const metadata: Metadata = {
+  title: 'Produkty | WędkarskaFabryka3D',
+  description:
+    'Katalog akcesoriów wędkarskich drukowanych w technologii 3D – spławiki, haczyki, pudełka, kółka i więcej. Sprawdź naszą ofertę.',
+  openGraph: {
+    title: 'Produkty | WędkarskaFabryka3D',
+    description: 'Akcesoria wędkarskie drukowane w technologii 3D',
+    url: 'https://wedkarskafabryka3d.pl/products',
+    siteName: 'WędkarskaFabryka3D',
+    locale: 'pl_PL',
+    type: 'website',
   },
-  {
-    id: '2',
-    name: 'Spławik UltraFloat Pro',
-    price: 24.99,
-    image: '',
-    category: 'Spławiki',
-    slug: 'splawik-ultrafloat-pro',
-  },
-  {
-    id: '3',
-    name: 'Przypona Fluorocarbon 3D',
-    price: 39.99,
-    image: '',
-    category: 'Przypony',
-    slug: 'przypona-fluorocarbon-3d',
-  },
-  {
-    id: '4',
-    name: 'Haczyk SteelHook 3D Pack',
-    price: 19.99,
-    image: '',
-    category: 'Haczyki',
-    slug: 'haczyk-steelhook-3d-pack',
-  },
-  {
-    id: '5',
-    name: 'Zanęta PelletMix 3D',
-    price: 34.99,
-    image: '',
-    category: 'Zanęty',
-    slug: 'zaneta-pelletmix-3d',
-  },
-  {
-    id: '6',
-    name: 'Wędka CarbonPro 3D',
-    price: 299.99,
-    image: '',
-    category: 'Wędki',
-    slug: 'wedka-carbonpro-3d',
-  },
-];
-
-const categories = ['Wszystkie', 'Kołowrotki', 'Wędki', 'Spławiki', 'Haczyki', 'Przypony', 'Zanęty'];
-
-export const metadata = {
-  title: 'Produkty - WędkarskaFabryka3D',
-  description: 'Katalog akcesoriów wędkarskich drukowanych w technologii 3D.',
 };
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  let products: Awaited<ReturnType<typeof prisma.product.findMany>> = [];
+
+  try {
+    products = await prisma.product.findMany({
+      where: { stock: { gt: 0 } },
+      orderBy: { createdAt: 'desc' },
+    });
+  } catch {
+    // Baza danych niedostępna
+  }
+
+  const categories = [
+    'Wszystkie',
+    ...Array.from(new Set(products.map((p) => p.category))),
+  ];
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* Page header */}
@@ -88,13 +61,21 @@ export default function ProductsPage() {
 
       {/* Products grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {allProducts.map((product) => (
-          <ProductCard key={product.id} {...product} />
+        {products.map((product) => (
+          <ProductCard
+            key={product.id}
+            id={product.id}
+            name={product.name}
+            price={Number(product.price)}
+            image={product.images[0] || ''}
+            category={product.category}
+            slug={product.slug}
+          />
         ))}
       </div>
 
       {/* Empty state */}
-      {allProducts.length === 0 && (
+      {products.length === 0 && (
         <div className="text-center py-20">
           <p className="text-gray-500 text-lg">Brak produktów w tej kategorii.</p>
         </div>
