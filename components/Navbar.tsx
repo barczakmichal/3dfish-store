@@ -47,6 +47,12 @@ export default function Navbar() {
             >
               Produkty
             </Link>
+            <Link
+              href="/blog"
+              className="text-gray-600 hover:text-blue-700 font-medium transition-colors"
+            >
+              Blog
+            </Link>
           </div>
 
           {/* Cart icon */}
@@ -76,6 +82,9 @@ export default function Navbar() {
           <div className="md:hidden flex items-center gap-3">
             <Link href="/products" className="text-gray-600 hover:text-blue-700 font-medium text-sm">
               Sklep
+            </Link>
+            <Link href="/blog" className="text-gray-600 hover:text-blue-700 font-medium text-sm">
+              Blog
             </Link>
           </div>
         </div>

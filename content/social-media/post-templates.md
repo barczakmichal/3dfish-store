@@ -1,4 +1,4 @@
-# Szablony Postów Social Media — WędkarskaFabryka3D
+# Szablony Postów Social Media — 3DFish
 
 ## Szablon 1: Prezentacja produktu (FB/IG)
 
@@ -7,7 +7,7 @@ Zdjęcie produktu na białym tle + zdjęcie w użyciu
 
 ### Tekst
 ```
-[EMOJI ryby] [NAZWA PRODUKTU] — nowość w WędkarskaFabryka3D!
+[EMOJI ryby] [NAZWA PRODUKTU] — nowość w 3DFish!
 
 [2-3 zdania o produkcie: co robi, z czego jest, dlaczego jest lepszy]
 
@@ -15,14 +15,14 @@ Cena: [CENA] zł
 Materiał: [MATERIAŁ]
 [KLUCZOWA CECHA]
 
-Zamów: wedkarskafabryka3d.pl/products/[SLUG]
+Zamów: 3dfish.pl/products/[SLUG]
 
-#wedkarskafabryka3d #druk3d #wedkarstwo #[KATEGORIA]
+#3dfish #druk3d #wedkarstwo #[KATEGORIA]
 ```
 
 ### Przykład wypełniony
 ```
-Uchwyt na wędkę naścienny 3D — nowość w WędkarskaFabryka3D!
+Uchwyt na wędkę naścienny 3D — nowość w 3DFish!
 
 Koniec z wędkami opartymi o ścianę. Nasz uchwyt naścienny z PETG trzyma wędkę pewnie i nie rysuje blanku. Montaż na 2 śruby — 5 minut i gotowe.
 
@@ -30,9 +30,9 @@ Cena: 29,99 zł
 Materiał: PETG odporny na UV
 Pasuje do blanków do 18mm
 
-Zamów: wedkarskafabryka3d.pl/products/uchwyt-na-wedke-nascienny-3d
+Zamów: 3dfish.pl/products/uchwyt-na-wedke-nascienny-3d
 
-#wedkarskafabryka3d #druk3d #wedkarstwo #uchwytnawedke #organizacjasprzetu
+#3dfish #druk3d #wedkarstwo #uchwytnawedke #organizacjasprzetu
 ```
 
 ---
@@ -50,9 +50,9 @@ Czy wiesz, że...? [FAKT O WĘDKARSTWIE/DRUKU 3D]
 
 [Subtelne nawiązanie do produktu]
 
-Więcej porad na naszym blogu: wedkarskafabryka3d.pl/blog
+Więcej porad na naszym blogu: 3dfish.pl/blog
 
-#wedkarskafabryka3d #poradywedkarskie #wedkarstwo #druk3d
+#3dfish #poradywedkarskie #wedkarstwo #druk3d
 ```
 
 ### Przykład
@@ -63,7 +63,7 @@ W tradycyjnej produkcji spławiki są robione w standardowych nośnościach: 1g,
 
 Sprawdź nasz zestaw spławików UltraFloat 3D w 5 nośnościach.
 
-#wedkarskafabryka3d #splawiki #druk3d #wedkarstwo #poradywedkarskie
+#3dfish #splawiki #druk3d #wedkarstwo #poradywedkarskie
 ```
 
 ---
@@ -81,9 +81,9 @@ Od modelu 3D do gotowego produktu — [CZAS DRUKU] godzin druku, potem [POSTPROC
 
 Każdy egzemplarz sprawdzamy ręcznie, zanim trafi do Was.
 
-[EMOJI] Zamów swój: wedkarskafabryka3d.pl
+[EMOJI] Zamów swój: 3dfish.pl
 
-#wedkarskafabryka3d #druk3d #kulisyprodukcji #behindthescenes #wedkarstwo
+#3dfish #druk3d #kulisyprodukcji #behindthescenes #wedkarstwo
 ```
 
 ---
@@ -105,7 +105,7 @@ C) [OPCJA C]
 
 Piszcie w komentarzach! Najciekawsze odpowiedzi nagrodzimy rabatem 15% na dowolny produkt.
 
-#wedkarskafabryka3d #wedkarstwo #ankieta
+#3dfish #wedkarstwo #ankieta
 ```
 
 ### Przykłady pytań
@@ -129,9 +129,9 @@ NOWY ARTYKUŁ NA BLOGU
 
 [2-3 zdania podsumowania — dlaczego warto przeczytać]
 
-Czytaj: wedkarskafabryka3d.pl/blog/[SLUG]
+Czytaj: 3dfish.pl/blog/[SLUG]
 
-#wedkarskafabryka3d #blog #wedkarstwo #[TEMAT]
+#3dfish #blog #wedkarstwo #[TEMAT]
 ```
 
 ---

@@ -19,7 +19,7 @@ async function main() {
       {
         name: '3DFish Uchwyt na Wędkę Universal',
         description:
-          'Uniwersalny uchwyt na wędkę z druku 3D. Montaż naścienny lub do łodzi. Pasuje do wędek o średnicy 8-30mm. Drukowany z PETG — odporny na UV, deszcz i mróz. Montaż na 2 śruby (w zestawie). Miękka wkładka chroniąca blank wędki. Waga: 45g. Idealne rozwiązanie dla spinningistów i wędkarzy karpiowych.',
+          'Uniwersalny uchwyt na wędkę z druku 3D — stojak naścienny na wędkę do garażu, łodzi lub pomostu. Pasuje do wędek o średnicy 8-30mm. Drukowany z PETG — odporny na UV, deszcz i mróz. Montaż na 2 śruby (w zestawie). Miękka wkładka chroniąca blank wędki. Waga: zaledwie 45g. Idealny organizer wędek dla spinningistów i wędkarzy karpiowych, którzy cenią porządek i szybki dostęp do sprzętu.',
         price: 19.99,
         images: [],
         stock: 40,
@@ -29,7 +29,7 @@ async function main() {
       {
         name: '3DFish Organizer Tackle Box Pro',
         description:
-          'Modularny organizer do pudełek na przynęty. Pasuje do popularnych modeli Plano 3600/3700 i Meiho VS-3010/3020. Modularne przegródki — konfiguruj według potrzeb. Stabilne zamknięcia — nic się nie przesunie w transporcie. Drukowany z PLA+, dostępny w wielu kolorach.',
+          'Modularny organizer wędkarski do pudełek na przynęty — wkładka tackle box kompatybilna z Plano 3600/3700 i Meiho VS-3010/3020. Modularne przegródki — konfiguruj według potrzeb. Stabilne zamknięcia — nic się nie przesunie w transporcie. Osobne przegródki na haczyki, jigheady, spławiki i drobne akcesoria. Drukowany z PLA+, dostępny w wielu kolorach. Pojemnik na lury, który zamieni chaos w porządek.',
         price: 24.99,
         images: [],
         stock: 35,
@@ -39,7 +39,7 @@ async function main() {
       {
         name: '3DFish Spławik 3D — zestaw 5 szt.',
         description:
-          'Zestaw 5 spławików z druku 3D w rozmiarach 1g, 2g, 3g, 5g, 8g. Neonowe kolory: czerwony, żółty, pomarańczowy — widoczne nawet o zmierzchu. Precyzyjne wyważenie — reagują na najdelikatniejsze branie. Trwały lakier UV — nie blakną. Drukowane z PLA+ i pokryte wodoodpornym lakierem.',
+          'Zestaw 5 spławików wędkarskich z druku 3D w rozmiarach 1g, 2g, 3g, 5g, 8g. Neonowe kolory: czerwony, żółty, pomarańczowy — widoczne nawet o zmierzchu. Precyzyjne wyważenie — reagują na najdelikatniejsze branie. Spławik z dokładnie dobraną nośnością, niemożliwą do osiągnięcia w produkcji masowej. Trwały lakier UV — nie blakną. Drukowane z PLA+ i pokryte wodoodpornym lakierem.',
         price: 14.99,
         images: [],
         stock: 60,
@@ -49,7 +49,7 @@ async function main() {
       {
         name: '3DFish Crankbait Hunter 7cm',
         description:
-          'Lura typu crankbait 7cm z druku 3D. Waga: 12g, zanurzalność: 1-2m. Realistyczny wobbling imitujący ruch małej ryby. Komora grzechotkowa przyciąga drapieżniki dźwiękiem. Wzmocnione oczka na haczyki treblowe. Dostępne wzory: okoń, płoć, ukleja, firetiger. Testowana na Zalewie Zegrzyńskim.',
+          'Lura crankbait 7cm z druku 3D — przynęta na szczupaka i okonia. Waga: 12g, zanurzalność: 1-2m. Realistyczny wobbling imitujący ruch małej ryby. Komora grzechotkowa przyciąga drapieżniki dźwiękiem. Wzmocnione oczka na haczyki treblowe. Dostępne wzory: okoń, płoć, ukleja, firetiger. Testowana na Zalewie Zegrzyńskim. Drukowana lura wędkarska z wykończeniem nie do odróżnienia od fabrycznej.',
         price: 12.99,
         images: [],
         stock: 30,
@@ -59,7 +59,7 @@ async function main() {
       {
         name: '3DFish Jig Head — zestaw 10 szt.',
         description:
-          'Zestaw 10 główek jigowych: 2x3g, 2x5g, 2x7g, 2x10g, 2x14g. Haczyki VMC (rozmiar dopasowany do gramatury). Kształty: round head, football head. Jaskrawe kolory: chartreuse, red, white, glow. Kompatybilne z gumami 2-4". Idealne do jigowania na okonia, sandacza i szczupaka.',
+          'Zestaw 10 główek jigowych do jigowania: 2x3g, 2x5g, 2x7g, 2x10g, 2x14g. Haczyki VMC (rozmiar dopasowany do gramatury). Kształty: round head, football head. Jaskrawe kolory: chartreuse, red, white, glow. Kompatybilne z gumami 2-4". Idealne główki jig na okonia, sandacza i szczupaka. Drukowane z wypełnieniem metalowym dla precyzyjnej wagi.',
         price: 19.99,
         images: [],
         stock: 25,
@@ -69,7 +69,7 @@ async function main() {
       {
         name: '3DFish Stojak Bankowy na 4 Wędki',
         description:
-          'Stabilny stojak bankowy na 4 wędki. Składana konstrukcja, regulowana wysokość nóg, gumowe końcówki. Kompatybilny z sygnalizatorami brań (buzz bar). Drukowany z PETG. Waga: 280g. Przetestowany na sesjach 48h+ w deszczu, wietrze i słońcu.',
+          'Stabilny stojak bankowy na 4 wędki — rod pod karpiowy z druku 3D. Składana konstrukcja, regulowana wysokość nóg, gumowe końcówki. Kompatybilny z sygnalizatorami brań (buzz bar). Drukowany z PETG — odporny na warunki atmosferyczne. Waga: 280g. Przetestowany na sesjach 48h+ w deszczu, wietrze i słońcu. Idealny stojak wędkarski na sesje karpiowe.',
         price: 39.99,
         images: [],
         stock: 20,

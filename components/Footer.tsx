@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
             <h3 className="text-xl font-bold mb-3">
@@ -38,6 +38,28 @@ export default function Footer() {
               <li>
                 <Link href="/products" className="hover:text-white transition-colors">
                   Akcesoria
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Blog */}
+          <div>
+            <h4 className="font-semibold text-lg mb-3">Blog</h4>
+            <ul className="space-y-2 text-gray-400 text-sm">
+              <li>
+                <Link href="/blog/druk-3d-w-wedkarstwie" className="hover:text-white transition-colors">
+                  Druk 3D w wędkarstwie
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog/porownanie-uchwytow-na-wedki" className="hover:text-white transition-colors">
+                  Porównanie uchwytów na wędki
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog/diy-vs-gotowe-akcesoria-wedkarskie" className="hover:text-white transition-colors">
+                  DIY vs gotowe akcesoria
                 </Link>
               </li>
             </ul>

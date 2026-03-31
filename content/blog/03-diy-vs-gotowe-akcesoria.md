@@ -1,6 +1,6 @@
 # DIY vs gotowe akcesoria wędkarskie — kiedy warto robić samemu, a kiedy kupić?
 
-**Meta title:** DIY vs gotowe akcesoria wędkarskie — co się bardziej opłaca? | WędkarskaFabryka3D
+**Meta title:** DIY vs gotowe akcesoria wędkarskie — co się bardziej opłaca? | 3DFish
 **Meta description:** Porównujemy akcesoria wędkarskie robione samodzielnie (DIY) z gotowymi produktami. Kiedy warto majsterkować, a kiedy lepiej kupić gotowe rozwiązanie?
 **Slug:** diy-vs-gotowe-akcesoria-wedkarskie
 **Kategoria:** Poradniki
@@ -76,4 +76,4 @@ Druk 3D to ciekawa opcja pomiędzy DIY a kupowaniem gotowych produktów. Jeśli 
 
 Najlepsza strategia? Łączenie obu podejść. Rób samemu to, co daje Ci satysfakcję i oszczędność (zanęty, muchy). Kupuj gotowe to, co wymaga precyzji i specjalistycznych narzędzi (organizery, uchwyty, lury).
 
-W WędkarskaFabryka3D mamy produkty dla obu grup — zarówno dla wędkarzy, którzy cenią wygodę gotowego rozwiązania, jak i dla tych, którzy szukają inspiracji do własnych projektów.
+W 3DFish mamy produkty dla obu grup — zarówno dla wędkarzy, którzy cenią wygodę gotowego rozwiązania, jak i dla tych, którzy szukają inspiracji do własnych projektów.
