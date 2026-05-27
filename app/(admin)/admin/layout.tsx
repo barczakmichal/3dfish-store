@@ -18,7 +18,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       <aside className="w-64 bg-gray-900 text-white flex flex-col">
         <div className="p-6 border-b border-gray-800">
           <Link href="/" className="text-xl font-bold">
-            Wedkarska<span className="text-orange-500">3D</span>
+            3D<span className="text-blue-500">Fish</span>
           </Link>
           <p className="text-gray-400 text-sm mt-1">Panel administratora</p>
           {session.user?.name && (
