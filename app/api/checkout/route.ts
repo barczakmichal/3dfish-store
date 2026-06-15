@@ -75,7 +75,13 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Create Stripe Checkout session
+    if (!stripe) {
+      return NextResponse.json({
+        url: `${req.nextUrl.origin}/order/success?order_id=${order.id}`,
+        orderId: order.id,
+      });
+    }
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: lineItems,
@@ -88,7 +94,6 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Link Stripe session to order
     await prisma.order.update({
       where: { id: order.id },
       data: { stripeSessionId: session.id },
