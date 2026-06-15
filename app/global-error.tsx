@@ -1,23 +1,26 @@
-'use client';
+'use client'
 
 export default function GlobalError({
-  error,
-  unstable_retry,
+  reset,
 }: {
-  error: Error & { digest?: string };
-  unstable_retry: () => void;
+  error: Error & { digest?: string }
+  reset: () => void
 }) {
   return (
     <html lang="pl">
       <body>
-        <div style={{ padding: '40px', textAlign: 'center' }}>
-          <h2>Coś poszło nie tak!</h2>
-          <p>{error.message}</p>
-          <button onClick={() => unstable_retry()} style={{ marginTop: '16px', padding: '8px 16px' }}>
-            Spróbuj ponownie
-          </button>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
+          <div style={{ textAlign: 'center' }}>
+            <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Coś poszło nie tak</h2>
+            <button
+              onClick={() => reset()}
+              style={{ padding: '0.5rem 1rem', backgroundColor: '#f97316', color: 'white', border: 'none', borderRadius: '0.5rem', cursor: 'pointer' }}
+            >
+              Spróbuj ponownie
+            </button>
+          </div>
         </div>
       </body>
     </html>
-  );
+  )
 }
