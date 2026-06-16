@@ -2,16 +2,17 @@ import { PrismaClient } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import 'dotenv/config';
 
-const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
+const adapter = new PrismaPg({ connectionString: (process.env.POSTGRES_PRISMA_URL || process.env.DATABASE_URL)! });
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  console.log('Rozpoczynam seed bazy danych...');
+  const existingCount = await prisma.product.count();
+  if (existingCount > 0) {
+    console.log(`Baza zawiera ${existingCount} produktow — pomijam seed.`);
+    return;
+  }
 
-  // Usuń istniejące dane
-  await prisma.orderItem.deleteMany();
-  await prisma.order.deleteMany();
-  await prisma.product.deleteMany();
+  console.log('Rozpoczynam seed bazy danych...');
 
   // Top 10 produktów 3DFish — dane z CMO (SKL-4)
   const products = await prisma.product.createMany({

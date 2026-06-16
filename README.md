@@ -2,26 +2,28 @@
 
 Sklep internetowy z akcesoriami wedkarskimi drukowanymi 3D. Next.js 16 + Prisma 7 + PostgreSQL (Neon) + Stripe + NextAuth.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fbarczakmichal%2F3dfish-store&env=DATABASE_URL,NEXTAUTH_SECRET,ADMIN_PASSWORD&envDescription=Konfiguracja%20sklepu%203DFish&envLink=https%3A%2F%2Fgithub.com%2Fbarczakmichal%2F3dfish-store%23zmienne-srodowiskowe&project-name=3dfish-store&repository-name=3dfish-store)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fbarczakmichal%2F3dfish-store&stores=%5B%7B%22type%22%3A%22postgres%22%7D%5D&env=NEXTAUTH_SECRET,ADMIN_PASSWORD&envDescription=NEXTAUTH_SECRET%3A%20wpisz%20dowolny%20losowy%20ciag%20(np.%20moj-tajny-klucz-123).%20ADMIN_PASSWORD%3A%20haslo%20do%20panelu%20admina.&project-name=3dfish-store&repository-name=3dfish-store)
 
-## Szybki start
+## Szybki start (1 klik)
 
 1. Kliknij przycisk **Deploy with Vercel** powyzej
-2. Stworz darmowa baze danych na [neon.tech](https://neon.tech) i skopiuj `DATABASE_URL`
-3. Wypelnij zmienne srodowiskowe (szczegoly ponizej)
-4. Vercel zbuduje i wdrozy sklep automatycznie
-5. Po wdrozeniu uruchom migracje: `npx prisma migrate deploy`
-6. Zaladuj produkty: `npx prisma db seed`
+2. Zaloguj sie do Vercel (lub stworz darmowe konto przez GitHub)
+3. Baza danych PostgreSQL zostanie utworzona automatycznie
+4. Wpisz dowolne `NEXTAUTH_SECRET` (np. `moj-sekret-123`) i `ADMIN_PASSWORD`
+5. Kliknij Deploy — sklep zostanie zbudowany i wdrozony automatycznie
 
 ## Zmienne srodowiskowe
 
 | Zmienna | Opis | Wymagana |
 |---------|------|----------|
-| `DATABASE_URL` | Connection string PostgreSQL (Neon free tier) | Tak |
-| `NEXTAUTH_SECRET` | Secret do sesji (generuj: `openssl rand -base64 32`) | Tak |
+| `POSTGRES_PRISMA_URL` | Auto-ustawiane przez Vercel Postgres | Auto |
+| `DATABASE_URL` | Connection string PostgreSQL (alternatywa do Vercel Postgres) | Nie* |
+| `NEXTAUTH_SECRET` | Dowolny tajny ciag znakow do sesji | Tak |
 | `ADMIN_PASSWORD` | Haslo do panelu admina `/admin` | Tak |
 | `STRIPE_SECRET_KEY` | Klucz API Stripe (opcjonalny na start) | Nie |
 | `STRIPE_WEBHOOK_SECRET` | Stripe webhook secret | Nie |
+
+\* `DATABASE_URL` jest wymagany tylko jesli nie uzywasz Vercel Postgres (przycisk Deploy ustawia baze automatycznie).
 
 ## Stack
 
