@@ -8,6 +8,8 @@ services:
       POSTGRES_DB: treefish
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      - internal
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U treefish"]
       interval: 5s
@@ -26,11 +28,20 @@ services:
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
       STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
       STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
-      NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}
       NODE_ENV: production
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - internal
+      - webproxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.treefish.rule=Host(`treefish.pl`) || Host(`www.treefish.pl`)"
+      - "traefik.http.routers.treefish.entrypoints=websecure"
+      - "traefik.http.routers.treefish.tls.certresolver=letsencrypt"
+      - "traefik.http.services.treefish.loadbalancer.server.port=3000"
+      - "traefik.docker.network=webproxy"
 
   migrate:
     build:
@@ -41,31 +52,17 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - internal
     command: >
       sh -c "npx prisma migrate deploy && npx prisma db seed || true"
     profiles:
       - init
 
-  nginx:
-    image: nginx:alpine
-    restart: unless-stopped
-    depends_on:
-      - app
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx/treefish.conf:/etc/nginx/conf.d/default.conf:ro
-      - /etc/letsencrypt:/etc/letsencrypt:ro
-      - certbot-webroot:/var/www/certbot:ro
-
-  certbot:
-    image: certbot/certbot
-    volumes:
-      - /etc/letsencrypt:/etc/letsencrypt
-      - certbot-webroot:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done'"
+networks:
+  internal:
+  webproxy:
+    external: true
 
 volumes:
   pgdata:
-  certbot-webroot:
