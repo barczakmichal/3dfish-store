@@ -1,63 +1,137 @@
 #!/bin/bash
 set -euo pipefail
 
-# 3DFish Store Deployment Script
-# Requires: VERCEL_TOKEN, NEON_API_KEY environment variables
+# TreeFish Store - VPS Deployment Script
+# Usage: ./scripts/deploy.sh <VPS_HOST> [SSH_USER]
+#
+# Prerequisites on VPS:
+#   - SSH access configured
+#   - Domain treefish.pl DNS A record pointing to VPS IP
 
-if [ -z "${VERCEL_TOKEN:-}" ]; then
-  echo "ERROR: VERCEL_TOKEN not set"
-  exit 1
-fi
-
-if [ -z "${NEON_API_KEY:-}" ]; then
-  echo "ERROR: NEON_API_KEY not set"
-  exit 1
-fi
+VPS_HOST="${1:?Usage: $0 <VPS_HOST> [SSH_USER]}"
+SSH_USER="${2:-root}"
+REMOTE_DIR="/opt/treefish"
+SSH_OPTS="-o StrictHostKeyChecking=accept-new"
 
 PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$PROJECT_DIR"
 
-echo "=== Step 1: Create Neon database ==="
-NEON_PROJECT=$(npx neonctl projects create --name "3dfish-store" --api-key "$NEON_API_KEY" --output json 2>/dev/null)
-NEON_PROJECT_ID=$(echo "$NEON_PROJECT" | node -e "process.stdin.on('data',d=>{const p=JSON.parse(d);console.log(p.project?.id||p.id)})")
-echo "Neon project: $NEON_PROJECT_ID"
+echo "=== TreeFish VPS Deployment ==="
+echo "Host: $SSH_USER@$VPS_HOST"
+echo "Remote dir: $REMOTE_DIR"
 
-DATABASE_URL=$(npx neonctl connection-string --project-id "$NEON_PROJECT_ID" --api-key "$NEON_API_KEY" 2>/dev/null)
-echo "Database URL obtained"
+echo ""
+echo "=== Step 1: Verify Docker on VPS ==="
+ssh $SSH_OPTS "$SSH_USER@$VPS_HOST" bash <<'REMOTE_DOCKER'
+if ! command -v docker &>/dev/null; then
+    echo "Installing Docker..."
+    curl -fsSL https://get.docker.com | sh
+    systemctl enable docker
+    systemctl start docker
+fi
+docker --version
+docker compose version
+echo "Docker OK"
+REMOTE_DOCKER
 
-echo "=== Step 2: Run Prisma migrations ==="
-DATABASE_URL="$DATABASE_URL" npx prisma migrate deploy
-echo "Migrations applied"
+echo ""
+echo "=== Step 2: Setup .env on VPS ==="
+ssh $SSH_OPTS "$SSH_USER@$VPS_HOST" bash <<REMOTE_ENV
+mkdir -p $REMOTE_DIR
+if [ ! -f "$REMOTE_DIR/.env" ]; then
+    DB_PASSWORD=\$(openssl rand -base64 24 | tr -d '/+=' | head -c 32)
+    NEXTAUTH_SECRET=\$(openssl rand -base64 32)
+    ADMIN_PASSWORD=\$(openssl rand -base64 16 | tr -d '/+=' | head -c 16)
 
-echo "=== Step 3: Seed database ==="
-DATABASE_URL="$DATABASE_URL" npx prisma db seed || echo "Seed skipped or failed (non-critical)"
+    cat > "$REMOTE_DIR/.env" <<EOF
+DB_PASSWORD=\$DB_PASSWORD
+NEXTAUTH_SECRET=\$NEXTAUTH_SECRET
+ADMIN_PASSWORD=\$ADMIN_PASSWORD
+STRIPE_SECRET_KEY=sk_test_REPLACE_ME
+STRIPE_WEBHOOK_SECRET=whsec_REPLACE_ME
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_REPLACE_ME
+EOF
+    echo "Created .env with generated secrets"
+    echo "ADMIN_PASSWORD=\$ADMIN_PASSWORD"
+    echo ">>> Update Stripe keys in $REMOTE_DIR/.env <<<"
+else
+    echo ".env already exists, skipping"
+fi
+REMOTE_ENV
 
-echo "=== Step 4: Generate secrets ==="
-NEXTAUTH_SECRET=$(openssl rand -base64 32)
-ADMIN_PASSWORD=$(openssl rand -base64 16)
+echo ""
+echo "=== Step 3: Sync project files ==="
+rsync -avz --delete \
+    --exclude node_modules \
+    --exclude .next \
+    --exclude .git \
+    --exclude '.env*' \
+    --exclude '*.pem' \
+    --exclude '*.key' \
+    --exclude .vercel \
+    --exclude tsconfig.tsbuildinfo \
+    --exclude next-env.d.ts \
+    -e "ssh $SSH_OPTS" \
+    ./ "$SSH_USER@$VPS_HOST:$REMOTE_DIR/"
+echo "Files synced"
 
-echo "=== Step 5: Deploy to Vercel ==="
-npx vercel pull --yes --token "$VERCEL_TOKEN" 2>/dev/null || true
-npx vercel link --yes --token "$VERCEL_TOKEN" 2>/dev/null || true
+echo ""
+echo "=== Step 4: SSL Certificate ==="
+ssh $SSH_OPTS "$SSH_USER@$VPS_HOST" bash <<REMOTE_SSL
+cd $REMOTE_DIR
+if [ ! -d "/etc/letsencrypt/live/treefish.pl" ]; then
+    echo "Obtaining SSL certificate..."
+    cp nginx/treefish-initial.conf nginx/treefish-active.conf
+    mv nginx/treefish.conf nginx/treefish-ssl.conf
+    cp nginx/treefish-active.conf nginx/treefish.conf
 
-npx vercel env add DATABASE_URL production --token "$VERCEL_TOKEN" <<< "$DATABASE_URL" 2>/dev/null || true
-npx vercel env add NEXTAUTH_SECRET production --token "$VERCEL_TOKEN" <<< "$NEXTAUTH_SECRET" 2>/dev/null || true
-npx vercel env add NEXTAUTH_URL production --token "$VERCEL_TOKEN" <<< "https://3dfish.vercel.app" 2>/dev/null || true
-npx vercel env add ADMIN_PASSWORD production --token "$VERCEL_TOKEN" <<< "$ADMIN_PASSWORD" 2>/dev/null || true
-npx vercel env add STRIPE_SECRET_KEY production --token "$VERCEL_TOKEN" <<< "REPLACE_WITH_STRIPE_SECRET_KEY" 2>/dev/null || true
-npx vercel env add NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY production --token "$VERCEL_TOKEN" <<< "REPLACE_WITH_STRIPE_PUBLISHABLE_KEY" 2>/dev/null || true
+    docker compose up -d nginx
+    sleep 3
 
-echo "=== Step 6: Production deployment ==="
-DEPLOY_URL=$(npx vercel deploy --prod --yes --token "$VERCEL_TOKEN" 2>&1 | tail -1)
-echo "Deployed to: $DEPLOY_URL"
+    docker compose run --rm certbot certonly \
+        --webroot --webroot-path=/var/www/certbot \
+        -d treefish.pl -d www.treefish.pl \
+        --email michal@geekwork.pl \
+        --agree-tos --non-interactive
+
+    docker compose down
+    mv nginx/treefish-ssl.conf nginx/treefish.conf
+    echo "SSL certificate obtained"
+else
+    echo "SSL certificate already exists"
+fi
+REMOTE_SSL
+
+echo ""
+echo "=== Step 5: Build and deploy ==="
+ssh $SSH_OPTS "$SSH_USER@$VPS_HOST" bash <<REMOTE_DEPLOY
+cd $REMOTE_DIR
+docker compose build app
+docker compose --profile init run --rm migrate
+docker compose up -d db app nginx certbot
+
+echo "Waiting for services..."
+sleep 10
+docker compose ps
+REMOTE_DEPLOY
+
+echo ""
+echo "=== Step 6: Verify ==="
+sleep 5
+HTTP_STATUS=\$(curl -s -o /dev/null -w "%{http_code}" "https://treefish.pl" 2>/dev/null || echo "000")
+if [ "\$HTTP_STATUS" = "200" ]; then
+    echo "SUCCESS: treefish.pl is live (HTTP \$HTTP_STATUS)"
+else
+    echo "WARNING: Got HTTP \$HTTP_STATUS"
+    echo "Check logs: ssh $SSH_USER@$VPS_HOST 'cd $REMOTE_DIR && docker compose logs'"
+fi
 
 echo ""
 echo "=== Deployment Complete ==="
-echo "URL: $DEPLOY_URL"
-echo "Admin password: $ADMIN_PASSWORD"
-echo "NEXTAUTH_SECRET: $NEXTAUTH_SECRET"
+echo "Site: https://treefish.pl"
+echo "Admin: https://treefish.pl/admin/login"
 echo ""
 echo "Next steps:"
-echo "1. Configure Stripe test keys in Vercel dashboard"
-echo "2. Set up Stripe webhook to: $DEPLOY_URL/api/webhooks/stripe"
-echo "3. Update NEXTAUTH_URL to actual domain"
+echo "1. Update Stripe keys in $REMOTE_DIR/.env on VPS"
+echo "2. Restart: ssh $SSH_USER@$VPS_HOST 'cd $REMOTE_DIR && docker compose restart app'"
+echo "3. Stripe webhook: https://treefish.pl/api/webhooks/stripe"
