@@ -11,6 +11,11 @@ RUN npm ci
 FROM base AS builder
 WORKDIR /app
 ENV NODE_ENV=production
+ENV DATABASE_URL="postgresql://build:build@localhost:5432/build"
+ENV STRIPE_SECRET_KEY="sk_test_build_placeholder"
+ENV STRIPE_WEBHOOK_SECRET="whsec_build_placeholder"
+ENV NEXTAUTH_SECRET="build_placeholder_secret"
+ENV ADMIN_PASSWORD="build_placeholder"
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npx prisma generate
