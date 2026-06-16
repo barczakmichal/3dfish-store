@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Blog — 3DFish',
     description: 'Artykuły o druku 3D w wędkarstwie',
-    url: 'https://3dfish.pl/blog',
+    url: 'https://treefish.pl/blog',
     siteName: '3DFish',
     locale: 'pl_PL',
     type: 'website',

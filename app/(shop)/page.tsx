@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: '3DFish',
     description: 'Unikalne akcesoria wędkarskie drukowane w 3D',
-    url: 'https://3dfish.pl',
+    url: 'https://treefish.pl',
     siteName: '3DFish',
     locale: 'pl_PL',
     type: 'website',

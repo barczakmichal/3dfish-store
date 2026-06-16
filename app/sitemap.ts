@@ -16,23 +16,23 @@ export default async function sitemap() {
 
   return [
     {
-      url: 'https://3dfish.pl',
+      url: 'https://treefish.pl',
       lastModified: new Date(),
     },
     {
-      url: 'https://3dfish.pl/products',
+      url: 'https://treefish.pl/products',
       lastModified: new Date(),
     },
     {
-      url: 'https://3dfish.pl/blog',
+      url: 'https://treefish.pl/blog',
       lastModified: new Date(),
     },
     ...blogPosts.map((post) => ({
-      url: `https://3dfish.pl/blog/${post.slug}`,
+      url: `https://treefish.pl/blog/${post.slug}`,
       lastModified: new Date(),
     })),
     ...products.map((p) => ({
-      url: `https://3dfish.pl/products/${p.id}`,
+      url: `https://treefish.pl/products/${p.id}`,
       lastModified: p.updatedAt,
     })),
   ]

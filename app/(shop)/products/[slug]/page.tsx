@@ -28,7 +28,7 @@ export async function generateMetadata({
     openGraph: {
       title: `${product.name} | 3DFish`,
       description: product.description.slice(0, 160),
-      url: `https://3dfish.pl/products/${product.slug}`,
+      url: `https://treefish.pl/products/${product.slug}`,
       siteName: '3DFish',
       locale: 'pl_PL',
       type: 'website',

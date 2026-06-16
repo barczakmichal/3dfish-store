@@ -17,11 +17,11 @@ export const metadata: Metadata = {
   keywords: ['wędkarstwo', 'akcesoria wędkarskie', 'druk 3D', 'spławiki', 'uchwyty na wędki', 'sklep wędkarski', '3DFish'],
   authors: [{ name: '3DFish' }],
   creator: '3DFish',
-  metadataBase: new URL('https://3dfish.pl'),
+  metadataBase: new URL('https://treefish.pl'),
   openGraph: {
     type: 'website',
     locale: 'pl_PL',
-    url: 'https://3dfish.pl',
+    url: 'https://treefish.pl',
     siteName: '3DFish',
     title: '3DFish - Akcesoria wędkarskie drukowane w 3D',
     description:
