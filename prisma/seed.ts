@@ -7,7 +7,15 @@ const prisma = new PrismaClient({ adapter });
 
 async function main() {
   const existingCount = await prisma.product.count();
+
+  // Rebrand existing products from 3DFish to treefish
   if (existingCount > 0) {
+    const updated = await prisma.$executeRawUnsafe(
+      `UPDATE "Product" SET name = REPLACE(name, '3DFish', 'treefish') WHERE name LIKE '%3DFish%'`
+    );
+    if (updated > 0) {
+      console.log(`Rebrand: zmieniono nazwy ${updated} produktów z 3DFish na treefish.`);
+    }
     console.log(`Baza zawiera ${existingCount} produktow — pomijam seed.`);
     return;
   }
