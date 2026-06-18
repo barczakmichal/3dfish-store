@@ -21,7 +21,7 @@ export default function SuccessContent() {
 
       <h1 className="text-3xl font-bold text-gray-900 mb-4">Zamówienie złożone!</h1>
       <p className="text-gray-600 text-lg mb-8">
-        Dziękujemy za zakupy w 3DFish. Potwierdzenie zamówienia zostanie wysłane na Twój adres email.
+        Dziękujemy za zakupy w treefish. Potwierdzenie zamówienia zostanie wysłane na Twój adres email.
       </p>
 
       <div className="flex flex-col sm:flex-row gap-4 justify-center">

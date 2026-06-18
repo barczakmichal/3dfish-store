@@ -3,14 +3,14 @@ import Link from 'next/link';
 import { getAllPosts } from '@/lib/blog';
 
 export const metadata: Metadata = {
-  title: 'Blog — 3DFish | Druk 3D w wędkarstwie',
+  title: 'Blog — treefish | Druk 3D w wędkarstwie',
   description:
     'Artykuły o druku 3D w wędkarstwie, porównania sprzętu i poradniki. Dowiedz się, jak technologia zmienia akcesoria wędkarskie.',
   openGraph: {
-    title: 'Blog — 3DFish',
+    title: 'Blog — treefish',
     description: 'Artykuły o druku 3D w wędkarstwie',
-    url: 'https://3dfish.pl/blog',
-    siteName: '3DFish',
+    url: 'https://treefish.pl/blog',
+    siteName: 'treefish',
     locale: 'pl_PL',
     type: 'website',
   },
@@ -23,7 +23,7 @@ export default function BlogPage() {
     <div className="bg-gray-50 min-h-screen">
       <section className="bg-blue-900 text-white py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl font-bold mb-4">Blog 3DFish</h1>
+          <h1 className="text-4xl font-bold mb-4">Blog treefish</h1>
           <p className="text-blue-200 text-lg">
             Poradniki, porównania i nowości ze świata druku 3D w wędkarstwie
           </p>

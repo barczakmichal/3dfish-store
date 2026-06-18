@@ -19,17 +19,17 @@ export async function generateMetadata({
   }
 
   if (!product) {
-    return { title: 'Produkt nie znaleziony | 3DFish' };
+    return { title: 'Produkt nie znaleziony | treefish' };
   }
 
   return {
-    title: `${product.name} | 3DFish`,
+    title: `${product.name} | treefish`,
     description: product.description.slice(0, 160),
     openGraph: {
-      title: `${product.name} | 3DFish`,
+      title: `${product.name} | treefish`,
       description: product.description.slice(0, 160),
-      url: `https://3dfish.pl/products/${product.slug}`,
-      siteName: '3DFish',
+      url: `https://treefish.pl/products/${product.slug}`,
+      siteName: 'treefish',
       locale: 'pl_PL',
       type: 'website',
       ...(product.images[0] ? { images: [{ url: product.images[0] }] } : {}),

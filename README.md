@@ -1,8 +1,8 @@
-# 3DFish - Sklep z akcesoriami wedkarskimi
+﻿# treefish - Sklep z akcesoriami wedkarskimi
 
 Sklep internetowy z akcesoriami wedkarskimi drukowanymi 3D. Next.js 16 + Prisma 7 + PostgreSQL (Neon) + Stripe + NextAuth.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fbarczakmichal%2F3dfish-store&stores=%5B%7B%22type%22%3A%22postgres%22%7D%5D&env=NEXTAUTH_SECRET,ADMIN_PASSWORD&envDescription=NEXTAUTH_SECRET%3A%20wpisz%20dowolny%20losowy%20ciag%20(np.%20moj-tajny-klucz-123).%20ADMIN_PASSWORD%3A%20haslo%20do%20panelu%20admina.&project-name=3dfish-store&repository-name=3dfish-store)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fbarczakmichal%2Ftreefish-store&stores=%5B%7B%22type%22%3A%22postgres%22%7D%5D&env=NEXTAUTH_SECRET,ADMIN_PASSWORD&envDescription=NEXTAUTH_SECRET%3A%20wpisz%20dowolny%20losowy%20ciag%20(np.%20moj-tajny-klucz-123).%20ADMIN_PASSWORD%3A%20haslo%20do%20panelu%20admina.&project-name=treefish-store&repository-name=treefish-store)
 
 ## Szybki start (1 klik)
 

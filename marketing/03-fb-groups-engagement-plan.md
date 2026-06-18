@@ -1,7 +1,7 @@
-# Plan Angazowania w Grupach Wedkarskich na Facebooku
+﻿# Plan Angazowania w Grupach Wedkarskich na Facebooku
 
 ## Strategia
-Budowanie wiarygodnosci marki 3DFish poprzez wartosciowe uczestnictwo w polskich grupach wedkarskich na FB. NIE SPAM — autentyczne dzielenie sie wiedza i doswiadczeniem.
+Budowanie wiarygodnosci marki treefish poprzez wartosciowe uczestnictwo w polskich grupach wedkarskich na FB. NIE SPAM — autentyczne dzielenie sie wiedza i doswiadczeniem.
 
 ---
 

@@ -39,7 +39,7 @@ export default function AdminLoginPage() {
       <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-gray-900">
-            3D<span className="text-blue-500">Fish</span>
+            tree<span className="text-blue-500">fish</span>
           </h1>
           <p className="text-gray-600 mt-2">Logowanie do panelu admina</p>
         </div>

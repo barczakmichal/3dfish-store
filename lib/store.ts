@@ -60,7 +60,7 @@ export const useCartStore = create<CartStore>()(
         get().items.reduce((total, item) => total + item.price * item.quantity, 0),
     }),
     {
-      name: '3dfish-cart-storage',
+      name: 'treefish-cart-storage',
     }
   )
 );

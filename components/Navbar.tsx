@@ -29,7 +29,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <span className="text-2xl font-bold text-blue-700 tracking-tight">
-              3D<span className="text-orange-500">Fish</span>
+              tree<span className="text-orange-500">fish</span>
             </span>
           </Link>
 

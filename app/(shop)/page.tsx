@@ -4,14 +4,14 @@ import ProductCard from '@/components/ProductCard';
 import prisma from '@/lib/prisma';
 
 export const metadata: Metadata = {
-  title: '3DFish - Akcesoria wędkarskie drukowane w 3D',
+  title: 'treefish - Akcesoria wędkarskie drukowane w 3D',
   description:
     'Sklep z unikalnymi akcesoriami wędkarskimi drukowanymi w technologii 3D. Spławiki, haczyki, pudełka, kółka i wiele więcej – precyzja i jakość w każdym detalu.',
   openGraph: {
-    title: '3DFish',
+    title: 'treefish',
     description: 'Unikalne akcesoria wędkarskie drukowane w 3D',
-    url: 'https://3dfish.pl',
-    siteName: '3DFish',
+    url: 'https://treefish.pl',
+    siteName: 'treefish',
     locale: 'pl_PL',
     type: 'website',
   },

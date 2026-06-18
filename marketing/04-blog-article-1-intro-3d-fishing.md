@@ -1,6 +1,6 @@
-# Druk 3D w Wedkarstwie — Rewolucja, o Ktorej Nie Slyszales
+﻿# Druk 3D w Wedkarstwie — Rewolucja, o Ktorej Nie Slyszales
 
-**Meta title:** Druk 3D w wedkarstwie — jak drukowane akcesoria zmieniaja lowienie | 3DFish
+**Meta title:** Druk 3D w wedkarstwie — jak drukowane akcesoria zmieniaja lowienie | treefish
 **Meta description:** Odkryj jak technologia druku 3D rewolucjonizuje wedkarstwo. Leksze, tansze i personalizowane akcesoria wedkarskie — uchwyty, lury, organizery i wiecej.
 **Slowa kluczowe:** druk 3D wedkarstwo, akcesoria wedkarskie druk 3D, drukowane lury, nowoczesne wedkarstwo
 **URL slug:** druk-3d-w-wedkarstwie-rewolucja

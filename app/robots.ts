@@ -5,6 +5,6 @@ export default function robots() {
       allow: '/',
       disallow: ['/admin/', '/api/'],
     },
-    sitemap: 'https://3dfish.pl/sitemap.xml',
+    sitemap: 'https://treefish.pl/sitemap.xml',
   }
 }

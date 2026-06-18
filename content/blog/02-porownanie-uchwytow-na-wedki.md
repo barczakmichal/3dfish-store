@@ -1,6 +1,6 @@
-# Uchwyty na wędki — porównanie: druk 3D vs metal vs drewno
+﻿# Uchwyty na wędki — porównanie: druk 3D vs metal vs drewno
 
-**Meta title:** Uchwyty na wędki 3D vs metal vs drewno — które wybrać? | 3DFish
+**Meta title:** Uchwyty na wędki 3D vs metal vs drewno — które wybrać? | treefish
 **Meta description:** Porównujemy uchwyty na wędki drukowane w 3D z metalowymi i drewnianymi. Sprawdź, który materiał jest najlepszy pod względem ceny, wagi i trwałości.
 **Slug:** porownanie-uchwytow-na-wedki
 **Kategoria:** Porównania
@@ -79,7 +79,7 @@ Dla większości wędkarzy **uchwyt drukowany w 3D** to najlepszy wybór. Jest l
 
 ## Nasze uchwyty 3D
 
-W 3DFish mamy dwa modele:
+W treefish mamy dwa modele:
 
 1. **Uchwyt naścienny** (29,99 zł) — idealny do garażu, piwnicy lub pokoju wędkarskiego. Montaż na 2 śruby, pasuje do blanków do 18mm.
 

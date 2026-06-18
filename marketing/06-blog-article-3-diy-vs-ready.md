@@ -1,6 +1,6 @@
-# DIY vs Gotowe Akcesoria Wedkarskie — Co Sie Bardziej Oplaca?
+﻿# DIY vs Gotowe Akcesoria Wedkarskie — Co Sie Bardziej Oplaca?
 
-**Meta title:** DIY vs gotowe akcesoria wedkarskie — co sie bardziej oplaca? | 3DFish
+**Meta title:** DIY vs gotowe akcesoria wedkarskie — co sie bardziej oplaca? | treefish
 **Meta description:** Porownanie kosztow i jakosci: reczna robota, zakupy w sklepie czy druk 3D? Sprawdz co sie oplaca dla wedkarza hobbysty i ktora opcja daje najlepsze rezultaty.
 **Slowa kluczowe:** DIY wedkarstwo, akcesoria wedkarskie domowej roboty, druk 3D vs kupione, samodzielne robienie sprzetu wedkarskiego
 **URL slug:** diy-vs-gotowe-akcesoria-wedkarskie
@@ -138,4 +138,4 @@ A jesli juz masz drukarke 3D — napisz do nas! Dzielimy sie plikami STL i porad
 
 ---
 
-*Sprawdz nasz sklep 3DFish — akcesoria wedkarskie z druku 3D w najlepszej cenie.*
+*Sprawdz nasz sklep treefish — akcesoria wedkarskie z druku 3D w najlepszej cenie.*
