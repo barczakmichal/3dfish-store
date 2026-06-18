@@ -71,22 +71,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Product image */}
         <div className="relative aspect-square bg-blue-50 rounded-2xl overflow-hidden">
-          {product.images[0] ? (
-            <Image
-              src={product.images[0]}
-              alt={product.name}
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              priority
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-32 h-32 text-blue-200">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75 7.5 9l4.5 4.5 3-3.75 4.5 5.25H2.25Z" />
-              </svg>
-            </div>
-          )}
+          <Image
+            src={product.images[0] || `/images/products/${product.slug}.svg`}
+            alt={product.name}
+            fill
+            className="object-cover"
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            priority
+          />
         </div>
 
         {/* Product details */}
@@ -114,7 +106,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               name: product.name,
               price: Number(product.price),
               slug: product.slug,
-              image: product.images[0] || '',
+              image: product.images[0] || `/images/products/${product.slug}.svg`,
               stock: product.stock,
             }}
           />
