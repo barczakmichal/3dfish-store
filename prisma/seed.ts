@@ -32,11 +32,14 @@ async function main() {
 
     let imgUpdated = 0;
     for (const [slug, imageUrl] of Object.entries(imageMap)) {
-      const result = await prisma.product.updateMany({
-        where: { slug, images: { isEmpty: true } },
-        data: { images: [imageUrl] },
-      });
-      imgUpdated += result.count;
+      const product = await prisma.product.findUnique({ where: { slug }, select: { images: true } });
+      if (product && (product.images.length === 0 || !product.images[0].endsWith('.png'))) {
+        const result = await prisma.product.updateMany({
+          where: { slug },
+          data: { images: [imageUrl] },
+        });
+        imgUpdated += result.count;
+      }
     }
     if (imgUpdated > 0) {
       console.log(`Obrazy: zaktualizowano ${imgUpdated} produktów.`);
