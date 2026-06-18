@@ -61,7 +61,7 @@ export default async function AdminDashboard() {
       {/* Quick actions */}
       <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Szybkie akcje</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <Link
             href="/admin/products/new"
             className="flex items-center gap-3 border border-orange-200 bg-orange-50 hover:bg-orange-100 rounded-lg p-4 transition-colors"
@@ -78,6 +78,15 @@ export default async function AdminDashboard() {
             <div>
               <p className="font-medium text-blue-800">Zarządzaj zamówieniami</p>
               <p className="text-sm text-blue-600 mt-0.5">Zmień statusy, przeglądaj historię</p>
+            </div>
+          </Link>
+          <Link
+            href="/admin/stock"
+            className="flex items-center gap-3 border border-green-200 bg-green-50 hover:bg-green-100 rounded-lg p-4 transition-colors"
+          >
+            <div>
+              <p className="font-medium text-green-800">Stany magazynowe</p>
+              <p className="text-sm text-green-600 mt-0.5">Zarządzaj ilościami produktów</p>
             </div>
           </Link>
         </div>
