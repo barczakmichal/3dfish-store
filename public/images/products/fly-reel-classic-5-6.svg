@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4c1d95"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="600" fill="url(#bg)"/>
+  <circle cx="300" cy="250" r="120" fill="rgba(255,255,255,0.08)"/>
+  <!-- Fly reel icon -->
+  <g transform="translate(300,245)">
+    <circle cx="0" cy="0" r="55" fill="none" stroke="#fbbf24" stroke-width="3"/>
+    <circle cx="0" cy="0" r="45" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" stroke-dasharray="6,4"/>
+    <circle cx="0" cy="0" r="20" fill="rgba(251,191,36,0.15)" stroke="#fbbf24" stroke-width="2"/>
+    <circle cx="0" cy="0" r="8" fill="rgba(251,191,36,0.3)"/>
+    <line x1="20" y1="0" x2="55" y2="0" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+    <line x1="-20" y1="0" x2="-55" y2="0" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+    <line x1="0" y1="-20" x2="0" y2="-55" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+    <line x1="0" y1="20" x2="0" y2="55" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+    <line x1="14" y1="-14" x2="39" y2="-39" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+    <line x1="-14" y1="14" x2="-39" y2="39" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+    <line x1="14" y1="14" x2="39" y2="39" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+    <line x1="-14" y1="-14" x2="-39" y2="-39" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+    <circle cx="55" cy="-15" r="6" fill="rgba(255,255,255,0.2)" stroke="#fbbf24" stroke-width="1.5"/>
+    <rect x="-65" y="-8" width="15" height="16" rx="3" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+  </g>
+  <text x="300" y="430" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" font-weight="700" fill="#ffffff">Fly Reel Classic</text>
+  <text x="300" y="460" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" font-weight="700" fill="#fbbf24">#5/6</text>
+  <text x="300" y="510" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" fill="rgba(255,255,255,0.5)" letter-spacing="3">3DFISH</text>
+</svg>
