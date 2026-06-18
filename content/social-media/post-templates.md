@@ -15,7 +15,7 @@ Cena: [CENA] zł
 Materiał: [MATERIAŁ]
 [KLUCZOWA CECHA]
 
-Zamów: 3dfish.pl/products/[SLUG]
+Zamów: treefish.pl/products/[SLUG]
 
 #3dfish #druk3d #wedkarstwo #[KATEGORIA]
 ```
@@ -30,7 +30,7 @@ Cena: 29,99 zł
 Materiał: PETG odporny na UV
 Pasuje do blanków do 18mm
 
-Zamów: 3dfish.pl/products/uchwyt-na-wedke-nascienny-3d
+Zamów: treefish.pl/products/uchwyt-na-wedke-nascienny-3d
 
 #3dfish #druk3d #wedkarstwo #uchwytnawedke #organizacjasprzetu
 ```
@@ -50,7 +50,7 @@ Czy wiesz, że...? [FAKT O WĘDKARSTWIE/DRUKU 3D]
 
 [Subtelne nawiązanie do produktu]
 
-Więcej porad na naszym blogu: 3dfish.pl/blog
+Więcej porad na naszym blogu: treefish.pl/blog
 
 #3dfish #poradywedkarskie #wedkarstwo #druk3d
 ```
@@ -81,7 +81,7 @@ Od modelu 3D do gotowego produktu — [CZAS DRUKU] godzin druku, potem [POSTPROC
 
 Każdy egzemplarz sprawdzamy ręcznie, zanim trafi do Was.
 
-[EMOJI] Zamów swój: 3dfish.pl
+[EMOJI] Zamów swój: treefish.pl
 
 #3dfish #druk3d #kulisyprodukcji #behindthescenes #wedkarstwo
 ```
@@ -129,7 +129,7 @@ NOWY ARTYKUŁ NA BLOGU
 
 [2-3 zdania podsumowania — dlaczego warto przeczytać]
 
-Czytaj: 3dfish.pl/blog/[SLUG]
+Czytaj: treefish.pl/blog/[SLUG]
 
 #3dfish #blog #wedkarstwo #[TEMAT]
 ```
