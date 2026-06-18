@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { connection } from 'next/server';
 import ProductCard from '@/components/ProductCard';
 import prisma from '@/lib/prisma';
 
@@ -17,6 +18,8 @@ export const metadata: Metadata = {
 };
 
 export default async function ProductsPage() {
+  await connection();
+
   let products: Awaited<ReturnType<typeof prisma.product.findMany>> = [];
 
   try {
