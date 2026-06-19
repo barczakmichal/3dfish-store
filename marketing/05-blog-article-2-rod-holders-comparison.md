@@ -1,6 +1,6 @@
 # Porownanie Uchwytow na Wedki — Druk 3D vs Metal vs Plastik
 
-**Meta title:** Uchwyty na wedki — porownanie: druk 3D vs metal vs plastik | 3DFish
+**Meta title:** Uchwyty na wedki — porownanie: druk 3D vs metal vs plastik | treefish
 **Meta description:** Ktory uchwyt na wedke jest najlepszy? Porownujemy uchwyty z druku 3D, metalowe i plastikowe pod katem wagi, ceny, wytrzymalosci i funkcjonalnosci.
 **Slowa kluczowe:** uchwyt na wedke, stojak na wedki porownanie, uchwyt wedkarski, uchwyt na wedke nascienny
 **URL slug:** porownanie-uchwytow-na-wedki-druk-3d-metal-plastik
@@ -124,4 +124,4 @@ Lekki, tani, odporny na pogode i — co najwazniejsze — mozna go dopasowac dok
 
 ---
 
-*Sprawdz nasze uchwyty na wedki w sklepie 3DFish. Dostepne w wersjach: nascienny, do lodzi i do samochodu.*
+*Sprawdz nasze uchwyty na wedki w sklepie treefish. Dostepne w wersjach: nascienny, do lodzi i do samochodu.*

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-# 3DFish Store — VPS Deployment Script
+# treefish Store — VPS Deployment Script
 # Usage: ./scripts/deploy-vps.sh <VPS_HOST> [SSH_USER=root]
 #
 # Deploys: PostgreSQL + Next.js app behind existing Traefik proxy
@@ -11,7 +11,7 @@ VPS_HOST="${1:?Usage: $0 <VPS_HOST> [SSH_USER]}"
 SSH_USER="${2:-root}"
 APP_DIR="/opt/treefish"
 
-echo "=== Deploying 3DFish Store to $SSH_USER@$VPS_HOST ==="
+echo "=== Deploying treefish Store to $SSH_USER@$VPS_HOST ==="
 
 DB_PASSWORD="$(openssl rand -hex 20)"
 NEXTAUTH_SECRET="$(openssl rand -base64 32)"

@@ -1,10 +1,10 @@
-# Opisy Produktowe — Top 10 Produktow 3DFish
+# Opisy Produktowe — Top 10 Produktow treefish
 
 ---
 
 ## 1. Uchwyt na wedki (Rod Holder) — nascienny / do lodzi
 
-**Nazwa produktu:** 3DFish Uchwyt na Wedke Universal
+**Nazwa produktu:** treefish Uchwyt na Wedke Universal
 **Kategoria:** Organizacja i przechowywanie
 **Material:** PETG (odporny na UV i wilgoc)
 
@@ -12,7 +12,7 @@
 Uniwersalny uchwyt na wedke z druku 3D. Montaz nascienny lub do lodzi. Pasuje do wedek o srednicy 8-30mm. Lekki, wytrzymaly, odporny na warunki atmosferyczne.
 
 **Pelny opis (do sklepu):**
-Koniec z bezladnie porozrzucanymi wedkami! Uchwyt 3DFish Universal to praktyczne rozwiazanie do przechowywania wedek — w garazu, na lodzi lub na pomoście.
+Koniec z bezladnie porozrzucanymi wedkami! Uchwyt treefish Universal to praktyczne rozwiazanie do przechowywania wedek — w garazu, na lodzi lub na pomoście.
 
 Cechy produktu:
 - Uniwersalny rozmiar — pasuje do wedek o srednicy 8-30mm
@@ -30,7 +30,7 @@ Idealne rozwiazanie dla spinningistow i wedkarzy karpiowych, ktorzy cenia porzad
 
 ## 2. Organizer Tackle Box — wkladki do pudelek
 
-**Nazwa produktu:** 3DFish Organizer Tackle Box Pro
+**Nazwa produktu:** treefish Organizer Tackle Box Pro
 **Kategoria:** Organizacja i przechowywanie
 **Material:** PLA+ / PETG
 
@@ -38,7 +38,7 @@ Idealne rozwiazanie dla spinningistow i wedkarzy karpiowych, ktorzy cenia porzad
 Modularny organizer do pudelek na przyn ety. Pasuje do popularnych modeli Plano i Meiho. Segreguj lury, haczyki i drobne akcesoria.
 
 **Pelny opis:**
-Zamien chaos w tackle boxie w porzadek! Organizer 3DFish to modularny system wkladek, ktory pasuje do najpopularniejszych pudelek na rynku (Plano 3600/3700, Meiho VS-3010/3020).
+Zamien chaos w tackle boxie w porzadek! Organizer treefish to modularny system wkladek, ktory pasuje do najpopularniejszych pudelek na rynku (Plano 3600/3700, Meiho VS-3010/3020).
 
 Cechy produktu:
 - Kompatybilny z Plano 3600, 3700 oraz Meiho VS-3010, VS-3020
@@ -56,7 +56,7 @@ Kazdy wedkarz wie, ze dobrze zorganizowany sprzet to polowa sukcesu na lowisku.
 
 ## 3. Splawik (Bobber) — rozne rozmiary
 
-**Nazwa produktu:** 3DFish Splawik 3D — zestaw 5 szt.
+**Nazwa produktu:** treefish Splawik 3D — zestaw 5 szt.
 **Kategoria:** Akcesoria lowcze
 **Material:** PLA+ (wodoodporny lakier)
 
@@ -64,7 +64,7 @@ Kazdy wedkarz wie, ze dobrze zorganizowany sprzet to polowa sukcesu na lowisku.
 Zestaw 5 splawikow z druku 3D w roznych rozmiarach. Lekkie, precyzyjne, widoczne z daleka dzieki neonowym kolorom.
 
 **Pelny opis:**
-Splawiki 3DFish to idealne polaczenie precyzji i widocznosci. Drukowane z PLA+ i pokryte wodoodpornym lakierem, sa lekkie i niezwykle czule na brania.
+Splawiki treefish to idealne polaczenie precyzji i widocznosci. Drukowane z PLA+ i pokryte wodoodpornym lakierem, sa lekkie i niezwykle czule na brania.
 
 Cechy produktu:
 - Zestaw 5 szt. w rozmiarach: 1g, 2g, 3g, 5g, 8g
@@ -81,7 +81,7 @@ Idealne do lowienia ploci, leszcza, lina i karasia na splawik.
 
 ## 4. Lura twarda (Crankbait) — szczupak/okon
 
-**Nazwa produktu:** 3DFish Crankbait Hunter 7cm
+**Nazwa produktu:** treefish Crankbait Hunter 7cm
 **Kategoria:** Lury i przynety
 **Material:** PETG / ASA (wodoodporny)
 
@@ -108,7 +108,7 @@ Testowana na Zalewie Zegrzynskim i jeziorach mazurskich. Sprawdzona na szczupaka
 
 ## 5. Glowka jigowa — rozne gramatury
 
-**Nazwa produktu:** 3DFish Jig Head zestaw 10 szt.
+**Nazwa produktu:** treefish Jig Head zestaw 10 szt.
 **Kategoria:** Lury i przynety
 **Material:** PLA+ z wkladka olowiana
 
@@ -116,7 +116,7 @@ Testowana na Zalewie Zegrzynskim i jeziorach mazurskich. Sprawdzona na szczupaka
 Zestaw 10 glowek jigowych w roznych gramaturach (3g, 5g, 7g, 10g, 14g). Precyzyjne odlewy z haczykami VMC.
 
 **Pelny opis:**
-Glowki jigowe 3DFish lacza precyzje druku 3D z klasyczna konstrukcja jigowa. Kazda glowka ma drukowana osłone na oko haczyka i aerodynamiczny ksztalt.
+Glowki jigowe treefish lacza precyzje druku 3D z klasyczna konstrukcja jigowa. Kazda glowka ma drukowana osłone na oko haczyka i aerodynamiczny ksztalt.
 
 Cechy produktu:
 - Zestaw 10 szt.: 2x3g, 2x5g, 2x7g, 2x10g, 2x14g
@@ -134,7 +134,7 @@ Idealne do jigowania na okonia, sandacza i szczupaka.
 
 ## 6. Stojak na wedki (Rod Stand)
 
-**Nazwa produktu:** 3DFish Stojak Bankowy na 4 Wedki
+**Nazwa produktu:** treefish Stojak Bankowy na 4 Wedki
 **Kategoria:** Organizacja i przechowywanie
 **Material:** PETG
 
@@ -142,7 +142,7 @@ Idealne do jigowania na okonia, sandacza i szczupaka.
 Stabilny stojak bankowy na 4 wedki. Skladany, lekki, odporny na warunki atmosferyczne. Idealny na sesje karpiowe i gruntowe.
 
 **Pelny opis:**
-Stojak 3DFish to must-have kazdego wedkarza karpiowego i gruntowego. Mieści 4 wedki jednoczesnie, a po zlozeniu zajmuje minimum miejsca.
+Stojak treefish to must-have kazdego wedkarza karpiowego i gruntowego. Mieści 4 wedki jednoczesnie, a po zlozeniu zajmuje minimum miejsca.
 
 Cechy produktu:
 - Mieści 4 wedki jednoczesnie
@@ -161,7 +161,7 @@ Przetestowany na sesjach 48h+ w deszczu, wietrze i sloncu.
 
 ## 7. Uchwyt na kolowrotek (Reel Stand)
 
-**Nazwa produktu:** 3DFish Uchwyt Serwisowy na Kolowrotek
+**Nazwa produktu:** treefish Uchwyt Serwisowy na Kolowrotek
 **Kategoria:** Organizacja i przechowywanie
 **Material:** PETG
 
@@ -169,7 +169,7 @@ Przetestowany na sesjach 48h+ w deszczu, wietrze i sloncu.
 Uchwyt do bezpiecznego przechowywania i serwisowania kolowrotkow. Chroni mechanizm i spool.
 
 **Pelny opis:**
-Kolowrotek to najdro zszy element zestawu — zadbaj o niego! Uchwyt 3DFish utrzymuje kolowrotek w stabilnej pozycji podczas przechowywania, transportu i serwisowania.
+Kolowrotek to najdro zszy element zestawu — zadbaj o niego! Uchwyt treefish utrzymuje kolowrotek w stabilnej pozycji podczas przechowywania, transportu i serwisowania.
 
 Cechy produktu:
 - Pasuje do kolowrotkow rozmiar 1000-5000
@@ -187,7 +187,7 @@ Swietny prezent dla kazdego wedkarza dbajacego o sprzet.
 
 ## 8. Klipy na linki / laczniki
 
-**Nazwa produktu:** 3DFish Klip na Linke — zestaw 20 szt.
+**Nazwa produktu:** treefish Klip na Linke — zestaw 20 szt.
 **Kategoria:** Akcesoria drobne
 **Material:** PLA+
 
@@ -195,7 +195,7 @@ Swietny prezent dla kazdego wedkarza dbajacego o sprzet.
 Zestaw klipow do organizacji i polaczen zylki i plecionki. Rozne rozmiary, jasne kolory do szybkiej identyfikacji.
 
 **Pelny opis:**
-Koniec ze splatanymi linkami! Klipy 3DFish pomagaja utrzymac porzadek — oznaczaj zestawy, lacz liderki i organizuj zylke na szpulach.
+Koniec ze splatanymi linkami! Klipy treefish pomagaja utrzymac porzadek — oznaczaj zestawy, lacz liderki i organizuj zylke na szpulach.
 
 Cechy produktu:
 - Zestaw 20 szt. w 4 kolorach (po 5 sztuk)
@@ -212,7 +212,7 @@ Drobne, ale niezwykle przydatne akcesorium, ktorego brakuje w kazdym zestawie.
 
 ## 9. Kolowrotek muchowy (Fly Reel)
 
-**Nazwa produktu:** 3DFish Fly Reel Classic #5/6
+**Nazwa produktu:** treefish Fly Reel Classic #5/6
 **Kategoria:** Polowy muchowe
 **Material:** ASA (wysokotemperaturowy, odporny na UV)
 
@@ -220,7 +220,7 @@ Drobne, ale niezwykle przydatne akcesorium, ktorego brakuje w kazdym zestawie.
 Kolowrotek muchowy z druku 3D w klasycznym stylu. Rozmiar #5/6, system click & pawl, ultralegki 95g.
 
 **Pelny opis:**
-Kolowrotek muchowy 3DFish to polaczenie nowoczesnej technologii druku 3D z klasycznym designem. Idealny dla poczatkujacych i sredniozaawansowanych mucharzy.
+Kolowrotek muchowy treefish to polaczenie nowoczesnej technologii druku 3D z klasycznym designem. Idealny dla poczatkujacych i sredniozaawansowanych mucharzy.
 
 Cechy produktu:
 - Rozmiar: #5/6 (kompatybilny z wiekszo scia wedek muchowych)
@@ -239,7 +239,7 @@ Uwaga: to produkt premium z dluzszym czasem produkcji (druk 18h+). Ograniczona d
 
 ## 10. Wieszak / Panel na sprzet wedkarski
 
-**Nazwa produktu:** 3DFish Panel Organizacyjny na Sprzet
+**Nazwa produktu:** treefish Panel Organizacyjny na Sprzet
 **Kategoria:** Organizacja i przechowywanie
 **Material:** PETG
 
@@ -247,7 +247,7 @@ Uwaga: to produkt premium z dluzszym czasem produkcji (druk 18h+). Ograniczona d
 Modularny panel scienny do zawieszenia wedek, kolowrotkow, siatek i akcesoriow. System pegboard z dedykowanymi uchwytami.
 
 **Pelny opis:**
-Panel 3DFish to kompletny system organizacji sprzetu wedkarskiego na scianie garazu, piwnicy lub domku wedkarskiego.
+Panel treefish to kompletny system organizacji sprzetu wedkarskiego na scianie garazu, piwnicy lub domku wedkarskiego.
 
 Cechy produktu:
 - Panel glowny 40x60cm z siatka otworow (kompatybilny z pegboard)

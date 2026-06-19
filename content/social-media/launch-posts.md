@@ -1,4 +1,4 @@
-# Posty na Otwarcie Sklepu 3DFish
+# Posty na Otwarcie Sklepu treefish
 
 ## Post 1: Oficjalne otwarcie sklepu (FB + IG)
 
@@ -6,7 +6,7 @@
 **Platformy:** Facebook, Instagram
 
 ```
-Ruszamy! 3DFish — sklep z akcesoriami wędkarskimi drukowanymi w 3D — jest oficjalnie otwarty!
+Ruszamy! treefish — sklep z akcesoriami wędkarskimi drukowanymi w 3D — jest oficjalnie otwarty!
 
 Co u nas znajdziesz?
 - Uchwyty na wędki (naścienne i bankowe)
@@ -20,7 +20,7 @@ Na start: darmowa dostawa przy zamówieniach powyżej 50 zł!
 
 Odwiedź nas: treefish.pl
 
-#3dfish #druk3d #wedkarstwo #otwarcie #nowysklep #akcesoriawedkarskie #fishing #polskiewedkarstwo
+#treefish #druk3d #wedkarstwo #otwarcie #nowysklep #akcesoriawedkarskie #fishing #polskiewedkarstwo
 ```
 
 ---
@@ -31,7 +31,7 @@ Odwiedź nas: treefish.pl
 **Platformy:** Facebook, Instagram
 
 ```
-3DFish Uchwyt na Wędkę Universal — nasz bestseller!
+treefish Uchwyt na Wędkę Universal — nasz bestseller!
 
 Koniec z wędkami opartymi o ścianę czy walającymi się po garażu. Nasz uniwersalny uchwyt:
 
@@ -46,7 +46,7 @@ Montaż na 2 śruby — 5 minut i gotowe.
 
 Zamów: treefish.pl/products/uchwyt-na-wedke-universal
 
-#3dfish #uchwytnawedke #druk3d #wedkarstwo #organizacjasprzetu #fishing
+#treefish #uchwytnawedke #druk3d #wedkarstwo #organizacjasprzetu #fishing
 ```
 
 ---
@@ -74,7 +74,7 @@ W jednym pokoju zmieścisz cały arsenał — a wędki będą bezpieczne i zawsz
 
 Więcej porad na naszym blogu: treefish.pl/blog
 
-#3dfish #poradywedkarskie #wedkarstwo #organizacja #druk3d #uchwytnawedke
+#treefish #poradywedkarskie #wedkarstwo #organizacja #druk3d #uchwytnawedke
 ```
 
 ---
@@ -96,7 +96,7 @@ D) Już używam drukowanych akcesoriów!
 
 Piszcie w komentarzach! Najciekawsze odpowiedzi nagrodzimy rabatem 15% na dowolny produkt z treefish.pl
 
-#3dfish #wedkarstwo #druk3d #ankieta #polskiewedkarstwo
+#treefish #wedkarstwo #druk3d #ankieta #polskiewedkarstwo
 ```
 
 ---
@@ -120,7 +120,7 @@ Przeczytaj pełny artykuł i dowiedz się, jakie materiały najlepiej sprawdzaj�
 
 Czytaj: treefish.pl/blog/druk-3d-w-wedkarstwie
 
-#3dfish #blog #wedkarstwo #druk3d #technologia #poradnik #innowacje
+#treefish #blog #wedkarstwo #druk3d #technologia #poradnik #innowacje
 ```
 
 ---

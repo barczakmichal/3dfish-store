@@ -1,21 +1,21 @@
-# Profile Social Media — 3DFish.pl
+# Profile Social Media — treefish.pl
 
 ## Nazwa marki na platformach
-**Nazwa:** 3DFish — Akcesoria Wedkarskie z Druku 3D
-**Handle:** @3dfish.pl (na wszystkich platformach dla spojnosci)
+**Nazwa:** treefish — Akcesoria Wedkarskie z Druku 3D
+**Handle:** @treefish.pl (na wszystkich platformach dla spojnosci)
 
 ---
 
 ## Facebook — Fan Page
 
 ### Nazwa strony
-3DFish — Akcesoria Wedkarskie 3D
+treefish — Akcesoria Wedkarskie 3D
 
 ### Opis krotki (tagline)
 Drukujemy Twoje lowisko! Akcesoria wedkarskie z druku 3D — lekkie, wytrzymale, w najlepszej cenie.
 
 ### Opis pelny (O nas)
-Witaj w 3DFish!
+Witaj w treefish!
 
 Jestesmy pierwszym polskim sklepem z akcesoriami wedkarskimi produkowanymi w technologii druku 3D. Nasze produkty to uchwyty na wedki, organizery tackle box, splawiki, lury i wiele wiecej.
 
@@ -26,7 +26,7 @@ Jestesmy pierwszym polskim sklepem z akcesoriami wedkarskimi produkowanymi w tec
 
 Wysylka w 24h | Bezpieczne platnosci | 14 dni na zwrot
 
-Zapraszamy na www.3dfish.pl
+Zapraszamy na www.treefish.pl
 
 ### Kategoria
 Sklep z artykulami sportowymi i rekreacyjnymi
@@ -39,10 +39,10 @@ Kup teraz -> link do sklepu
 ## YouTube
 
 ### Nazwa kanalu
-3DFish — Drukowane Akcesoria Wedkarskie
+treefish — Drukowane Akcesoria Wedkarskie
 
 ### Opis kanalu
-Witaj na kanale 3DFish!
+Witaj na kanale treefish!
 
 Tutaj zobaczysz:
 - Testy wytrzymalosci naszych akcesorii z druku 3D
@@ -53,8 +53,8 @@ Tutaj zobaczysz:
 
 Dlaczego druk 3D? Bo mozemy produkowac lejsze, tansze i w pelni personalizowane akcesoria dla kazdego wedkarza.
 
-Sklep: www.3dfish.pl
-Kontakt: kontakt@3dfish.pl
+Sklep: www.treefish.pl
+Kontakt: kontakt@treefish.pl
 
 Subskrybuj i wlacz dzwonek — nowe filmy co tydzien!
 
@@ -66,17 +66,17 @@ wedkarstwo, druk 3D, akcesoria wedkarskie, uchwyty na wedki, lury 3D, spinning, 
 ## Instagram
 
 ### Nazwa
-3DFish — Wedkarstwo 3D
+treefish — Wedkarstwo 3D
 
 ### Bio
 Akcesoria wedkarskie z druku 3D
 Pierwszy taki sklep w Polsce
 Lekkie | Wytrzymale | Tanie
 Wysylka 24h
-www.3dfish.pl
+www.treefish.pl
 
 ### Hashtagi (stale)
-#3dfish #druk3d #wedkarstwo #akcesoriawedkarskie #fishing #3dprinting #polskiewedkarstwo #spinning #karpiowka #lowienie
+#treefish #druk3d #wedkarstwo #akcesoriawedkarskie #fishing #3dprinting #polskiewedkarstwo #spinning #karpiowka #lowienie
 
 ---
 
@@ -94,7 +94,7 @@ Cena: [XX] zl
 
 Link w bio / komentarzu
 
-#3dfish #druk3d #wedkarstwo #[kategoria]
+#treefish #druk3d #wedkarstwo #[kategoria]
 ```
 
 ### Szablon 2: Test / Porownanie
@@ -110,7 +110,7 @@ Wyniki:
 
 Co myslicie? Dajcie znac w komentarzach!
 
-#3dfish #testwedkarski #druk3d #fishing
+#treefish #testwedkarski #druk3d #fishing
 ```
 
 ### Szablon 3: Porada / How-to
@@ -123,12 +123,12 @@ PORADA: [Tytul porady]
 
 Macie jakies swoje triki? Podzielcie sie!
 
-#3dfish #poradywedkarskie #wedkarstwo #fishing
+#treefish #poradywedkarskie #wedkarstwo #fishing
 ```
 
 ### Szablon 4: Za kulisami (produkcja)
 ```
-Za kulisami 3DFish!
+Za kulisami treefish!
 
 Zobaczcie jak powstaje [nazwa produktu] — od projektu 3D do gotowego produktu.
 
@@ -138,7 +138,7 @@ Temperatura: [X]C
 
 Caly proces — od pomyslu do paczki — zajmuje nam [X] dni.
 
-#3dfish #zakulisami #druk3d #produkcja
+#treefish #zakulisami #druk3d #produkcja
 ```
 
 ### Szablon 5: Angazowanie spolecznosci
@@ -152,5 +152,5 @@ PYTANIE DO WAS:
 
 Odpowiadajcie w komentarzach! Najciekawsza odpowiedz dostanie [nagroda/rabat].
 
-#3dfish #wedkarstwo #pytanie #spolecznosc
+#treefish #wedkarstwo #pytanie #spolecznosc
 ```

@@ -1,8 +1,8 @@
-# 3DFish — Opisy Profili Social Media
+# treefish — Opisy Profili Social Media
 
 ## Ujednolicona nazwa marki
-- **Nazwa:** 3DFish
-- **Handle:** @3dfish.pl (wszędzie ten sam)
+- **Nazwa:** treefish
+- **Handle:** @treefish.pl (wszędzie ten sam)
 - **Kolory marki:** granatowy (#1e3a5f), pomarańczowy (#f97316), biały
 - **Ton komunikacji:** profesjonalny ale przystępny, pasjonat do pasjonata
 
@@ -10,14 +10,14 @@
 
 ## Facebook — Fan Page
 
-**Nazwa strony:** 3DFish
+**Nazwa strony:** treefish
 **Kategoria:** Sklep z artykułami sportowymi / Wędkarstwo
 
 **O nas (krótki):**
 Akcesoria wędkarskie drukowane w technologii 3D. Najlepsze wyposażenie w najlepszej cenie.
 
 **O nas (długi):**
-3DFish to innowacyjny sklep z akcesoriami wędkarskimi drukowanymi w technologii 3D. Tworzymy produkty, które łączą nowoczesną technologię z potrzebami prawdziwych wędkarzy.
+treefish to innowacyjny sklep z akcesoriami wędkarskimi drukowanymi w technologii 3D. Tworzymy produkty, które łączą nowoczesną technologię z potrzebami prawdziwych wędkarzy.
 
 Nasze produkty:
 - Uchwyty na wędki (naścienne i łodziowe)
@@ -37,7 +37,7 @@ Dołącz do społeczności wędkarzy, którzy wybrali druk 3D!
 ## Instagram
 
 **Bio:**
-3DFish
+treefish
 Akcesoria wędkarskie z drukarki 3D
 Uchwyty | Organizery | Lury | Spławiki
 Najlepsze wyposażenie w najlepszej cenie
@@ -45,17 +45,17 @@ Zamów online
 treefish.pl
 
 **Hashtagi stałe:**
-#3dfish #druk3d #wedkarstwo #fishing #akcesoriawedkarskie #3dprint #polskiewedkarstwo #wedkarz #lubyryby #nadwoda
+#treefish #druk3d #wedkarstwo #fishing #akcesoriawedkarskie #3dprint #polskiewedkarstwo #wedkarz #lubyryby #nadwoda
 
 ---
 
 ## YouTube
 
-**Nazwa kanału:** 3DFish
-**Handle:** @3dfish.pl
+**Nazwa kanału:** treefish
+**Handle:** @treefish.pl
 
 **Opis kanału:**
-Witaj na kanale 3DFish!
+Witaj na kanale treefish!
 
 Tworzymy akcesoria wędkarskie drukowane w technologii 3D — od uchwytów na wędki, przez organizery, po lury i spławiki. Na tym kanale znajdziesz:
 
@@ -68,8 +68,8 @@ Tworzymy akcesoria wędkarskie drukowane w technologii 3D — od uchwytów na w�
 Subskrybuj, żeby nie przegapić nowości!
 
 Sklep: treefish.pl
-Facebook: facebook.com/3dfish.pl
-Instagram: @3dfish.pl
+Facebook: facebook.com/treefish.pl
+Instagram: @treefish.pl
 
 **Tagi kanału:** wędkarstwo, druk 3D, akcesoria wędkarskie, fishing, 3D printing, DIY wędkarstwo, polskie wędkarstwo
 
@@ -78,7 +78,7 @@ Instagram: @3dfish.pl
 ## TikTok (opcjonalnie, faza 2)
 
 **Bio:**
-3DFish
+treefish
 Wędkarstwo + Druk 3D = Przyszłość
 Testy nad wodą | DIY | Nowości
 treefish.pl

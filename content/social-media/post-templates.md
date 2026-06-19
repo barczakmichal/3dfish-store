@@ -1,4 +1,4 @@
-# Szablony Postów Social Media — 3DFish
+# Szablony Postów Social Media — treefish
 
 ## Szablon 1: Prezentacja produktu (FB/IG)
 
@@ -7,7 +7,7 @@ Zdjęcie produktu na białym tle + zdjęcie w użyciu
 
 ### Tekst
 ```
-[EMOJI ryby] [NAZWA PRODUKTU] — nowość w 3DFish!
+[EMOJI ryby] [NAZWA PRODUKTU] — nowość w treefish!
 
 [2-3 zdania o produkcie: co robi, z czego jest, dlaczego jest lepszy]
 
@@ -17,12 +17,12 @@ Materiał: [MATERIAŁ]
 
 Zamów: treefish.pl/products/[SLUG]
 
-#3dfish #druk3d #wedkarstwo #[KATEGORIA]
+#treefish #druk3d #wedkarstwo #[KATEGORIA]
 ```
 
 ### Przykład wypełniony
 ```
-Uchwyt na wędkę naścienny 3D — nowość w 3DFish!
+Uchwyt na wędkę naścienny 3D — nowość w treefish!
 
 Koniec z wędkami opartymi o ścianę. Nasz uchwyt naścienny z PETG trzyma wędkę pewnie i nie rysuje blanku. Montaż na 2 śruby — 5 minut i gotowe.
 
@@ -32,7 +32,7 @@ Pasuje do blanków do 18mm
 
 Zamów: treefish.pl/products/uchwyt-na-wedke-nascienny-3d
 
-#3dfish #druk3d #wedkarstwo #uchwytnawedke #organizacjasprzetu
+#treefish #druk3d #wedkarstwo #uchwytnawedke #organizacjasprzetu
 ```
 
 ---
@@ -52,7 +52,7 @@ Czy wiesz, że...? [FAKT O WĘDKARSTWIE/DRUKU 3D]
 
 Więcej porad na naszym blogu: treefish.pl/blog
 
-#3dfish #poradywedkarskie #wedkarstwo #druk3d
+#treefish #poradywedkarskie #wedkarstwo #druk3d
 ```
 
 ### Przykład
@@ -63,7 +63,7 @@ W tradycyjnej produkcji spławiki są robione w standardowych nośnościach: 1g,
 
 Sprawdź nasz zestaw spławików UltraFloat 3D w 5 nośnościach.
 
-#3dfish #splawiki #druk3d #wedkarstwo #poradywedkarskie
+#treefish #splawiki #druk3d #wedkarstwo #poradywedkarskie
 ```
 
 ---
@@ -83,7 +83,7 @@ Każdy egzemplarz sprawdzamy ręcznie, zanim trafi do Was.
 
 [EMOJI] Zamów swój: treefish.pl
 
-#3dfish #druk3d #kulisyprodukcji #behindthescenes #wedkarstwo
+#treefish #druk3d #kulisyprodukcji #behindthescenes #wedkarstwo
 ```
 
 ---
@@ -105,7 +105,7 @@ C) [OPCJA C]
 
 Piszcie w komentarzach! Najciekawsze odpowiedzi nagrodzimy rabatem 15% na dowolny produkt.
 
-#3dfish #wedkarstwo #ankieta
+#treefish #wedkarstwo #ankieta
 ```
 
 ### Przykłady pytań
@@ -131,7 +131,7 @@ NOWY ARTYKUŁ NA BLOGU
 
 Czytaj: treefish.pl/blog/[SLUG]
 
-#3dfish #blog #wedkarstwo #[TEMAT]
+#treefish #blog #wedkarstwo #[TEMAT]
 ```
 
 ---

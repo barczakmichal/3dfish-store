@@ -9,21 +9,21 @@ const geistSans = Geist({
 
 export const metadata: Metadata = {
   title: {
-    default: '3DFish - Akcesoria wędkarskie drukowane w 3D',
-    template: '%s | 3DFish',
+    default: 'treefish - Akcesoria wędkarskie drukowane w 3D',
+    template: '%s | treefish',
   },
   description:
     'Sklep internetowy z akcesoriami wędkarskimi drukowanymi w technologii 3D. Spławiki, uchwyty, organizery, lury i wiele więcej.',
-  keywords: ['wędkarstwo', 'akcesoria wędkarskie', 'druk 3D', 'spławiki', 'uchwyty na wędki', 'sklep wędkarski', '3DFish'],
-  authors: [{ name: '3DFish' }],
-  creator: '3DFish',
+  keywords: ['wędkarstwo', 'akcesoria wędkarskie', 'druk 3D', 'spławiki', 'uchwyty na wędki', 'sklep wędkarski', 'treefish'],
+  authors: [{ name: 'treefish' }],
+  creator: 'treefish',
   metadataBase: new URL('https://treefish.pl'),
   openGraph: {
     type: 'website',
     locale: 'pl_PL',
     url: 'https://treefish.pl',
-    siteName: '3DFish',
-    title: '3DFish - Akcesoria wędkarskie drukowane w 3D',
+    siteName: 'treefish',
+    title: 'treefish - Akcesoria wędkarskie drukowane w 3D',
     description:
       'Sklep internetowy z akcesoriami wędkarskimi drukowanymi w technologii 3D. Spławiki, uchwyty, organizery, lury i wiele więcej.',
   },
