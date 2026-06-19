@@ -42,6 +42,9 @@ export async function PUT(
         stock: body.stock,
         category: body.category,
         slug: body.slug,
+        sourceUrl: body.sourceUrl ?? null,
+        sourceFileUrl: body.sourceFileUrl ?? null,
+        printedImageUrl: body.printedImageUrl ?? null,
       }
     })
     return NextResponse.json(product)

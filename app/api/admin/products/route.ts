@@ -35,6 +35,9 @@ export async function POST(req: NextRequest) {
         stock: body.stock || 0,
         category: body.category,
         slug: body.slug,
+        sourceUrl: body.sourceUrl ?? null,
+        sourceFileUrl: body.sourceFileUrl ?? null,
+        printedImageUrl: body.printedImageUrl ?? null,
       }
     })
     return NextResponse.json(product, { status: 201 })

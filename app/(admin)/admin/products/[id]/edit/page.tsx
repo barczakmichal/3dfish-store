@@ -49,6 +49,9 @@ export default async function EditProductPage({ params }: Props) {
             stock: product.stock,
             category: product.category,
             slug: product.slug,
+            sourceUrl: product.sourceUrl,
+            sourceFileUrl: product.sourceFileUrl,
+            printedImageUrl: product.printedImageUrl,
           }}
         />
       </div>

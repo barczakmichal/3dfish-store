@@ -54,7 +54,14 @@ export default async function AdminProductsPage() {
                 <tr key={product.id} className="hover:bg-gray-50 transition-colors">
                   <td className="px-6 py-4">
                     <div>
-                      <p className="font-medium text-gray-900">{product.name}</p>
+                      <p className="font-medium text-gray-900">
+                        {product.name}
+                        {product.sourceUrl && (
+                          <a href={product.sourceUrl} target="_blank" rel="noopener noreferrer" className="ml-2 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-700 hover:bg-blue-200" title="Ma plik źródłowy do druku">
+                            3D
+                          </a>
+                        )}
+                      </p>
                       <p className="text-sm text-gray-400 truncate max-w-xs">{product.slug}</p>
                     </div>
                   </td>

@@ -12,6 +12,9 @@ interface ProductFormData {
   stock: number
   category: string
   slug: string
+  sourceUrl?: string | null
+  sourceFileUrl?: string | null
+  printedImageUrl?: string | null
 }
 
 interface Props {
@@ -50,6 +53,9 @@ export default function ProductForm({ initialData, mode }: Props) {
   const [category, setCategory] = useState(initialData?.category ?? CATEGORIES[0])
   const [slug, setSlug] = useState(initialData?.slug ?? '')
   const [imagesRaw, setImagesRaw] = useState(initialData?.images?.join('\n') ?? '')
+  const [sourceUrl, setSourceUrl] = useState(initialData?.sourceUrl ?? '')
+  const [sourceFileUrl, setSourceFileUrl] = useState(initialData?.sourceFileUrl ?? '')
+  const [printedImageUrl, setPrintedImageUrl] = useState(initialData?.printedImageUrl ?? '')
 
   function handleNameChange(val: string) {
     setName(val)
@@ -72,6 +78,9 @@ export default function ProductForm({ initialData, mode }: Props) {
       category,
       slug,
       images,
+      sourceUrl: sourceUrl || null,
+      sourceFileUrl: sourceFileUrl || null,
+      printedImageUrl: printedImageUrl || null,
     }
 
     try {
@@ -207,6 +216,81 @@ export default function ProductForm({ initialData, mode }: Props) {
             className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500 font-mono text-sm"
             placeholder="https://example.com/zdjecie1.jpg&#10;https://example.com/zdjecie2.jpg"
           />
+        </div>
+      </div>
+
+      <div className="border-t border-gray-200 pt-6 mt-6">
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">Druk 3D — pliki źródłowe</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Link do oryginalnego projektu
+            </label>
+            <input
+              type="url"
+              value={sourceUrl}
+              onChange={e => setSourceUrl(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500 font-mono text-sm"
+              placeholder="https://www.thingiverse.com/thing:... lub https://www.printables.com/model/..."
+            />
+            <p className="mt-1 text-xs text-gray-500">Strona projektu, z którego pochodzą pliki STL/GCODE do druku</p>
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Bezpośredni link do pliku do druku
+            </label>
+            <input
+              type="url"
+              value={sourceFileUrl}
+              onChange={e => setSourceFileUrl(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500 font-mono text-sm"
+              placeholder="https://... link do pliku STL/GCODE"
+            />
+            <p className="mt-1 text-xs text-gray-500">Bezpośredni link do pobrania pliku gotowego do druku</p>
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Zdjęcie wydrukowanego produktu (z serwisu źródłowego)
+            </label>
+            <input
+              type="url"
+              value={printedImageUrl}
+              onChange={e => setPrintedImageUrl(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500 font-mono text-sm"
+              placeholder="https://... URL zdjęcia oryginału"
+            />
+            <p className="mt-1 text-xs text-gray-500">Oryginalne zdjęcie produktu z serwisu, z którego pochodzi projekt</p>
+            {printedImageUrl && (
+              <div className="mt-2">
+                <img
+                  src={printedImageUrl}
+                  alt="Podgląd wydrukowanego produktu"
+                  className="max-h-48 rounded-lg border border-gray-200 object-contain"
+                  onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
+                />
+              </div>
+            )}
+          </div>
+
+          {sourceUrl && (
+            <div className="md:col-span-2 bg-blue-50 border border-blue-200 rounded-lg px-4 py-3">
+              <p className="text-sm text-blue-800">
+                <a href={sourceUrl} target="_blank" rel="noopener noreferrer" className="font-medium underline hover:text-blue-600">
+                  Otwórz oryginalny projekt
+                </a>
+                {sourceFileUrl && (
+                  <>
+                    {' | '}
+                    <a href={sourceFileUrl} target="_blank" rel="noopener noreferrer" className="font-medium underline hover:text-blue-600">
+                      Pobierz plik do druku
+                    </a>
+                  </>
+                )}
+              </p>
+            </div>
+          )}
         </div>
       </div>
 
