@@ -1,60 +1,15 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import { useCartStore } from '@/lib/store';
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, getTotalPrice } = useCartStore();
-  const [email, setEmail] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
 
   const formattedTotal = new Intl.NumberFormat('pl-PL', {
     style: 'currency',
     currency: 'PLN',
   }).format(getTotalPrice());
-
-  const handleCheckout = async () => {
-    if (!email || !email.includes('@')) {
-      setError('Podaj poprawny adres email');
-      return;
-    }
-
-    setIsLoading(true);
-    setError('');
-
-    try {
-      const res = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          items: items.map((item) => ({
-            id: item.id,
-            name: item.name,
-            price: item.price,
-            quantity: item.quantity,
-          })),
-          customerEmail: email,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.error || 'Wystąpił błąd');
-        return;
-      }
-
-      if (data.url) {
-        window.location.href = data.url;
-      }
-    } catch {
-      setError('Wystąpił błąd połączenia. Spróbuj ponownie.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   if (items.length === 0) {
     return (
@@ -153,40 +108,20 @@ export default function CartPage() {
             <div className="border-t border-gray-200 pt-4 mb-6">
               <div className="flex justify-between text-sm text-gray-600 mb-2">
                 <span>Dostawa</span>
-                <span>Bezpłatna</span>
+                <span className="text-blue-600">wg cennika kuriera</span>
               </div>
               <div className="flex justify-between font-bold text-lg mt-3">
-                <span>Razem</span>
+                <span>Produkty razem</span>
                 <span className="text-blue-700">{formattedTotal}</span>
               </div>
             </div>
 
-            {/* Email input */}
-            <div className="mb-4">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                Email do potwierdzenia
-              </label>
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="twoj@email.pl"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
-              />
-            </div>
-
-            {error && (
-              <p className="text-red-500 text-sm mb-4">{error}</p>
-            )}
-
-            <button
-              onClick={handleCheckout}
-              disabled={isLoading}
-              className="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-xl transition-colors text-lg"
+            <Link
+              href="/checkout"
+              className="block w-full text-center bg-orange-500 hover:bg-orange-600 text-white font-semibold py-4 rounded-xl transition-colors text-lg"
             >
-              {isLoading ? 'Przetwarzanie...' : 'Przejdź do płatności'}
-            </button>
+              Przejdź do kasy
+            </Link>
 
             <Link
               href="/products"
