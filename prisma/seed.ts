@@ -59,7 +59,7 @@ async function main() {
         description:
           'Uniwersalny uchwyt na wędkę z druku 3D — stojak naścienny na wędkę do garażu, łodzi lub pomostu. Pasuje do wędek o średnicy 8-30mm. Drukowany z PETG — odporny na UV, deszcz i mróz. Montaż na 2 śruby (w zestawie). Miękka wkładka chroniąca blank wędki. Waga: zaledwie 45g. Idealny organizer wędek dla spinningistów i wędkarzy karpiowych, którzy cenią porządek i szybki dostęp do sprzętu.',
         price: 19.99,
-        images: ['https://treefish.pl/products/08-uchwyt-wedka-v2.png', 'https://treefish.pl/products/marketing/uchwyt-na-wedke-universal-marketing.jpg'],
+        images: ['https://treefish.pl/products/08-uchwyt-wedka-v2.png', '/products/marketing/uchwyt-na-wedke-universal-marketing.jpg'],
         stock: 40,
         category: 'Organizacja i przechowywanie',
         slug: 'uchwyt-na-wedke-universal',
@@ -89,7 +89,7 @@ async function main() {
         description:
           'Lura crankbait 7cm z druku 3D — przynęta na szczupaka i okonia. Waga: 12g, zanurzalność: 1-2m. Realistyczny wobbling imitujący ruch małej ryby. Komora grzechotkowa przyciąga drapieżniki dźwiękiem. Wzmocnione oczka na haczyki treblowe. Dostępne wzory: okoń, płoć, ukleja, firetiger. Testowana na Zalewie Zegrzyńskim. Drukowana lura wędkarska z wykończeniem nie do odróżnienia od fabrycznej.',
         price: 12.99,
-        images: ['https://treefish.pl/products/04-crankbait-hunter.png', 'https://treefish.pl/products/marketing/crankbait-hunter-7cm-marketing.jpg'],
+        images: ['https://treefish.pl/products/04-crankbait-hunter.png', '/products/marketing/crankbait-hunter-7cm-marketing.jpg'],
         stock: 30,
         category: 'Lury i przynęty',
         slug: 'crankbait-hunter-7cm',
@@ -119,7 +119,7 @@ async function main() {
         description:
           'Uchwyt do bezpiecznego przechowywania i serwisowania kołowrotków. Pasuje do rozmiarów 1000-5000. Miękkie podkładki chroniące obudowę. Stabilna podstawa. Ułatwia czyszczenie i oliwienie mechanizmu. Drukowany z PETG. Świetny prezent dla wędkarza.',
         price: 14.99,
-        images: ['https://treefish.pl/products/01-reel-stand.png', 'https://treefish.pl/products/marketing/uchwyt-serwisowy-kolowrotek-marketing.jpg'],
+        images: ['https://treefish.pl/products/01-reel-stand.png', '/products/marketing/uchwyt-serwisowy-kolowrotek-marketing.jpg'],
         stock: 45,
         category: 'Organizacja i przechowywanie',
         slug: 'uchwyt-serwisowy-kolowrotek',
@@ -139,7 +139,7 @@ async function main() {
         description:
           'Kołowrotek muchowy z druku 3D w klasycznym stylu. Rozmiar #5/6, system click & pawl. Waga: 95g — jeden z najlżejszych na rynku. Materiał ASA — odporny na UV, temperaturę i wilgoć. Duża spool mieści WF5 + 50m backing. Wymienne elementy. Produkt premium z dłuższym czasem produkcji.',
         price: 89.99,
-        images: ['https://treefish.pl/products/07-fly-reel.png', 'https://treefish.pl/products/marketing/fly-reel-classic-marketing.jpg'],
+        images: ['https://treefish.pl/products/07-fly-reel.png', '/products/marketing/fly-reel-classic-marketing.jpg'],
         stock: 10,
         category: 'Połowy muchowe',
         slug: 'fly-reel-classic-5-6',
@@ -149,7 +149,7 @@ async function main() {
         description:
           'Modularny panel ścienny 40x60cm do zawieszenia wędek, kołowrotków i akcesoriów. System pegboard z 10 dedykowanymi uchwytami: 4x uchwyt na wędkę, 2x hak na siatkę, 2x półka na pudełka, 2x uchwyt na kołowrotek. Montaż na 4 śruby. Możliwość rozbudowy. Wytrzymałość: do 15kg na panel. PETG.',
         price: 59.99,
-        images: ['https://treefish.pl/products/10-panel-organizacyjny-v2.png', 'https://treefish.pl/products/marketing/panel-organizacyjny-marketing.jpg'],
+        images: ['https://treefish.pl/products/10-panel-organizacyjny-v2.png', '/products/marketing/panel-organizacyjny-marketing.jpg'],
         stock: 10,
         category: 'Organizacja i przechowywanie',
         slug: 'panel-organizacyjny-sprzet',
