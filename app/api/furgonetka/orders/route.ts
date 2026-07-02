@@ -1,6 +1,51 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
-import { verifyHmacSignature } from '@/lib/furgonetka';
+import { verifyHmacSignature, validateIntegrationToken } from '@/lib/furgonetka';
+
+export async function GET(req: NextRequest) {
+  if (!validateIntegrationToken(req)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  try {
+    const orders = await prisma.order.findMany({
+      where: { status: { in: ['PENDING', 'PAID'] } },
+      include: { items: { include: { product: true } } },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    return NextResponse.json({
+      orders: orders.map((order) => ({
+        id: order.id,
+        number: order.id,
+        status: order.status.toLowerCase(),
+        customer: {
+          name: order.customerName,
+          email: order.customerEmail,
+          phone: order.customerPhone || '',
+        },
+        address: {
+          street: order.street || '',
+          city: order.city || '',
+          postCode: order.postalCode || '',
+          country: order.country || 'PL',
+        },
+        products: order.items.map((item) => ({
+          sku: item.product.slug,
+          name: item.product.name,
+          price: Number(item.price),
+          quantity: item.quantity,
+          weight: item.product.weightGrams || 0,
+        })),
+        total: Number(order.total),
+        currency: 'PLN',
+      })),
+    });
+  } catch (error) {
+    console.error('Furgonetka GET /orders error:', error);
+    return NextResponse.json({ error: 'Błąd pobierania zamówień' }, { status: 500 });
+  }
+}
 
 interface FurgonetkaOrderPayload {
   order_id: string;

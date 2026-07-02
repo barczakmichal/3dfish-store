@@ -74,3 +74,13 @@ export function verifyHmacSignature(payload: string, signature: string): boolean
 export function isFurgonetkaConfigured(): boolean {
   return !!(FURGONETKA_CLIENT_ID && FURGONETKA_CLIENT_SECRET && FURGONETKA_USERNAME && FURGONETKA_PASSWORD);
 }
+
+export function validateIntegrationToken(req: import('next/server').NextRequest): boolean {
+  const token = process.env.FURGONETKA_INTEGRATION_TOKEN;
+  if (!token) return false;
+  const authHeader = req.headers.get('authorization');
+  if (!authHeader?.startsWith('Bearer ')) return false;
+  const requestToken = authHeader.slice(7);
+  if (requestToken.length !== token.length) return false;
+  return crypto.timingSafeEqual(Buffer.from(token), Buffer.from(requestToken));
+}
