@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma'
 import { OrderStatus } from '@prisma/client'
 import OrderStatusBadge from '@/components/admin/OrderStatusBadge'
 import OrderStatusSelect from '@/components/admin/OrderStatusSelect'
+import ShippingActions from '@/components/admin/ShippingActions'
 
 export const metadata = {
   title: 'Zamówienia - Panel Admina',
@@ -88,6 +89,7 @@ export default async function AdminOrdersPage({ searchParams }: Props) {
                 <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-3">Klient</th>
                 <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-3">Kwota</th>
                 <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-3">Status</th>
+                <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-3">Wysyłka</th>
                 <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-3">Data</th>
                 <th className="text-right text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-3">Zmień status</th>
               </tr>
@@ -107,6 +109,15 @@ export default async function AdminOrdersPage({ searchParams }: Props) {
                   </td>
                   <td className="px-6 py-4">
                     <OrderStatusBadge status={order.status} />
+                  </td>
+                  <td className="px-6 py-4">
+                    <ShippingActions
+                      orderId={order.id}
+                      furgonetkaId={order.furgonetkaId}
+                      trackingNumber={order.trackingNumber}
+                      shippingMethod={order.shippingMethod}
+                      labelUrl={order.labelUrl}
+                    />
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-500">
                     {new Date(order.createdAt).toLocaleDateString('pl-PL', {
