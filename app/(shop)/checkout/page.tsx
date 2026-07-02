@@ -17,20 +17,22 @@ declare global {
 }
 
 interface FurgonetkaCheckoutConfig {
+  checkoutUuid?: string;
   dataProviderCallback: () => Promise<unknown>;
   eventsCallback: (event: FurgonetkaEvent) => void;
 }
 
 interface FurgonetkaEvent {
-  type: string;
-  data?: { order_id?: string };
+  eventType: string;
+  payload?: { orderId?: string };
 }
 
 const FURGONETKA_ENV = process.env.NEXT_PUBLIC_FURGONETKA_ENV || 'sandbox';
+const FURGONETKA_CHECKOUT_UUID = process.env.NEXT_PUBLIC_FURGONETKA_CHECKOUT_UUID;
 const FURGONETKA_SCRIPT_SRC =
   FURGONETKA_ENV === 'production'
-    ? 'https://cdn.furgonetka.pl/checkout/universal-checkout-prod.js'
-    : 'https://cdn.furgonetka.pl/checkout/universal-checkout-sandbox.js';
+    ? 'https://furgonetka.pl/js/dist/checkout/universal-checkout-prod.js'
+    : 'https://sandbox.furgonetka.pl/js/dist/checkout/universal-checkout-sandbox.js';
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -67,6 +69,7 @@ export default function CheckoutPage() {
     setWidgetOpen(true);
 
     window.Furgonetka.Checkout.init({
+      ...(FURGONETKA_CHECKOUT_UUID ? { checkoutUuid: FURGONETKA_CHECKOUT_UUID } : {}),
       dataProviderCallback: async () => {
         const res = await fetch('/api/furgonetka/cart', {
           method: 'POST',
@@ -89,12 +92,9 @@ export default function CheckoutPage() {
         };
       },
       eventsCallback: (event: FurgonetkaEvent) => {
-        if (event.type === 'ORDER_CREATED') {
+        if (event.eventType === 'ORDER_CREATED') {
           clearCart();
           router.push('/checkout/success');
-        }
-        if (event.type === 'CLOSE') {
-          setWidgetOpen(false);
         }
       },
     });
