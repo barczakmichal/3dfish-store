@@ -4,6 +4,7 @@ import Link from 'next/link';
 import prisma from '@/lib/prisma';
 import AddToCartButton from './AddToCartButton';
 import ProductGallery from '@/components/ProductGallery';
+import { publicProductWhere } from '@/lib/catalog';
 
 export async function generateMetadata({
   params,
@@ -14,7 +15,7 @@ export async function generateMetadata({
 
   let product = null;
   try {
-    product = await prisma.product.findUnique({ where: { slug } });
+    product = await prisma.product.findFirst({ where: { AND: [{ slug }, publicProductWhere()] } });
   } catch {
     // Baza danych niedostępna
   }
@@ -43,7 +44,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
   let product = null;
   try {
-    product = await prisma.product.findUnique({ where: { slug } });
+    product = await prisma.product.findFirst({ where: { AND: [{ slug }, publicProductWhere()] } });
   } catch {
     // Baza danych niedostępna
   }
