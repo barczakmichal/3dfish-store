@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 import prisma from '@/lib/prisma';
+import { isLicenseGateEnabled, effectiveCommercialUse } from '@/lib/license';
 
 interface CartItem {
   id: string;
@@ -32,6 +33,16 @@ export async function POST(req: NextRequest) {
 
     if (products.length !== items.length) {
       return NextResponse.json({ error: 'Niektóre produkty nie istnieją' }, { status: 400 });
+    }
+
+    if (isLicenseGateEnabled()) {
+      const blocked = products.filter((p) => !effectiveCommercialUse(p.licenseType, p.commercialUseOverride));
+      if (blocked.length > 0) {
+        return NextResponse.json(
+          { error: `Produkty niedostępne w sprzedaży: ${blocked.map((p) => p.name).join(', ')}. Usuń je z koszyka.` },
+          { status: 400 },
+        );
+      }
     }
 
     // Build Stripe line items using server-side prices (security)

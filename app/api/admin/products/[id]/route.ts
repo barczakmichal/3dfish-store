@@ -32,20 +32,31 @@ export async function PUT(
     const { id } = await params
     const body = await req.json()
 
+    const data: Record<string, unknown> = {
+      name: body.name,
+      description: body.description,
+      price: body.price,
+      images: body.images,
+      stock: body.stock,
+      category: body.category,
+      slug: body.slug,
+      sourceUrl: body.sourceUrl ?? null,
+      sourceFileUrl: body.sourceFileUrl ?? null,
+      printedImageUrl: body.printedImageUrl ?? null,
+    }
+
+    if (body.licenseType !== undefined) {
+      data.licenseType = body.licenseType
+      data.licenseVerifiedAt = new Date()
+      data.licenseVerifiedBy = body.licenseVerifiedBy ?? session.user?.email ?? 'admin'
+    }
+    if (body.commercialUseOverride !== undefined) data.commercialUseOverride = body.commercialUseOverride
+    if (body.marketingImageUrl !== undefined) data.marketingImageUrl = body.marketingImageUrl
+    if (body.packshotImageUrl !== undefined) data.packshotImageUrl = body.packshotImageUrl
+
     const product = await prisma.product.update({
       where: { id },
-      data: {
-        name: body.name,
-        description: body.description,
-        price: body.price,
-        images: body.images,
-        stock: body.stock,
-        category: body.category,
-        slug: body.slug,
-        sourceUrl: body.sourceUrl ?? null,
-        sourceFileUrl: body.sourceFileUrl ?? null,
-        printedImageUrl: body.printedImageUrl ?? null,
-      }
+      data,
     })
     return NextResponse.json(product)
   } catch (error) {
