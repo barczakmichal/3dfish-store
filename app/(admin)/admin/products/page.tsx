@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 import DeleteProductButton from '@/components/admin/DeleteProductButton'
-import { effectiveCommercialUse } from '@/lib/license'
+import { effectiveCommercialUse, LICENSE_SHORT_LABELS } from '@/lib/license'
 
 export const metadata = {
   title: 'Produkty - Panel Admina',
@@ -18,6 +18,12 @@ async function getProducts() {
 export default async function AdminProductsPage() {
   const products = await getProducts()
 
+  const totalCount = products.length
+  const blockedCount = products.filter(
+    (product) => !effectiveCommercialUse(product.licenseType, product.commercialUseOverride)
+  ).length
+  const okCount = totalCount - blockedCount
+
   return (
     <div className="p-8">
       <div className="flex items-center justify-between mb-8">
@@ -32,6 +38,20 @@ export default async function AdminProductsPage() {
           + Dodaj produkt
         </Link>
       </div>
+
+      {totalCount > 0 && (
+        <div className="mb-6 space-y-2">
+          {blockedCount > 0 && (
+            <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+              ⚠️ {blockedCount} z {totalCount} produktów ma licencję blokującą sprzedaż. Sklep sprzedaje je nadal —
+              bramka licencyjna jest wyłączona (decyzja operatora, wymiana asortymentu w toku: SKL-156).
+            </div>
+          )}
+          <div className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+            {okCount} z {totalCount} produktów z licencją komercyjną OK
+          </div>
+        </div>
+      )}
 
       <div className="bg-white rounded-xl shadow-sm overflow-hidden">
         {products.length === 0 ? (
@@ -70,6 +90,9 @@ export default async function AdminProductsPage() {
                             Licencja blokuje sprzedaż
                           </span>
                         )}
+                        <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600">
+                          {LICENSE_SHORT_LABELS[product.licenseType] ?? product.licenseType}
+                        </span>
                         {!product.marketingImageUrl && (
                           <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-700">
                             brak reklamowego

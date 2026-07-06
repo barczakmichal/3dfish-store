@@ -13,6 +13,19 @@ export const COMMERCIAL_OK_LICENSES = ['CC0', 'CC_BY', 'CC_BY_SA', 'OWN_MODEL'] 
 
 const COMMERCIAL_OK: ReadonlySet<LicenseType> = new Set(COMMERCIAL_OK_LICENSES)
 
+export const LICENSE_SHORT_LABELS: Record<string, string> = {
+  CC0: 'CC0',
+  CC_BY: 'CC BY',
+  CC_BY_SA: 'CC BY-SA',
+  CC_BY_NC: 'CC BY-NC',
+  CC_BY_NC_SA: 'CC BY-NC-SA',
+  CC_BY_ND: 'CC BY-ND',
+  CC_BY_NC_ND: 'CC BY-NC-ND',
+  STANDARD_DIGITAL_FILE: 'MW Standard',
+  OWN_MODEL: 'Model własny',
+  UNKNOWN: 'Licencja nieznana',
+}
+
 export function commercialUseAllowed(licenseType: LicenseType): boolean {
   return COMMERCIAL_OK.has(licenseType)
 }
