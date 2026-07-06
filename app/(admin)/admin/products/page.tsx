@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 import DeleteProductButton from '@/components/admin/DeleteProductButton'
+import { effectiveCommercialUse } from '@/lib/license'
 
 export const metadata = {
   title: 'Produkty - Panel Admina',
@@ -57,12 +58,34 @@ export default async function AdminProductsPage() {
                       <p className="font-medium text-gray-900">
                         {product.name}
                         {product.sourceUrl && (
-                          <a href={product.sourceUrl} target="_blank" rel="noopener noreferrer" className="ml-2 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-700 hover:bg-blue-200" title="Ma plik źródłowy do druku">
-                            3D
+                          <a href={product.sourceUrl} target="_blank" rel="noopener noreferrer" className="ml-2 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-700 hover:bg-blue-200" title="Otwórz w Makerworld">
+                            3D ↗
                           </a>
                         )}
                       </p>
                       <p className="text-sm text-gray-400 truncate max-w-xs">{product.slug}</p>
+                      <div className="mt-1 flex flex-wrap gap-1">
+                        {!effectiveCommercialUse(product.licenseType, product.commercialUseOverride) && (
+                          <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-red-100 text-red-700">
+                            Licencja blokuje sprzedaż
+                          </span>
+                        )}
+                        {!product.marketingImageUrl && (
+                          <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-700">
+                            brak reklamowego
+                          </span>
+                        )}
+                        {!product.packshotImageUrl && (
+                          <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-700">
+                            brak packshota
+                          </span>
+                        )}
+                        {!product.printedImageUrl && (
+                          <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-700">
+                            brak zdjęcia wydruku
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </td>
                   <td className="px-6 py-4 text-gray-600">{product.category}</td>
