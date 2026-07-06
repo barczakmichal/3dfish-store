@@ -68,7 +68,7 @@ export default async function ProductsPage() {
             id={product.id}
             name={product.name}
             price={Number(product.price)}
-            image={product.images[0] || ''}
+            image={product.marketingImageUrl || product.images[0] || ''}
             category={product.category}
             slug={product.slug}
           />

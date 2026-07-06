@@ -24,6 +24,8 @@ export async function generateMetadata({
     return { title: 'Produkt nie znaleziony | treefish' };
   }
 
+  const ogImage = product.marketingImageUrl ?? product.images[0];
+
   return {
     title: `${product.name} | treefish`,
     description: product.description.slice(0, 160),
@@ -34,7 +36,7 @@ export async function generateMetadata({
       siteName: 'treefish',
       locale: 'pl_PL',
       type: 'website',
-      ...(product.images[0] ? { images: [{ url: product.images[0] }] } : {}),
+      ...(ogImage ? { images: [{ url: ogImage }] } : {}),
     },
   };
 }
@@ -58,6 +60,15 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     currency: 'PLN',
   }).format(Number(product.price));
 
+  const galleryImages = [
+    product.marketingImageUrl ? { url: product.marketingImageUrl, label: 'Zdjęcie reklamowe' } : null,
+    product.packshotImageUrl ? { url: product.packshotImageUrl, label: 'Packshot' } : null,
+    product.printedImageUrl ? { url: product.printedImageUrl, label: 'Przykładowy wydruk' } : null,
+    ...product.images.map((url) => ({ url })),
+  ].filter((x): x is { url: string; label?: string } => x !== null)
+  const seen = new Set<string>()
+  const dedupedImages = galleryImages.filter((img) => (seen.has(img.url) ? false : (seen.add(img.url), true)))
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* Breadcrumb */}
@@ -71,7 +82,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Product gallery */}
-        <ProductGallery images={product.images} productName={product.name} slug={product.slug} />
+        <ProductGallery images={dedupedImages} productName={product.name} slug={product.slug} />
 
         {/* Product details */}
         <div>
@@ -98,7 +109,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               name: product.name,
               price: Number(product.price),
               slug: product.slug,
-              image: product.images[0] || `/images/products/${product.slug}.svg`,
+              image: product.marketingImageUrl ?? product.images[0] ?? `/images/products/${product.slug}.svg`,
               stock: product.stock,
             }}
           />
