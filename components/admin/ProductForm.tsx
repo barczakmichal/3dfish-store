@@ -2,6 +2,9 @@
 
 import { useState, FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
+import { LICENSE_TYPES, effectiveCommercialUse } from '@/lib/license'
+
+type LicenseTypeValue = (typeof LICENSE_TYPES)[number]
 
 interface ProductFormData {
   id?: string
@@ -15,11 +18,28 @@ interface ProductFormData {
   sourceUrl?: string | null
   sourceFileUrl?: string | null
   printedImageUrl?: string | null
+  licenseType?: LicenseTypeValue
+  commercialUseOverride?: boolean | null
+  marketingImageUrl?: string | null
+  packshotImageUrl?: string | null
 }
 
 interface Props {
   initialData?: ProductFormData
   mode: 'new' | 'edit'
+}
+
+const LICENSE_LABELS: Record<LicenseTypeValue, string> = {
+  CC0: 'CC0 (domena publiczna)',
+  CC_BY: 'CC BY',
+  CC_BY_SA: 'CC BY-SA',
+  CC_BY_NC: 'CC BY-NC — ZAKAZ sprzedaży',
+  CC_BY_NC_SA: 'CC BY-NC-SA — ZAKAZ sprzedaży',
+  CC_BY_ND: 'CC BY-ND — blokada (wydruk = utwór zależny)',
+  CC_BY_NC_ND: 'CC BY-NC-ND — ZAKAZ sprzedaży',
+  STANDARD_DIGITAL_FILE: 'Makerworld Standard — blokada sprzedaży wydruków',
+  OWN_MODEL: 'Model własny',
+  UNKNOWN: 'Nieznana — do weryfikacji',
 }
 
 const CATEGORIES = [
@@ -56,6 +76,15 @@ export default function ProductForm({ initialData, mode }: Props) {
   const [sourceUrl, setSourceUrl] = useState(initialData?.sourceUrl ?? '')
   const [sourceFileUrl, setSourceFileUrl] = useState(initialData?.sourceFileUrl ?? '')
   const [printedImageUrl, setPrintedImageUrl] = useState(initialData?.printedImageUrl ?? '')
+  const [marketingImageUrl, setMarketingImageUrl] = useState(initialData?.marketingImageUrl ?? '')
+  const [packshotImageUrl, setPackshotImageUrl] = useState(initialData?.packshotImageUrl ?? '')
+  const [licenseType, setLicenseType] = useState<LicenseTypeValue>(initialData?.licenseType ?? 'UNKNOWN')
+  const [commercialUseOverride, setCommercialUseOverride] = useState<'' | 'true' | 'false'>(
+    initialData?.commercialUseOverride === true ? 'true' : initialData?.commercialUseOverride === false ? 'false' : ''
+  )
+
+  const overrideValue = commercialUseOverride === 'true' ? true : commercialUseOverride === 'false' ? false : null
+  const saleAllowed = effectiveCommercialUse(licenseType, overrideValue)
 
   function handleNameChange(val: string) {
     setName(val)
@@ -81,6 +110,10 @@ export default function ProductForm({ initialData, mode }: Props) {
       sourceUrl: sourceUrl || null,
       sourceFileUrl: sourceFileUrl || null,
       printedImageUrl: printedImageUrl || null,
+      marketingImageUrl: marketingImageUrl || null,
+      packshotImageUrl: packshotImageUrl || null,
+      licenseType,
+      commercialUseOverride: overrideValue,
     }
 
     try {
@@ -233,7 +266,14 @@ export default function ProductForm({ initialData, mode }: Props) {
               className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500 font-mono text-sm"
               placeholder="https://www.thingiverse.com/thing:... lub https://www.printables.com/model/..."
             />
-            <p className="mt-1 text-xs text-gray-500">Strona projektu, z którego pochodzą pliki STL/GCODE do druku</p>
+            <p className="mt-1 text-xs text-gray-500 flex items-center gap-2">
+              Strona projektu, z którego pochodzą pliki STL/GCODE do druku
+              {sourceUrl && (
+                <a href={sourceUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                  Otwórz w Makerworld →
+                </a>
+              )}
+            </p>
           </div>
 
           <div className="md:col-span-2">
@@ -274,6 +314,32 @@ export default function ProductForm({ initialData, mode }: Props) {
             )}
           </div>
 
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Zdjęcie reklamowe
+            </label>
+            <input
+              type="url"
+              value={marketingImageUrl}
+              onChange={e => setMarketingImageUrl(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500 font-mono text-sm"
+              placeholder="https://... zdjęcie reklamowe (hero na stronie produktu)"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Packshot
+            </label>
+            <input
+              type="url"
+              value={packshotImageUrl}
+              onChange={e => setPackshotImageUrl(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500 font-mono text-sm"
+              placeholder="https://... zdjęcie packshot"
+            />
+          </div>
+
           {sourceUrl && (
             <div className="md:col-span-2 bg-blue-50 border border-blue-200 rounded-lg px-4 py-3">
               <p className="text-sm text-blue-800">
@@ -291,6 +357,52 @@ export default function ProductForm({ initialData, mode }: Props) {
               </p>
             </div>
           )}
+        </div>
+      </div>
+
+      <div className="border-t border-gray-200 pt-6 mt-6">
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">Licencja modelu</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Licencja <span className="text-red-500">*</span>
+            </label>
+            <select
+              value={licenseType}
+              onChange={e => setLicenseType(e.target.value as LicenseTypeValue)}
+              required
+              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            >
+              {LICENSE_TYPES.map(type => (
+                <option key={type} value={type}>{LICENSE_LABELS[type]}</option>
+              ))}
+            </select>
+            <p className="mt-1 text-xs text-gray-500">Odczytaj licencję ze strony modelu na Makerworld</p>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Sprzedaż wydruków — override
+            </label>
+            <select
+              value={commercialUseOverride}
+              onChange={e => setCommercialUseOverride(e.target.value as '' | 'true' | 'false')}
+              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            >
+              <option value="">automatycznie wg licencji</option>
+              <option value="true">wymuś: sprzedaż OK</option>
+              <option value="false">wymuś: blokada</option>
+            </select>
+          </div>
+
+          <div className="md:col-span-2">
+            <p className="text-sm font-medium">
+              Sprzedaż:{' '}
+              <span className={saleAllowed ? 'text-green-600' : 'text-red-600'}>
+                {saleAllowed ? 'DOZWOLONA' : 'ZABLOKOWANA'}
+              </span>
+            </p>
+          </div>
         </div>
       </div>
 

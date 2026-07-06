@@ -52,6 +52,10 @@ export default async function EditProductPage({ params }: Props) {
             sourceUrl: product.sourceUrl,
             sourceFileUrl: product.sourceFileUrl,
             printedImageUrl: product.printedImageUrl,
+            marketingImageUrl: product.marketingImageUrl,
+            packshotImageUrl: product.packshotImageUrl,
+            licenseType: product.licenseType,
+            commercialUseOverride: product.commercialUseOverride,
           }}
         />
       </div>

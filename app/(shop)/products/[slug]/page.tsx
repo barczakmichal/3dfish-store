@@ -4,6 +4,7 @@ import Link from 'next/link';
 import prisma from '@/lib/prisma';
 import AddToCartButton from './AddToCartButton';
 import ProductGallery from '@/components/ProductGallery';
+import { publicProductWhere } from '@/lib/catalog';
 
 export async function generateMetadata({
   params,
@@ -14,7 +15,7 @@ export async function generateMetadata({
 
   let product = null;
   try {
-    product = await prisma.product.findUnique({ where: { slug } });
+    product = await prisma.product.findFirst({ where: { AND: [{ slug }, publicProductWhere()] } });
   } catch {
     // Baza danych niedostępna
   }
@@ -22,6 +23,8 @@ export async function generateMetadata({
   if (!product) {
     return { title: 'Produkt nie znaleziony | treefish' };
   }
+
+  const ogImage = product.marketingImageUrl ?? product.images[0];
 
   return {
     title: `${product.name} | treefish`,
@@ -33,7 +36,7 @@ export async function generateMetadata({
       siteName: 'treefish',
       locale: 'pl_PL',
       type: 'website',
-      ...(product.images[0] ? { images: [{ url: product.images[0] }] } : {}),
+      ...(ogImage ? { images: [{ url: ogImage }] } : {}),
     },
   };
 }
@@ -43,7 +46,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
   let product = null;
   try {
-    product = await prisma.product.findUnique({ where: { slug } });
+    product = await prisma.product.findFirst({ where: { AND: [{ slug }, publicProductWhere()] } });
   } catch {
     // Baza danych niedostępna
   }
@@ -56,6 +59,15 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     style: 'currency',
     currency: 'PLN',
   }).format(Number(product.price));
+
+  const galleryImages = [
+    product.marketingImageUrl ? { url: product.marketingImageUrl, label: 'Zdjęcie reklamowe' } : null,
+    product.packshotImageUrl ? { url: product.packshotImageUrl, label: 'Packshot' } : null,
+    product.printedImageUrl ? { url: product.printedImageUrl, label: 'Przykładowy wydruk' } : null,
+    ...product.images.map((url) => ({ url })),
+  ].filter((x): x is { url: string; label?: string } => x !== null)
+  const seen = new Set<string>()
+  const dedupedImages = galleryImages.filter((img) => (seen.has(img.url) ? false : (seen.add(img.url), true)))
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -70,7 +82,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Product gallery */}
-        <ProductGallery images={product.images} productName={product.name} slug={product.slug} />
+        <ProductGallery key={product.slug} images={dedupedImages} productName={product.name} slug={product.slug} />
 
         {/* Product details */}
         <div>
@@ -97,7 +109,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               name: product.name,
               price: Number(product.price),
               slug: product.slug,
-              image: product.images[0] || `/images/products/${product.slug}.svg`,
+              image: product.marketingImageUrl ?? product.images[0] ?? `/images/products/${product.slug}.svg`,
               stock: product.stock,
             }}
           />

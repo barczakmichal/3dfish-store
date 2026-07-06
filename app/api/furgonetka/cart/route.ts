@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { isLicenseGateEnabled, effectiveCommercialUse } from '@/lib/license';
 
 interface CartRequestItem {
   id: string;
@@ -18,6 +19,17 @@ export async function POST(req: NextRequest) {
     const products = await prisma.product.findMany({
       where: { id: { in: productIds } },
     });
+
+    // Bramka licencyjna tylko na wejściu do zakupu; webhook orders celowo bez bramki — płatność już przetworzona.
+    if (isLicenseGateEnabled()) {
+      const blocked = products.filter((p) => !effectiveCommercialUse(p.licenseType, p.commercialUseOverride));
+      if (blocked.length > 0) {
+        return NextResponse.json(
+          { error: `Produkty niedostępne w sprzedaży: ${blocked.map((p) => p.name).join(', ')}. Usuń je z koszyka.` },
+          { status: 400 },
+        );
+      }
+    }
 
     const cartProducts = items.map((item) => {
       const product = products.find((p) => p.id === item.id);

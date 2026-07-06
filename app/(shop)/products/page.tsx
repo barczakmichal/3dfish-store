@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import ProductCard from '@/components/ProductCard';
 import prisma from '@/lib/prisma';
+import { publicProductWhere } from '@/lib/catalog';
 
 export const metadata: Metadata = {
   title: 'Produkty | treefish',
@@ -21,7 +22,7 @@ export default async function ProductsPage() {
 
   try {
     products = await prisma.product.findMany({
-      where: { stock: { gt: 0 } },
+      where: { AND: [{ stock: { gt: 0 } }, publicProductWhere()] },
       orderBy: { createdAt: 'desc' },
     });
   } catch {
@@ -67,7 +68,7 @@ export default async function ProductsPage() {
             id={product.id}
             name={product.name}
             price={Number(product.price)}
-            image={product.images[0] || ''}
+            image={product.marketingImageUrl || product.images[0] || ''}
             category={product.category}
             slug={product.slug}
           />

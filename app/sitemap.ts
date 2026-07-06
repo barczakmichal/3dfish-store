@@ -1,11 +1,13 @@
 import { prisma } from '@/lib/prisma'
 import { getAllPosts } from '@/lib/blog'
+import { publicProductWhere } from '@/lib/catalog'
 
 export default async function sitemap() {
   let products: { id: string; updatedAt: Date }[] = []
 
   try {
     products = await prisma.product.findMany({
+      where: publicProductWhere(),
       select: { id: true, updatedAt: true },
     })
   } catch {

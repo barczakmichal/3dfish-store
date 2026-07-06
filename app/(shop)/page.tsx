@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
 import prisma from '@/lib/prisma';
+import { publicProductWhere } from '@/lib/catalog';
 
 export const metadata: Metadata = {
   title: 'treefish - Akcesoria wędkarskie drukowane w 3D',
@@ -22,7 +23,7 @@ export default async function HomePage() {
 
   try {
     featuredProducts = await prisma.product.findMany({
-      where: { stock: { gt: 0 } },
+      where: { AND: [{ stock: { gt: 0 } }, publicProductWhere()] },
       orderBy: { createdAt: 'desc' },
       take: 3,
     });
@@ -136,7 +137,7 @@ export default async function HomePage() {
                 id={product.id}
                 name={product.name}
                 price={Number(product.price)}
-                image={product.images[0] || ''}
+                image={product.marketingImageUrl || product.images[0] || ''}
                 category={product.category}
                 slug={product.slug}
               />
