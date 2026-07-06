@@ -22,7 +22,7 @@ export default function ProductGallery({
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const displayImages = images.length > 0 ? images : [{ url: `/images/products/${slug}.svg` }];
-  const selectedImage = displayImages[selectedIndex];
+  const selectedImage = displayImages[selectedIndex] ?? displayImages[0];
 
   return (
     <div className="flex flex-col gap-3">
