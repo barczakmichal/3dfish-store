@@ -40,16 +40,15 @@ export async function POST(req: NextRequest) {
           where: { stripeSessionId: session.id },
         });
 
-        const shippingDetails = session.shipping_details;
-        const shippingUpdate = shippingDetails?.address
+        const shippingDetails = session.collected_information?.shipping_details;
+        const addr = shippingDetails?.address;
+        const shippingUpdate = addr
           ? {
-              street: [shippingDetails.address.line1, shippingDetails.address.line2]
-                .filter(Boolean)
-                .join(', '),
-              city: shippingDetails.address.city || null,
-              postalCode: shippingDetails.address.postal_code || null,
-              country: shippingDetails.address.country || 'PL',
-              customerName: shippingDetails.name || session.customer_details?.name || undefined,
+              street: [addr.line1, addr.line2].filter(Boolean).join(', '),
+              city: addr.city || null,
+              postalCode: addr.postal_code || null,
+              country: addr.country || 'PL',
+              customerName: shippingDetails?.name || session.customer_details?.name || undefined,
             }
           : {};
 
@@ -68,7 +67,6 @@ export async function POST(req: NextRequest) {
               stripeSessionId: session.id,
               customerEmail: session.customer_details?.email || '',
               customerName: shippingDetails?.name || session.customer_details?.name || '',
-              customerPhone: session.customer_details?.phone || null,
               total: (session.amount_total || 0) / 100,
               status: 'PAID',
               ...shippingUpdate,
