@@ -12,9 +12,11 @@ interface CartItem {
 
 export async function POST(req: NextRequest) {
   try {
-    const { items, customerEmail } = (await req.json()) as {
+    const { items, customerEmail, customerName, customerPhone } = (await req.json()) as {
       items: CartItem[];
       customerEmail: string;
+      customerName?: string;
+      customerPhone?: string;
     };
 
     if (!items || items.length === 0) {
@@ -70,7 +72,8 @@ export async function POST(req: NextRequest) {
     const order = await prisma.order.create({
       data: {
         customerEmail,
-        customerName: customerEmail.split('@')[0],
+        customerName: customerName || customerEmail.split('@')[0],
+        customerPhone: customerPhone || null,
         total,
         status: 'PENDING',
         items: {
@@ -94,12 +97,15 @@ export async function POST(req: NextRequest) {
     }
 
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
+      payment_method_types: ['card', 'p24', 'blik'],
       line_items: lineItems,
       mode: 'payment',
       success_url: `${req.nextUrl.origin}/order/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.nextUrl.origin}/cart`,
       customer_email: customerEmail,
+      shipping_address_collection: {
+        allowed_countries: ['PL'],
+      },
       metadata: {
         orderId: order.id,
       },

@@ -40,20 +40,38 @@ export async function POST(req: NextRequest) {
           where: { stripeSessionId: session.id },
         });
 
+        const shippingDetails = session.shipping_details;
+        const shippingUpdate = shippingDetails?.address
+          ? {
+              street: [shippingDetails.address.line1, shippingDetails.address.line2]
+                .filter(Boolean)
+                .join(', '),
+              city: shippingDetails.address.city || null,
+              postalCode: shippingDetails.address.postal_code || null,
+              country: shippingDetails.address.country || 'PL',
+              customerName: shippingDetails.name || session.customer_details?.name || undefined,
+            }
+          : {};
+
         if (existing) {
           await prisma.order.update({
             where: { stripeSessionId: session.id },
-            data: { status: 'PAID' },
+            data: {
+              status: 'PAID',
+              customerPhone: session.customer_details?.phone || existing.customerPhone,
+              ...shippingUpdate,
+            },
           });
         } else {
-          // Stwórz zamówienie jeśli nie zostało wcześniej utworzone
           await prisma.order.create({
             data: {
               stripeSessionId: session.id,
               customerEmail: session.customer_details?.email || '',
-              customerName: session.customer_details?.name || '',
+              customerName: shippingDetails?.name || session.customer_details?.name || '',
+              customerPhone: session.customer_details?.phone || null,
               total: (session.amount_total || 0) / 100,
               status: 'PAID',
+              ...shippingUpdate,
             },
           });
         }
