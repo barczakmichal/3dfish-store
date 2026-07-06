@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
               city: addr.city || null,
               postalCode: addr.postal_code || null,
               country: addr.country || 'PL',
-              customerName: shippingDetails?.name || session.customer_details?.name || undefined,
+              customerName: shippingDetails?.name ?? session.customer_details?.name ?? undefined,
             }
           : {};
 
@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
             data: {
               stripeSessionId: session.id,
               customerEmail: session.customer_details?.email || '',
-              customerName: shippingDetails?.name || session.customer_details?.name || '',
+              customerName: shippingDetails?.name ?? session.customer_details?.name ?? '',
               total: (session.amount_total || 0) / 100,
               status: 'PAID',
               ...shippingUpdate,
