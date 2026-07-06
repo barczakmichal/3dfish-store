@@ -89,9 +89,13 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    const origin =
+      process.env.NEXT_PUBLIC_APP_URL ||
+      `https://${req.headers.get('x-forwarded-host') || req.headers.get('host')}`;
+
     if (!stripe) {
       return NextResponse.json({
-        url: `${req.nextUrl.origin}/order/success?order_id=${order.id}`,
+        url: `${origin}/order/success?order_id=${order.id}`,
         orderId: order.id,
       });
     }
@@ -100,8 +104,8 @@ export async function POST(req: NextRequest) {
       payment_method_types: ['card', 'p24', 'blik'],
       line_items: lineItems,
       mode: 'payment',
-      success_url: `${req.nextUrl.origin}/order/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${req.nextUrl.origin}/cart`,
+      success_url: `${origin}/order/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/cart`,
       customer_email: customerEmail,
       shipping_address_collection: {
         allowed_countries: ['PL'],
