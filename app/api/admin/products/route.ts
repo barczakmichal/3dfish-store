@@ -32,6 +32,19 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: licenseError }, { status: 400 })
     }
 
+    // Reguła sklepu: każdy produkt wchodzi z kompletem trzech typowanych zdjęć.
+    // marketing = ujęcie hero/reklamowe, packshot = czyste tło/render,
+    // printed = zdjęcie REALNEGO wydruku (np. galeria autora na stronie modelu).
+    if (!body.marketingImageUrl || !body.packshotImageUrl || !body.printedImageUrl) {
+      return NextResponse.json(
+        {
+          error:
+            'Wymagane trzy typy zdjęć: marketingImageUrl (hero/reklama), packshotImageUrl (czyste tło/render), printedImageUrl (zdjęcie realnego wydruku). Użyj og:image i galerii strony modelu — nie losowych assetów.',
+        },
+        { status: 400 },
+      )
+    }
+
     const product = await prisma.product.create({
       data: {
         name: body.name,
