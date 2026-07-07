@@ -29,6 +29,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'media.printables.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'makerworld.bblmw.com',
+      },
     ],
   },
 };
