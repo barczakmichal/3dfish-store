@@ -89,8 +89,10 @@ export function validateIntegrationToken(req: import('next/server').NextRequest)
   const token = process.env.FURGONETKA_INTEGRATION_TOKEN;
   if (!token) return false;
   const authHeader = req.headers.get('authorization');
-  if (!authHeader?.startsWith('Bearer ')) return false;
-  const requestToken = authHeader.slice(7);
+  if (!authHeader) return false;
+  // Furgonetka wysyła surowy nagłówek "Authorization: <token>" (bez schematu) —
+  // tak definiuje to securityScheme apiKey w ich specu; "Bearer " wspieramy dodatkowo.
+  const requestToken = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : authHeader;
   if (requestToken.length !== token.length) return false;
   return crypto.timingSafeEqual(Buffer.from(token), Buffer.from(requestToken));
 }
