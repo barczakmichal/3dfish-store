@@ -1,6 +1,7 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  output: 'standalone',
   // Mark Prisma client as external to prevent bundling issues with pnpm symlinks
   serverExternalPackages: ['@prisma/client', 'prisma'],
   experimental: {},
