@@ -10,10 +10,10 @@ async function getServiceId(carrier: string, pickup: Record<string, string>, rec
   });
   if (!res.ok) return null;
   const data = await res.json();
-  const services = data.services_prices || [];
-  const match = services.find((s: { service: string; available: boolean }) => s.service === carrier && s.available);
+  const services: { service: string; service_id: number; available: boolean }[] = data.services_prices || [];
+  const match = services.find((s) => s.service === carrier);
   if (match) return match.service_id;
-  const fallback = services.find((s: { available: boolean }) => s.available);
+  const fallback = services.find((s) => s.available) || services[0];
   return fallback?.service_id ?? null;
 }
 
@@ -45,6 +45,7 @@ export async function POST(req: NextRequest) {
       width: 30,
       height: 20,
       depth: 15,
+      quantity: 1,
       description: order.items.map((i) => i.product.name).join(', '),
       value: Number(order.total),
     }];
