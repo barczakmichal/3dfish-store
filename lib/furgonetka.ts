@@ -1,21 +1,29 @@
 import crypto from 'crypto';
 
-const FURGONETKA_API_URL = process.env.FURGONETKA_API_URL || 'https://api.sandbox.furgonetka.pl';
-const FURGONETKA_CLIENT_ID = process.env.FURGONETKA_CLIENT_ID || '';
-const FURGONETKA_CLIENT_SECRET = process.env.FURGONETKA_CLIENT_SECRET || '';
-const FURGONETKA_USERNAME = process.env.FURGONETKA_USERNAME || '';
-const FURGONETKA_PASSWORD = process.env.FURGONETKA_PASSWORD || '';
-
 let cachedToken: { accessToken: string; expiresAt: number } | null = null;
+
+function getFurgonetkaConfig() {
+  return {
+    apiUrl: process.env.FURGONETKA_API_URL || 'https://api.sandbox.furgonetka.pl',
+    clientId: process.env.FURGONETKA_CLIENT_ID || '',
+    clientSecret: process.env.FURGONETKA_CLIENT_SECRET || '',
+    username: process.env.FURGONETKA_USERNAME || '',
+    password: process.env.FURGONETKA_PASSWORD || '',
+  };
+}
 
 export async function getAccessToken(): Promise<string> {
   if (cachedToken && Date.now() < cachedToken.expiresAt - 60_000) {
     return cachedToken.accessToken;
   }
 
-  const credentials = Buffer.from(`${FURGONETKA_CLIENT_ID}:${FURGONETKA_CLIENT_SECRET}`).toString('base64');
+  // Clear stale cache so config changes take effect
+  cachedToken = null;
 
-  const res = await fetch(`${FURGONETKA_API_URL}/oauth/token`, {
+  const { apiUrl, clientId, clientSecret, username, password } = getFurgonetkaConfig();
+  const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
+
+  const res = await fetch(`${apiUrl}/oauth/token`, {
     method: 'POST',
     headers: {
       'Authorization': `Basic ${credentials}`,
@@ -24,8 +32,8 @@ export async function getAccessToken(): Promise<string> {
     body: new URLSearchParams({
       grant_type: 'password',
       scope: 'api',
-      username: FURGONETKA_USERNAME,
-      password: FURGONETKA_PASSWORD,
+      username,
+      password,
     }),
   });
 
@@ -45,8 +53,9 @@ export async function getAccessToken(): Promise<string> {
 
 export async function furgonetkaApi(path: string, options: RequestInit = {}): Promise<Response> {
   const token = await getAccessToken();
+  const { apiUrl } = getFurgonetkaConfig();
 
-  return fetch(`${FURGONETKA_API_URL}${path}`, {
+  return fetch(`${apiUrl}${path}`, {
     ...options,
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -72,7 +81,8 @@ export function verifyHmacSignature(payload: string, signature: string): boolean
 }
 
 export function isFurgonetkaConfigured(): boolean {
-  return !!(FURGONETKA_CLIENT_ID && FURGONETKA_CLIENT_SECRET && FURGONETKA_USERNAME && FURGONETKA_PASSWORD);
+  const { clientId, clientSecret, username, password } = getFurgonetkaConfig();
+  return !!(clientId && clientSecret && username && password);
 }
 
 export function validateIntegrationToken(req: import('next/server').NextRequest): boolean {
