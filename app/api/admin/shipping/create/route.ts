@@ -3,6 +3,20 @@ import { getServerSession } from 'next-auth';
 import prisma from '@/lib/prisma';
 import { furgonetkaApi, isFurgonetkaConfigured } from '@/lib/furgonetka';
 
+async function getServiceId(carrier: string, pickup: Record<string, string>, receiver: Record<string, string>, parcels: Record<string, unknown>[]): Promise<number | null> {
+  const res = await furgonetkaApi('/packages/calculate-price', {
+    method: 'POST',
+    body: JSON.stringify({ pickup, receiver, parcels, type: 'package' }),
+  });
+  if (!res.ok) return null;
+  const data = await res.json();
+  const services = data.services_prices || [];
+  const match = services.find((s: { service: string; available: boolean }) => s.service === carrier && s.available);
+  if (match) return match.service_id;
+  const fallback = services.find((s: { available: boolean }) => s.available);
+  return fallback?.service_id ?? null;
+}
+
 export async function POST(req: NextRequest) {
   try {
     const session = await getServerSession();
@@ -31,29 +45,65 @@ export async function POST(req: NextRequest) {
       width: 30,
       height: 20,
       depth: 15,
-      contents: order.items.map((i) => i.product.name).join(', '),
+      description: order.items.map((i) => i.product.name).join(', '),
       value: Number(order.total),
     }];
 
-    const packageData = {
-      service: order.shippingCarrier || 'inpost',
-      pickup: order.shippingMethod === 'paczkomat' ? 'parcel_locker' : 'courier',
-      receiver: {
-        name: order.customerName,
-        email: order.customerEmail,
-        phone: order.customerPhone || '',
-        address: {
-          street: order.street || '',
-          city: order.city || '',
-          postCode: order.postalCode || '',
-          country: order.country || 'PL',
-        },
-        ...(order.pickupPointId ? { point: order.pickupPointId } : {}),
-      },
-      parcels,
-      cod: null,
-      insurance: Number(order.total),
+    const senderName = process.env.FURGONETKA_SENDER_NAME || 'Aleksandra Barczak';
+    const senderCompany = process.env.FURGONETKA_SENDER_COMPANY || 'Treefish';
+    const senderEmail = process.env.FURGONETKA_SENDER_EMAIL || process.env.FURGONETKA_USERNAME || '';
+    const senderPhone = process.env.FURGONETKA_SENDER_PHONE || '606373738';
+    const senderStreet = process.env.FURGONETKA_SENDER_STREET || 'ul. Michała Kleofasa Ogińskiego 2';
+    const senderCity = process.env.FURGONETKA_SENDER_CITY || 'Bydgoszcz';
+    const senderPostcode = process.env.FURGONETKA_SENDER_POSTCODE || '85-092';
+
+    const pickup = {
+      name: senderName,
+      company: senderCompany,
+      email: senderEmail,
+      phone: senderPhone,
+      street: senderStreet,
+      city: senderCity,
+      postcode: senderPostcode,
+      country_code: 'PL',
     };
+
+    const receiver = {
+      name: order.customerName || '',
+      company: '',
+      email: order.customerEmail || '',
+      phone: order.customerPhone || '',
+      street: order.street || '',
+      city: order.city || '',
+      postcode: order.postalCode || '',
+      country_code: order.country || 'PL',
+      ...(order.pickupPointId ? { point: order.pickupPointId } : {}),
+    };
+
+    const carrier = order.shippingCarrier || 'inpost';
+    const serviceId = await getServiceId(carrier, pickup, receiver, parcels);
+    if (!serviceId) {
+      console.error('Furgonetka: no available service for carrier', carrier);
+      return NextResponse.json(
+        { error: `Brak dostępnej usługi wysyłkowej dla kuriera: ${carrier}` },
+        { status: 422 },
+      );
+    }
+
+    const packageData = {
+      service_id: serviceId,
+      pickup,
+      receiver,
+      parcels,
+      type: 'package',
+      user_reference_number: `TF-${order.id.slice(-8).toUpperCase()}`,
+      additional_services: {
+        cod: { amount: 0, currency: 'PLN' },
+        rod: false,
+      },
+    };
+
+    console.log('Furgonetka create package request:', JSON.stringify(packageData));
 
     const res = await furgonetkaApi('/packages', {
       method: 'POST',
@@ -63,7 +113,10 @@ export async function POST(req: NextRequest) {
     if (!res.ok) {
       const errorText = await res.text();
       console.error('Furgonetka create package error:', errorText);
-      return NextResponse.json({ error: 'Błąd tworzenia przesyłki w Furgonetce' }, { status: 502 });
+      return NextResponse.json(
+        { error: 'Błąd tworzenia przesyłki w Furgonetce', details: errorText },
+        { status: 502 },
+      );
     }
 
     const result = await res.json();
