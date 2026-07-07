@@ -19,6 +19,14 @@ const nextConfig: NextConfig = {
         hostname: 'treefish.pl',
         pathname: '/products/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.thingiverse.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'media.printables.com',
+      },
     ],
   },
 };
