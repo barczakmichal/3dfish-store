@@ -124,8 +124,9 @@ export async function POST(req: NextRequest) {
 
     // Dostawa tylko do paczkomatu — adres punktu jest już w zamówieniu,
     // więc nie zbieramy osobnego adresu wysyłki w Stripe.
+    // Bez payment_method_types — Stripe dobiera metody aktywowane w dashboardzie
+    // (karta od razu; BLIK/P24 pojawią się po aktywacji w trybie live, bez deployu).
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card', 'p24', 'blik'],
       line_items: lineItems,
       mode: 'payment',
       success_url: `${origin}/order/success?session_id={CHECKOUT_SESSION_ID}`,
