@@ -4,14 +4,82 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useCartStore } from '@/lib/store';
 
+interface PickupPoint {
+  code: string;
+  name: string;
+}
+
+declare global {
+  interface Window {
+    Furgonetka?: {
+      Map: new (options: {
+        apiKey: string;
+        courierServices: string[];
+        callback: (params: { point: { code: string; name: string } }) => void;
+      }) => { show: () => void };
+    };
+  }
+}
+
+const MAP_SCRIPT_URL = 'https://furgonetka.pl/js/dist/map/map.js';
+
+function loadMapScript(): Promise<void> {
+  return new Promise((resolve, reject) => {
+    if (window.Furgonetka?.Map) return resolve();
+    const existing = document.querySelector(`script[src="${MAP_SCRIPT_URL}"]`);
+    if (existing) {
+      existing.addEventListener('load', () => resolve());
+      existing.addEventListener('error', () => reject(new Error('map script failed')));
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = MAP_SCRIPT_URL;
+    script.async = true;
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error('map script failed'));
+    document.head.appendChild(script);
+  });
+}
+
 export default function CheckoutPage() {
   const { items, getTotalPrice } = useCartStore();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [pickupPoint, setPickupPoint] = useState<PickupPoint | null>(null);
+  const [mapLoading, setMapLoading] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const openPointMap = async () => {
+    setError('');
+    setMapLoading(true);
+    try {
+      const res = await fetch('/api/furgonetka/map-key');
+      const data = await res.json();
+      if (!res.ok || !data.apiKey) {
+        setError(data.error || 'Mapa punktów jest chwilowo niedostępna');
+        return;
+      }
+      await loadMapScript();
+      if (!window.Furgonetka?.Map) {
+        setError('Nie udało się załadować mapy punktów');
+        return;
+      }
+      new window.Furgonetka.Map({
+        apiKey: data.apiKey,
+        courierServices: ['inpost'],
+        callback: ({ point }) => {
+          setPickupPoint({ code: point.code, name: point.name });
+        },
+      }).show();
+    } catch {
+      setError('Nie udało się załadować mapy punktów');
+    } finally {
+      setMapLoading(false);
+    }
+  };
 
   const formattedTotal = new Intl.NumberFormat('pl-PL', {
     style: 'currency',
@@ -25,6 +93,14 @@ export default function CheckoutPage() {
     }
     if (!email || !email.includes('@')) {
       setError('Podaj poprawny adres email');
+      return;
+    }
+    if (!phone.trim()) {
+      setError('Podaj numer telefonu — dostaniesz SMS z kodem odbioru z paczkomatu');
+      return;
+    }
+    if (!pickupPoint) {
+      setError('Wybierz paczkomat InPost, do którego wyślemy zamówienie');
       return;
     }
     setError('');
@@ -43,7 +119,8 @@ export default function CheckoutPage() {
           })),
           customerEmail: email,
           customerName: name,
-          customerPhone: phone.trim() || undefined,
+          customerPhone: phone.trim(),
+          pickupPoint,
         }),
       });
 
@@ -135,8 +212,7 @@ export default function CheckoutPage() {
 
               <div>
                 <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                  Telefon{' '}
-                  <span className="text-gray-400 font-normal">(opcjonalnie)</span>
+                  Telefon <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="tel"
@@ -146,12 +222,42 @@ export default function CheckoutPage() {
                   placeholder="+48 123 456 789"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                 />
+                <p className="text-xs text-gray-500 mt-1">
+                  Na ten numer InPost wyśle SMS z kodem odbioru paczki.
+                </p>
               </div>
             </div>
+          </div>
 
-            <p className="text-xs text-gray-500 mt-4">
-              Adres dostawy podasz na stronie płatności Stripe.
-            </p>
+          <div className="bg-white rounded-xl p-6 shadow-sm mt-6">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">
+              Dostawa: Paczkomat InPost <span className="text-red-500">*</span>
+            </h2>
+
+            {pickupPoint ? (
+              <div className="flex items-start justify-between gap-4 bg-green-50 border border-green-200 rounded-lg p-4">
+                <div>
+                  <p className="font-semibold text-gray-900">{pickupPoint.name}</p>
+                  <p className="text-sm text-gray-600">Paczkomat: {pickupPoint.code}</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={openPointMap}
+                  className="text-sm text-blue-700 hover:text-blue-900 font-medium whitespace-nowrap"
+                >
+                  Zmień punkt
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={openPointMap}
+                disabled={mapLoading}
+                className="w-full border-2 border-dashed border-blue-300 hover:border-blue-500 text-blue-700 font-semibold py-4 rounded-xl transition-colors disabled:opacity-50"
+              >
+                {mapLoading ? 'Ładowanie mapy…' : '📍 Wybierz paczkomat na mapie'}
+              </button>
+            )}
           </div>
         </div>
 
@@ -178,7 +284,9 @@ export default function CheckoutPage() {
             <div className="border-t border-gray-200 pt-4 mb-6">
               <div className="flex justify-between text-sm text-gray-600 mb-2">
                 <span>Dostawa</span>
-                <span className="text-blue-600 font-medium">wg cennika kuriera</span>
+                <span className="text-blue-600 font-medium">
+                  {pickupPoint ? `Paczkomat ${pickupPoint.code}` : 'Paczkomat InPost'}
+                </span>
               </div>
               <div className="flex justify-between font-bold text-lg mt-3">
                 <span>Produkty razem</span>

@@ -10,13 +10,19 @@ interface CartItem {
   quantity: number;
 }
 
+interface PickupPoint {
+  code: string;
+  name: string;
+}
+
 export async function POST(req: NextRequest) {
   try {
-    const { items, customerEmail, customerName, customerPhone } = (await req.json()) as {
+    const { items, customerEmail, customerName, customerPhone, pickupPoint } = (await req.json()) as {
       items: CartItem[];
       customerEmail: string;
       customerName?: string;
       customerPhone?: string;
+      pickupPoint?: PickupPoint;
     };
 
     if (!items || items.length === 0) {
@@ -25,6 +31,15 @@ export async function POST(req: NextRequest) {
 
     if (!customerEmail) {
       return NextResponse.json({ error: 'Email jest wymagany' }, { status: 400 });
+    }
+
+    // Dostawa wyłącznie do paczkomatu InPost — punkt i telefon (SMS z kodem odbioru) są obowiązkowe.
+    if (!pickupPoint?.code) {
+      return NextResponse.json({ error: 'Wybierz paczkomat InPost' }, { status: 400 });
+    }
+
+    if (!customerPhone?.trim()) {
+      return NextResponse.json({ error: 'Numer telefonu jest wymagany przy dostawie do paczkomatu' }, { status: 400 });
     }
 
     // Verify products exist and prices match
@@ -74,6 +89,10 @@ export async function POST(req: NextRequest) {
         customerEmail,
         customerName: customerName || customerEmail.split('@')[0],
         customerPhone: customerPhone || null,
+        shippingMethod: 'paczkomat',
+        shippingCarrier: 'inpost',
+        pickupPointId: pickupPoint.code,
+        pickupPointName: pickupPoint.name,
         total,
         status: 'PENDING',
         items: {
@@ -100,6 +119,8 @@ export async function POST(req: NextRequest) {
       });
     }
 
+    // Dostawa tylko do paczkomatu — adres punktu jest już w zamówieniu,
+    // więc nie zbieramy osobnego adresu wysyłki w Stripe.
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card', 'p24', 'blik'],
       line_items: lineItems,
@@ -107,11 +128,9 @@ export async function POST(req: NextRequest) {
       success_url: `${origin}/order/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/cart`,
       customer_email: customerEmail,
-      shipping_address_collection: {
-        allowed_countries: ['PL'],
-      },
       metadata: {
         orderId: order.id,
+        pickupPointId: pickupPoint.code,
       },
     });
 
