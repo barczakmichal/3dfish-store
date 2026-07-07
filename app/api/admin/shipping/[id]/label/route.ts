@@ -18,8 +18,31 @@ export async function GET(
 
     const res = await furgonetkaApi(`/packages/${id}/label`);
 
+    if (res.status === 204) {
+      return NextResponse.json(
+        { error: 'Przesyłka nie ma jeszcze etykiety.' },
+        { status: 409 },
+      );
+    }
+
     if (!res.ok) {
-      return NextResponse.json({ error: 'Błąd pobierania etykiety' }, { status: 502 });
+      const errorText = await res.text();
+      console.error('Furgonetka label error:', res.status, errorText);
+      // Etykieta istnieje dopiero po opłaceniu/zleceniu przesyłki —
+      // szkic w koszyku "Do wysłania" zwraca 400 ze statusem uniemożliwiającym.
+      if (res.status === 400 && errorText.includes('status uniemo')) {
+        return NextResponse.json(
+          {
+            error:
+              'Przesyłka nie jest jeszcze opłacona. Opłać ją w panelu Furgonetki (zakładka "Do wysłania"), a etykieta będzie dostępna.',
+          },
+          { status: 409 },
+        );
+      }
+      return NextResponse.json(
+        { error: 'Błąd pobierania etykiety', details: errorText },
+        { status: 502 },
+      );
     }
 
     const pdfBuffer = await res.arrayBuffer();

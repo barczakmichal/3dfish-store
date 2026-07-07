@@ -118,12 +118,13 @@ export async function POST(req: NextRequest) {
 
     const result = await res.json();
 
+    // Utworzenie przesyłki to dopiero szkic w koszyku "Do wysłania" Furgonetki —
+    // status SHIPPED ustawi webhook tracking_number po nadaniu paczki.
     await prisma.order.update({
       where: { id: orderId },
       data: {
-        furgonetkaId: result.package_id || result.id,
-        trackingNumber: result.tracking_number,
-        status: 'SHIPPED',
+        furgonetkaId: String(result.package_id || result.id),
+        ...(result.tracking_number ? { trackingNumber: result.tracking_number } : {}),
       },
     });
 
