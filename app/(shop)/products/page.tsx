@@ -3,6 +3,10 @@ import ProductCard from '@/components/ProductCard';
 import prisma from '@/lib/prisma';
 import { publicProductWhere } from '@/lib/catalog';
 
+// Bez tego strona jest budowana statycznie podczas `next build` w obrazie Docker,
+// gdzie baza jest niedostępna — katalog zapiekał się jako pusty ("Brak produktów").
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Produkty | treefish',
   description:

@@ -4,6 +4,10 @@ import ProductCard from '@/components/ProductCard';
 import prisma from '@/lib/prisma';
 import { publicProductWhere } from '@/lib/catalog';
 
+// Bez tego strona jest budowana statycznie podczas `next build` w obrazie Docker,
+// gdzie baza jest niedostępna — sekcja polecanych produktów zapiekała się jako pusta.
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'treefish - Akcesoria wędkarskie drukowane w 3D',
   description:
