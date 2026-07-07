@@ -13,11 +13,13 @@ export async function POST(
   try {
     const { id } = await params;
     const body = await req.json();
-    const trackingNumber = body.tracking_number;
+    // Oficjalny wzór API: { tracking: { number, courierService } };
+    // tracking_number zostaje dla zgodności ze starszymi testami.
+    const trackingNumber = body?.tracking?.number ?? body?.tracking_number;
 
     if (!trackingNumber || typeof trackingNumber !== 'string') {
       return NextResponse.json(
-        { error: 'tracking_number is required' },
+        { error: 'tracking.number is required' },
         { status: 400 }
       );
     }

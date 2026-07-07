@@ -2,45 +2,71 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { verifyHmacSignature, validateIntegrationToken } from '@/lib/furgonetka';
 
+// Format odpowiedzi wg wzoru API integracji e-commerce Furgonetki
+// (https://furgonetka.pl/api/universal-integration-example): top-level tablica
+// zamówień nowszych niż ?datetime, sortowanych od najstarszego, max ?limit.
 export async function GET(req: NextRequest) {
   if (!validateIntegrationToken(req)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   try {
+    const datetimeParam = req.nextUrl.searchParams.get('datetime');
+    const limitParam = Number(req.nextUrl.searchParams.get('limit'));
+    const since = datetimeParam ? new Date(datetimeParam) : null;
+    const limit = Number.isFinite(limitParam) && limitParam > 0 ? Math.min(limitParam, 100) : 100;
+
     const orders = await prisma.order.findMany({
-      where: { status: { in: ['PENDING', 'PAID'] } },
+      where: {
+        status: { in: ['PENDING', 'PAID'] },
+        ...(since && !isNaN(since.getTime()) ? { updatedAt: { gt: since } } : {}),
+      },
       include: { items: { include: { product: true } } },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { updatedAt: 'asc' },
+      take: limit,
     });
 
-    return NextResponse.json({
-      orders: orders.map((order) => ({
-        id: order.id,
-        number: order.id,
-        status: order.status.toLowerCase(),
-        customer: {
-          name: order.customerName,
-          email: order.customerEmail,
-          phone: order.customerPhone || '',
-        },
-        address: {
-          street: order.street || '',
-          city: order.city || '',
-          postCode: order.postalCode || '',
-          country: order.country || 'PL',
-        },
-        products: order.items.map((item) => ({
-          sku: item.product.slug,
-          name: item.product.name,
-          price: Number(item.price),
-          quantity: item.quantity,
-          weight: item.product.weightGrams || 0,
-        })),
-        total: Number(order.total),
-        currency: 'PLN',
-      })),
-    });
+    return NextResponse.json(
+      orders.map((order) => {
+        const [firstName, ...rest] = (order.customerName || '').trim().split(/\s+/);
+        const totalWeightKg = order.items.reduce(
+          (sum, item) => sum + ((item.product.weightGrams || 500) / 1000) * item.quantity,
+          0,
+        );
+        return {
+          sourceOrderId: order.id,
+          datetimeOrder: order.createdAt.toISOString(),
+          sourceDatetimeChange: order.updatedAt.toISOString(),
+          service: order.shippingCarrier || 'inpost',
+          status: order.status === 'PAID' ? 'paid' : 'pending',
+          totalPrice: Number(order.total),
+          shippingCost: Number(order.shippingCost ?? 0),
+          totalPaid: order.status === 'PAID' ? Number(order.total) : 0,
+          totalWeight: Math.round(totalWeightKg * 1000) / 1000,
+          ...(order.pickupPointId ? { point: order.pickupPointId } : {}),
+          ...(order.notes ? { comment: order.notes } : {}),
+          shippingAddress: {
+            company: '',
+            name: firstName || '',
+            surname: rest.join(' '),
+            street: order.street || '',
+            city: order.city || '',
+            postcode: order.postalCode || '',
+            countryCode: order.country || 'PL',
+            phone: order.customerPhone || '',
+            email: order.customerEmail,
+          },
+          products: order.items.map((item) => ({
+            name: item.product.name,
+            sku: item.product.slug,
+            price: Number(item.price),
+            quantity: item.quantity,
+            weight: (item.product.weightGrams || 500) / 1000,
+          })),
+          ...(order.status === 'PAID' ? { paymentDatetime: order.updatedAt.toISOString() } : {}),
+        };
+      }),
+    );
   } catch (error) {
     console.error('Furgonetka GET /orders error:', error);
     return NextResponse.json({ error: 'Błąd pobierania zamówień' }, { status: 500 });

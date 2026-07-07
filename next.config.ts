@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
     return [
       { source: '/orders', destination: '/api/furgonetka/orders' },
       { source: '/orders/:id/tracking_number', destination: '/api/furgonetka/orders/:id/tracking-number' },
+      { source: '/orders/:id/payments', destination: '/api/furgonetka/orders/:id/payments' },
     ];
   },
   images: {
