@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 import prisma from '@/lib/prisma';
 import { isLicenseGateEnabled, effectiveCommercialUse } from '@/lib/license';
+import { SHIPPING_COST_PLN } from '@/lib/shipping';
 
 interface CartItem {
   id: string;
@@ -78,10 +79,11 @@ export async function POST(req: NextRequest) {
       };
     });
 
-    const total = items.reduce((sum, item) => {
+    const productsTotal = items.reduce((sum, item) => {
       const product = products.find((p) => p.id === item.id)!;
       return sum + Number(product.price) * item.quantity;
     }, 0);
+    const total = productsTotal + SHIPPING_COST_PLN;
 
     // Create order in database
     const order = await prisma.order.create({
@@ -93,6 +95,7 @@ export async function POST(req: NextRequest) {
         shippingCarrier: 'inpost',
         pickupPointId: pickupPoint.code,
         pickupPointName: pickupPoint.name,
+        shippingCost: SHIPPING_COST_PLN,
         total,
         status: 'PENDING',
         items: {
@@ -128,6 +131,18 @@ export async function POST(req: NextRequest) {
       success_url: `${origin}/order/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/cart`,
       customer_email: customerEmail,
+      shipping_options: [
+        {
+          shipping_rate_data: {
+            type: 'fixed_amount',
+            display_name: 'Paczkomat InPost',
+            fixed_amount: {
+              amount: SHIPPING_COST_PLN * 100,
+              currency: 'pln',
+            },
+          },
+        },
+      ],
       metadata: {
         orderId: order.id,
         pickupPointId: pickupPoint.code,

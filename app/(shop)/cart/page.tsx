@@ -2,14 +2,16 @@
 
 import Link from 'next/link';
 import { useCartStore } from '@/lib/store';
+import { SHIPPING_COST_PLN } from '@/lib/shipping';
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, getTotalPrice } = useCartStore();
 
-  const formattedTotal = new Intl.NumberFormat('pl-PL', {
-    style: 'currency',
-    currency: 'PLN',
-  }).format(getTotalPrice());
+  const formatPln = (v: number) =>
+    new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN' }).format(v);
+  const formattedTotal = formatPln(getTotalPrice());
+  const formattedShipping = formatPln(SHIPPING_COST_PLN);
+  const formattedGrandTotal = formatPln(getTotalPrice() + SHIPPING_COST_PLN);
 
   if (items.length === 0) {
     return (
@@ -107,12 +109,16 @@ export default function CartPage() {
 
             <div className="border-t border-gray-200 pt-4 mb-6">
               <div className="flex justify-between text-sm text-gray-600 mb-2">
-                <span>Dostawa</span>
-                <span className="text-blue-600">wg cennika kuriera</span>
+                <span>Produkty</span>
+                <span className="font-medium">{formattedTotal}</span>
+              </div>
+              <div className="flex justify-between text-sm text-gray-600 mb-2">
+                <span>Dostawa (Paczkomat InPost)</span>
+                <span className="font-medium">{formattedShipping}</span>
               </div>
               <div className="flex justify-between font-bold text-lg mt-3">
-                <span>Produkty razem</span>
-                <span className="text-blue-700">{formattedTotal}</span>
+                <span>Razem</span>
+                <span className="text-blue-700">{formattedGrandTotal}</span>
               </div>
             </div>
 
