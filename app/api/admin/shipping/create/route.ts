@@ -6,7 +6,7 @@ import { furgonetkaApi, isFurgonetkaConfigured } from '@/lib/furgonetka';
 async function getServiceId(carrier: string, pickup: Record<string, string>, receiver: Record<string, string>, parcels: Record<string, unknown>[]): Promise<number | null> {
   const res = await furgonetkaApi('/packages/calculate-price', {
     method: 'POST',
-    body: JSON.stringify({ pickup, receiver, parcels, type: 'package' }),
+    body: JSON.stringify({ pickup, receiver, parcels, type: 'standard' }),
   });
   if (!res.ok) return null;
   const data = await res.json();
@@ -96,12 +96,8 @@ export async function POST(req: NextRequest) {
       pickup,
       receiver,
       parcels,
-      type: 'package',
+      type: 'standard',
       user_reference_number: `TF-${order.id.slice(-8).toUpperCase()}`,
-      additional_services: {
-        cod: { amount: 0, currency: 'PLN' },
-        rod: false,
-      },
     };
 
     console.log('Furgonetka create package request:', JSON.stringify(packageData));
