@@ -92,6 +92,7 @@ export default function OrderDetailClient({ order }: Props) {
 
   async function handleStatusChange(newStatus: string) {
     if (newStatus === status) return
+    const prevStatus = status
     setStatusLoading(true)
     try {
       const res = await fetch(`/api/admin/orders/${order.id}`, {
@@ -101,6 +102,15 @@ export default function OrderDetailClient({ order }: Props) {
       })
       if (res.ok) {
         setStatus(newStatus as OrderStatus)
+        setEvents(prev => [...prev, {
+          id: `local-${Date.now()}`,
+          type: 'status_change',
+          fromValue: prevStatus,
+          toValue: newStatus,
+          note: null,
+          actor: 'admin',
+          createdAt: new Date().toISOString(),
+        }])
         router.refresh()
       } else {
         alert('Błąd podczas zmiany statusu.')
