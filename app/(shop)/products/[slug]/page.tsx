@@ -61,8 +61,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   }).format(Number(product.price));
 
   const galleryImages = [
-    product.marketingImageUrl ? { url: product.marketingImageUrl, label: 'Zdjęcie reklamowe' } : null,
     product.packshotImageUrl ? { url: product.packshotImageUrl, label: 'Packshot' } : null,
+    product.marketingImageUrl ? { url: product.marketingImageUrl, label: 'Zdjęcie reklamowe' } : null,
     product.printedImageUrl ? { url: product.printedImageUrl, label: 'Przykładowy wydruk' } : null,
     ...product.images.map((url) => ({ url })),
   ].filter((x): x is { url: string; label?: string } => x !== null)
