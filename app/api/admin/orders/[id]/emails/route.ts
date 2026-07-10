@@ -13,7 +13,7 @@ export async function GET(
     const { id } = await params
     const emails = await prisma.emailLog.findMany({
       where: { orderId: id },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { sentAt: 'desc' },
     })
 
     return NextResponse.json(emails)
