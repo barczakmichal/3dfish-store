@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 import { OrderStatus } from '@prisma/client'
 import OrderStatusBadge from '@/components/admin/OrderStatusBadge'
@@ -98,7 +99,12 @@ export default async function AdminOrdersPage({ searchParams }: Props) {
               {orders.map((order) => (
                 <tr key={order.id} className="hover:bg-gray-50 transition-colors">
                   <td className="px-6 py-4">
-                    <span className="font-mono text-xs text-gray-500">{order.id.slice(0, 8)}...</span>
+                    <Link
+                      href={`/admin/orders/${order.id}`}
+                      className="font-mono text-xs text-orange-600 hover:underline"
+                    >
+                      {order.id.slice(0, 8)}...
+                    </Link>
                   </td>
                   <td className="px-6 py-4">
                     <p className="font-medium text-gray-900">{order.customerName}</p>

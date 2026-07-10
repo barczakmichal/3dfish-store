@@ -14,7 +14,15 @@ export async function GET(
     const { id } = await params
     const order = await prisma.order.findUnique({
       where: { id },
-      include: { items: { include: { product: true } } }
+      include: {
+        items: {
+          include: {
+            product: { select: { id: true, name: true, slug: true, images: true } }
+          }
+        },
+        emails: { orderBy: { sentAt: 'desc' } },
+        events: { orderBy: { createdAt: 'asc' } },
+      }
     })
     if (!order) return NextResponse.json({ error: 'Zamówienie nie znalezione' }, { status: 404 })
 
@@ -41,10 +49,25 @@ export async function PUT(
       return NextResponse.json({ error: 'Nieprawidłowy status' }, { status: 400 })
     }
 
-    const order = await prisma.order.update({
-      where: { id },
-      data: { status: body.status as OrderStatus }
-    })
+    const current = await prisma.order.findUnique({ where: { id }, select: { status: true } })
+    if (!current) return NextResponse.json({ error: 'Zamówienie nie znalezione' }, { status: 404 })
+
+    const [order] = await prisma.$transaction([
+      prisma.order.update({
+        where: { id },
+        data: { status: body.status as OrderStatus }
+      }),
+      prisma.orderEvent.create({
+        data: {
+          orderId: id,
+          type: 'status_change',
+          fromValue: current.status,
+          toValue: body.status,
+          actor: 'admin',
+        }
+      }),
+    ])
+
     return NextResponse.json(order)
   } catch (error) {
     console.error('Błąd aktualizacji zamówienia:', error)
