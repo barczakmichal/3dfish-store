@@ -29,6 +29,14 @@ export default async function sitemap() {
       url: 'https://treefish.pl/blog',
       lastModified: new Date(),
     },
+    {
+      url: 'https://treefish.pl/regulamin',
+      lastModified: new Date(),
+    },
+    {
+      url: 'https://treefish.pl/polityka-prywatnosci',
+      lastModified: new Date(),
+    },
     ...blogPosts.map((post) => ({
       url: `https://treefish.pl/blog/${post.slug}`,
       lastModified: new Date(),

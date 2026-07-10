@@ -76,8 +76,17 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-10 pt-6 text-center text-gray-500 text-sm">
+        <div className="border-t border-gray-800 mt-10 pt-6 text-center text-gray-500 text-sm space-y-2">
           <p>&copy; {new Date().getFullYear()} treefish. Wszelkie prawa zastrzeżone.</p>
+          <div className="flex justify-center items-center gap-2">
+            <Link href="/regulamin" className="hover:text-gray-300 transition-colors">
+              Regulamin
+            </Link>
+            <span>|</span>
+            <Link href="/polityka-prywatnosci" className="hover:text-gray-300 transition-colors">
+              Polityka Prywatności
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
