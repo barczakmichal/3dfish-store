@@ -1,8 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 import prisma from '@/lib/prisma';
 import { isLicenseGateEnabled, effectiveCommercialUse } from '@/lib/license';
 import { SHIPPING_COST_PLN } from '@/lib/shipping';
+import { sendOrderEmail } from '@/lib/email/send';
 
 interface CartItem {
   id: string;
@@ -116,6 +117,18 @@ export async function POST(req: NextRequest) {
       `https://${req.headers.get('x-forwarded-host') || req.headers.get('host')}`;
 
     if (!stripe) {
+      sendOrderEmail(order.id, customerEmail, {
+        type: 'ORDER_CONFIRMATION',
+        data: {
+          orderNumber: order.id.slice(-8).toUpperCase(),
+          customerName: order.customerName,
+          items: items.map((item) => {
+            const product = products.find((p) => p.id === item.id)!;
+            return { name: product.name, quantity: item.quantity, price: Number(product.price) };
+          }),
+          total: Number(order.total),
+        },
+      }).catch((e) => console.error('[email] ORDER_CONFIRMATION (no-stripe) error:', e));
       return NextResponse.json({
         url: `${origin}/order/success?order_id=${order.id}`,
         orderId: order.id,
@@ -154,6 +167,20 @@ export async function POST(req: NextRequest) {
       where: { id: order.id },
       data: { stripeSessionId: session.id },
     });
+
+    // Send ORDER_CONFIRMATION email (fire-and-forget)
+    sendOrderEmail(order.id, customerEmail, {
+      type: 'ORDER_CONFIRMATION',
+      data: {
+        orderNumber: order.id.slice(-8).toUpperCase(),
+        customerName: order.customerName,
+        items: items.map((item) => {
+          const product = products.find((p) => p.id === item.id)!;
+          return { name: product.name, quantity: item.quantity, price: Number(product.price) };
+        }),
+        total: Number(order.total),
+      },
+    }).catch((e) => console.error('[email] ORDER_CONFIRMATION fire-and-forget error:', e));
 
     return NextResponse.json({ url: session.url });
   } catch (error) {

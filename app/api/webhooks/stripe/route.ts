@@ -3,6 +3,7 @@ import Stripe from 'stripe';
 import { stripe } from '@/lib/stripe';
 import { prisma } from '@/lib/prisma';
 import { sendOrderNotificationToSlack } from '@/lib/notifications';
+import { sendOrderEmail } from '@/lib/email/send';
 
 export async function POST(req: NextRequest) {
   if (!stripe) {
@@ -53,8 +54,9 @@ export async function POST(req: NextRequest) {
             }
           : {};
 
+        let orderId: string;
         if (existing) {
-          await prisma.order.update({
+          const updated = await prisma.order.update({
             where: { stripeSessionId: session.id },
             data: {
               status: 'PAID',
@@ -62,8 +64,9 @@ export async function POST(req: NextRequest) {
               ...shippingUpdate,
             },
           });
+          orderId = updated.id;
         } else {
-          await prisma.order.create({
+          const created = await prisma.order.create({
             data: {
               stripeSessionId: session.id,
               customerEmail: session.customer_details?.email || '',
@@ -73,7 +76,22 @@ export async function POST(req: NextRequest) {
               ...shippingUpdate,
             },
           });
+          orderId = created.id;
         }
+
+        const customerEmail = session.customer_details?.email || existing?.customerEmail || '';
+        const customerName =
+          shippingDetails?.name ?? session.customer_details?.name ?? existing?.customerName ?? '';
+        const total = (session.amount_total || 0) / 100;
+
+        sendOrderEmail(orderId, customerEmail, {
+          type: 'PAYMENT_CONFIRMATION',
+          data: {
+            orderNumber: orderId.slice(-8).toUpperCase(),
+            customerName,
+            total,
+          },
+        }).catch((e) => console.error('[email] PAYMENT_CONFIRMATION error:', e));
 
         console.log(`Zamówienie opłacone: ${session.id}`);
 

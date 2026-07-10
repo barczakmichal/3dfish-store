@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { prisma } from '@/lib/prisma'
 import { OrderStatus } from '@prisma/client'
+import { sendOrderEmail } from '@/lib/email/send'
 
 export const dynamic = 'force-dynamic'
 
@@ -69,6 +70,16 @@ export async function PUT(
         }
       }),
     ])
+
+    if (body.status === 'DELIVERED') {
+      sendOrderEmail(id, order.customerEmail, {
+        type: 'DELIVERY_CONFIRMATION',
+        data: {
+          orderNumber: id.slice(-8).toUpperCase(),
+          customerName: order.customerName,
+        },
+      }).catch((e) => console.error('[email] DELIVERY_CONFIRMATION error:', e))
+    }
 
     return NextResponse.json(order)
   } catch (error) {

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import prisma from '@/lib/prisma';
 import { furgonetkaApi, isFurgonetkaConfigured } from '@/lib/furgonetka';
+import { sendOrderEmail } from '@/lib/email/send';
 
 async function getServiceId(carrier: string, pickup: Record<string, string>, receiver: Record<string, string>, parcels: Record<string, unknown>[]): Promise<number | null> {
   const res = await furgonetkaApi('/packages/calculate-price', {
@@ -127,6 +128,18 @@ export async function POST(req: NextRequest) {
         ...(result.tracking_number ? { trackingNumber: result.tracking_number } : {}),
       },
     });
+
+    sendOrderEmail(orderId, order.customerEmail, {
+      type: 'SHIPPING_NOTIFICATION',
+      data: {
+        orderNumber: orderId.slice(-8).toUpperCase(),
+        customerName: order.customerName,
+        trackingNumber: result.tracking_number || undefined,
+        carrier: order.shippingCarrier || undefined,
+        pickupPointName: order.pickupPointName || undefined,
+        pickupPointId: order.pickupPointId || undefined,
+      },
+    }).catch((e) => console.error('[email] SHIPPING_NOTIFICATION error:', e));
 
     return NextResponse.json({
       success: true,
