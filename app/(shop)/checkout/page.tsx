@@ -1,9 +1,25 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useCartStore } from '@/lib/store';
 import { SHIPPING_COST_PLN } from '@/lib/shipping';
+import DiscountCodeInput from '@/components/shop/DiscountCodeInput';
+
+interface DiscountInfo {
+  code: string;
+  type: 'PERCENTAGE' | 'FIXED_AMOUNT';
+  value: number;
+  minOrderAmount: number | null;
+}
+
+function calcDiscountAmount(discount: DiscountInfo, productsTotal: number): number {
+  if (discount.type === 'PERCENTAGE') {
+    return Math.round(productsTotal * discount.value) / 100;
+  }
+  return Math.min(discount.value, productsTotal);
+}
 
 interface PickupPoint {
   code: string;
@@ -44,6 +60,7 @@ function loadMapScript(): Promise<void> {
 
 export default function CheckoutPage() {
   const { items, getTotalPrice } = useCartStore();
+  const searchParams = useSearchParams();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -52,6 +69,20 @@ export default function CheckoutPage() {
   const [mapLoading, setMapLoading] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [discount, setDiscount] = useState<DiscountInfo | null>(null);
+
+  useEffect(() => {
+    const discountParam = searchParams.get('discount');
+    if (discountParam) {
+      fetch('/api/discount-codes/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: discountParam, orderAmount: getTotalPrice() }),
+      })
+        .then((r) => (r.ok ? r.json() : null))
+        .then((data) => { if (data) setDiscount(data); });
+    }
+  }, [searchParams, getTotalPrice]);
 
   const openPointMap = async () => {
     setError('');
@@ -84,9 +115,11 @@ export default function CheckoutPage() {
 
   const formatPln = (v: number) =>
     new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN' }).format(v);
-  const formattedTotal = formatPln(getTotalPrice());
+  const productsTotal = getTotalPrice();
+  const discountAmount = discount ? calcDiscountAmount(discount, productsTotal) : 0;
+  const formattedTotal = formatPln(productsTotal);
   const formattedShipping = formatPln(SHIPPING_COST_PLN);
-  const formattedGrandTotal = formatPln(getTotalPrice() + SHIPPING_COST_PLN);
+  const formattedGrandTotal = formatPln(productsTotal - discountAmount + SHIPPING_COST_PLN);
 
   const handleCheckout = async () => {
     if (!name.trim()) {
@@ -123,6 +156,7 @@ export default function CheckoutPage() {
           customerName: name,
           customerPhone: phone.trim(),
           pickupPoint,
+          discountCode: discount?.code || null,
         }),
       });
 
@@ -283,11 +317,26 @@ export default function CheckoutPage() {
               ))}
             </div>
 
+            <div className="border-t border-gray-200 pt-4 mb-4">
+              <DiscountCodeInput
+                orderAmount={productsTotal}
+                onApply={setDiscount}
+                onRemove={() => setDiscount(null)}
+                appliedDiscount={discount}
+              />
+            </div>
+
             <div className="border-t border-gray-200 pt-4 mb-6">
               <div className="flex justify-between text-sm text-gray-600 mb-2">
                 <span>Produkty</span>
                 <span className="font-medium">{formattedTotal}</span>
               </div>
+              {discountAmount > 0 && (
+                <div className="flex justify-between text-sm text-green-600 mb-2">
+                  <span>Rabat ({discount!.code})</span>
+                  <span className="font-medium">-{formatPln(discountAmount)}</span>
+                </div>
+              )}
               <div className="flex justify-between text-sm text-gray-600 mb-2">
                 <span>
                   Dostawa{pickupPoint ? ` (Paczkomat ${pickupPoint.code})` : ' (Paczkomat InPost)'}

@@ -93,6 +93,14 @@ export async function POST(req: NextRequest) {
           },
         }).catch((e) => console.error('[email] PAYMENT_CONFIRMATION error:', e));
 
+        const discountCodeId = session.metadata?.discountCodeId;
+        if (discountCodeId) {
+          await prisma.discountCode.update({
+            where: { id: discountCodeId },
+            data: { usageCount: { increment: 1 } },
+          }).catch((e: unknown) => console.error('[discount] usageCount increment error:', e));
+        }
+
         console.log(`Zamówienie opłacone: ${session.id}`);
 
         const paidOrder = await prisma.order.findUnique({

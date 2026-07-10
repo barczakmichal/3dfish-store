@@ -1,17 +1,36 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { useCartStore } from '@/lib/store';
 import { SHIPPING_COST_PLN } from '@/lib/shipping';
+import DiscountCodeInput from '@/components/shop/DiscountCodeInput';
+
+interface DiscountInfo {
+  code: string;
+  type: 'PERCENTAGE' | 'FIXED_AMOUNT';
+  value: number;
+  minOrderAmount: number | null;
+}
+
+function calcDiscountAmount(discount: DiscountInfo, productsTotal: number): number {
+  if (discount.type === 'PERCENTAGE') {
+    return Math.round(productsTotal * discount.value) / 100;
+  }
+  return Math.min(discount.value, productsTotal);
+}
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, getTotalPrice } = useCartStore();
+  const [discount, setDiscount] = useState<DiscountInfo | null>(null);
 
   const formatPln = (v: number) =>
     new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN' }).format(v);
-  const formattedTotal = formatPln(getTotalPrice());
+  const productsTotal = getTotalPrice();
+  const discountAmount = discount ? calcDiscountAmount(discount, productsTotal) : 0;
+  const formattedTotal = formatPln(productsTotal);
   const formattedShipping = formatPln(SHIPPING_COST_PLN);
-  const formattedGrandTotal = formatPln(getTotalPrice() + SHIPPING_COST_PLN);
+  const formattedGrandTotal = formatPln(productsTotal - discountAmount + SHIPPING_COST_PLN);
 
   if (items.length === 0) {
     return (
@@ -107,11 +126,26 @@ export default function CartPage() {
               ))}
             </div>
 
+            <div className="border-t border-gray-200 pt-4 mb-4">
+              <DiscountCodeInput
+                orderAmount={productsTotal}
+                onApply={setDiscount}
+                onRemove={() => setDiscount(null)}
+                appliedDiscount={discount}
+              />
+            </div>
+
             <div className="border-t border-gray-200 pt-4 mb-6">
               <div className="flex justify-between text-sm text-gray-600 mb-2">
                 <span>Produkty</span>
                 <span className="font-medium">{formattedTotal}</span>
               </div>
+              {discountAmount > 0 && (
+                <div className="flex justify-between text-sm text-green-600 mb-2">
+                  <span>Rabat ({discount!.code})</span>
+                  <span className="font-medium">-{formatPln(discountAmount)}</span>
+                </div>
+              )}
               <div className="flex justify-between text-sm text-gray-600 mb-2">
                 <span>Dostawa (Paczkomat InPost)</span>
                 <span className="font-medium">{formattedShipping}</span>
@@ -123,7 +157,7 @@ export default function CartPage() {
             </div>
 
             <Link
-              href="/checkout"
+              href={discount ? `/checkout?discount=${encodeURIComponent(discount.code)}` : '/checkout'}
               className="block w-full text-center bg-orange-500 hover:bg-orange-600 text-white font-semibold py-4 rounded-xl transition-colors text-lg"
             >
               Przejdź do kasy

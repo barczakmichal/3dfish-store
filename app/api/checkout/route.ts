@@ -19,12 +19,13 @@ interface PickupPoint {
 
 export async function POST(req: NextRequest) {
   try {
-    const { items, customerEmail, customerName, customerPhone, pickupPoint } = (await req.json()) as {
+    const { items, customerEmail, customerName, customerPhone, pickupPoint, discountCode } = (await req.json()) as {
       items: CartItem[];
       customerEmail: string;
       customerName?: string;
       customerPhone?: string;
       pickupPoint?: PickupPoint;
+      discountCode?: string | null;
     };
 
     if (!items || items.length === 0) {
@@ -64,6 +65,46 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    // Validate discount code if provided
+    let discountRecord: { id: string; code: string; type: string; value: number } | null = null;
+    let discountAmount = 0;
+
+    if (discountCode) {
+      const dc = await prisma.discountCode.findUnique({
+        where: { code: discountCode.toUpperCase() },
+      });
+
+      if (!dc || !dc.isActive) {
+        return NextResponse.json({ error: 'Nieprawidłowy lub nieaktywny kod rabatowy' }, { status: 400 });
+      }
+      if (dc.expiresAt && new Date() > dc.expiresAt) {
+        return NextResponse.json({ error: 'Kod rabatowy wygasł' }, { status: 400 });
+      }
+      if (dc.usageLimit && dc.usageCount >= dc.usageLimit) {
+        return NextResponse.json({ error: 'Kod rabatowy został już w pełni wykorzystany' }, { status: 400 });
+      }
+
+      const tempTotal = items.reduce((sum, item) => {
+        const product = products.find((p) => p.id === item.id)!;
+        return sum + Number(product.price) * item.quantity;
+      }, 0);
+
+      if (dc.minOrderAmount && tempTotal < Number(dc.minOrderAmount)) {
+        return NextResponse.json(
+          { error: `Minimalna kwota zamówienia to ${Number(dc.minOrderAmount).toFixed(2)} PLN` },
+          { status: 400 },
+        );
+      }
+
+      discountRecord = { id: dc.id, code: dc.code, type: dc.type, value: Number(dc.value) };
+
+      if (dc.type === 'PERCENTAGE') {
+        discountAmount = Math.round(tempTotal * Number(dc.value)) / 100;
+      } else {
+        discountAmount = Math.min(Number(dc.value), tempTotal);
+      }
+    }
+
     // Build Stripe line items using server-side prices (security)
     const lineItems = items.map((item) => {
       const product = products.find((p) => p.id === item.id)!;
@@ -84,7 +125,7 @@ export async function POST(req: NextRequest) {
       const product = products.find((p) => p.id === item.id)!;
       return sum + Number(product.price) * item.quantity;
     }, 0);
-    const total = productsTotal + SHIPPING_COST_PLN;
+    const total = productsTotal - discountAmount + SHIPPING_COST_PLN;
 
     // Create order in database
     const order = await prisma.order.create({
@@ -97,6 +138,8 @@ export async function POST(req: NextRequest) {
         pickupPointId: pickupPoint.code,
         pickupPointName: pickupPoint.name,
         shippingCost: SHIPPING_COST_PLN,
+        discountCodeId: discountRecord?.id || null,
+        discountAmount: discountAmount > 0 ? discountAmount : null,
         total,
         status: 'PENDING',
         items: {
@@ -139,8 +182,20 @@ export async function POST(req: NextRequest) {
     // więc nie zbieramy osobnego adresu wysyłki w Stripe.
     // Bez payment_method_types — Stripe dobiera metody aktywowane w dashboardzie
     // (karta od razu; BLIK/P24 pojawią się po aktywacji w trybie live, bez deployu).
+    let stripeCouponId: string | undefined;
+    if (discountAmount > 0 && stripe) {
+      const coupon = await stripe.coupons.create({
+        amount_off: Math.round(discountAmount * 100),
+        currency: 'pln',
+        duration: 'once',
+        name: `Rabat ${discountRecord!.code}`,
+      });
+      stripeCouponId = coupon.id;
+    }
+
     const session = await stripe.checkout.sessions.create({
       line_items: lineItems,
+      ...(stripeCouponId ? { discounts: [{ coupon: stripeCouponId }] } : {}),
       mode: 'payment',
       success_url: `${origin}/order/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/cart`,
@@ -160,6 +215,7 @@ export async function POST(req: NextRequest) {
       metadata: {
         orderId: order.id,
         pickupPointId: pickupPoint.code,
+        ...(discountRecord ? { discountCodeId: discountRecord.id } : {}),
       },
     });
 
