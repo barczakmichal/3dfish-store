@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { stripe } from '@/lib/stripe';
 import { prisma } from '@/lib/prisma';
+import { sendOrderNotificationToSlack } from '@/lib/notifications';
 
 export async function POST(req: NextRequest) {
   if (!stripe) {
@@ -75,6 +76,17 @@ export async function POST(req: NextRequest) {
         }
 
         console.log(`Zamówienie opłacone: ${session.id}`);
+
+        const paidOrder = await prisma.order.findUnique({
+          where: { stripeSessionId: session.id },
+          include: { items: { include: { product: { select: { name: true } } } } },
+        });
+
+        if (paidOrder) {
+          sendOrderNotificationToSlack(paidOrder).catch((err) =>
+            console.error('Nie udało się wysłać powiadomienia:', err)
+          );
+        }
       } catch (error) {
         console.error('Błąd aktualizacji zamówienia:', error);
         return NextResponse.json({ error: 'Błąd aktualizacji zamówienia' }, { status: 500 });
