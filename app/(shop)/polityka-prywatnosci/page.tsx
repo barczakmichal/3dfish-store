@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Polityka Prywatności | treefish',
+  title: 'Polityka Prywatności',
   description: 'Polityka prywatności sklepu internetowego treefish.pl',
 };
 
