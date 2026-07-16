@@ -274,7 +274,7 @@ function CheckoutContent() {
                   id="phone"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  placeholder="+48 123 456 789"
+                  placeholder="+48"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                 />
                 <p className="text-xs text-gray-500 mt-1">

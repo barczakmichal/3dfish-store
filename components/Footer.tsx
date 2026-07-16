@@ -70,7 +70,6 @@ export default function Footer() {
             <h4 className="font-semibold text-lg mb-3">Kontakt</h4>
             <ul className="space-y-2 text-gray-400 text-sm">
               <li>kontakt@treefish.pl</li>
-              <li>+48 123 456 789</li>
               <li>Pon-Pt: 9:00 - 17:00</li>
             </ul>
           </div>
