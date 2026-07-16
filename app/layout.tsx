@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Geist } from 'next/font/google';
+import Script from 'next/script';
 import MetaPixel from '@/components/MetaPixel';
 import './globals.css';
 
@@ -60,16 +61,40 @@ export default function RootLayout({
             `,
           }}
         />
-        <script
-          id="Cookiebot"
-          src="https://consent.cookiebot.com/uc.js"
-          data-cbid="8786bee1-006e-4187-9a2d-7605ac80b9f4"
-          data-blockingmode="auto"
-        />
       </head>
       <body className="min-h-full flex flex-col bg-gray-50">
         <MetaPixel />
         {children}
+        <Script
+          id="Cookiebot"
+          src="https://consent.cookiebot.com/uc.js"
+          data-cbid="8786bee1-006e-4187-9a2d-7605ac80b9f4"
+          data-blockingmode="auto"
+          data-culture="PL"
+          strategy="beforeInteractive"
+        />
+        <Script
+          id="cookiebot-consent-handler"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              function updateConsentFromCookiebot() {
+                if (!window.Cookiebot || !window.Cookiebot.consent) return;
+                var c = window.Cookiebot.consent;
+                gtag('consent', 'update', {
+                  'ad_storage': c.marketing ? 'granted' : 'denied',
+                  'ad_user_data': c.marketing ? 'granted' : 'denied',
+                  'ad_personalization': c.marketing ? 'granted' : 'denied',
+                  'analytics_storage': c.statistics ? 'granted' : 'denied',
+                  'functionality_storage': c.preferences ? 'granted' : 'denied',
+                  'personalization_storage': c.preferences ? 'granted' : 'denied',
+                });
+              }
+              window.addEventListener('CookiebotOnAccept', updateConsentFromCookiebot);
+              window.addEventListener('CookiebotOnDecline', updateConsentFromCookiebot);
+            `,
+          }}
+        />
       </body>
     </html>
   );

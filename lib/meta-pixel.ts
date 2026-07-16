@@ -11,7 +11,13 @@ declare global {
     Cookiebot?: {
       consent: {
         marketing: boolean;
+        statistics: boolean;
+        preferences: boolean;
+        necessary: boolean;
       };
+      consented: boolean;
+      declined: boolean;
+      hasResponse: boolean;
     };
   }
 }
