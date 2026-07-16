@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Geist } from 'next/font/google';
-import Script from 'next/script';
 import MetaPixel from '@/components/MetaPixel';
 import './globals.css';
 
@@ -61,23 +60,19 @@ export default function RootLayout({
             `,
           }}
         />
-      </head>
-      <body className="min-h-full flex flex-col bg-gray-50">
-        <MetaPixel />
-        {children}
-        <Script
-          id="Cookiebot"
-          src="https://consent.cookiebot.com/uc.js"
-          data-cbid="8786bee1-006e-4187-9a2d-7605ac80b9f4"
-          data-blockingmode="auto"
-          data-culture="PL"
-          strategy="beforeInteractive"
-        />
-        <Script
-          id="cookiebot-consent-handler"
-          strategy="afterInteractive"
+        <script
           dangerouslySetInnerHTML={{
             __html: `
+              (function(){
+                var s = document.createElement('script');
+                s.id = 'Cookiebot';
+                s.src = 'https://consent.cookiebot.com/uc.js';
+                s.setAttribute('data-cbid', '8786bee1-006e-4187-9a2d-7605ac80b9f4');
+                s.setAttribute('data-blockingmode', 'auto');
+                s.setAttribute('data-culture', 'PL');
+                document.currentScript.parentNode.insertBefore(s, document.currentScript);
+              })();
+
               function updateConsentFromCookiebot() {
                 if (!window.Cookiebot || !window.Cookiebot.consent) return;
                 var c = window.Cookiebot.consent;
@@ -95,6 +90,10 @@ export default function RootLayout({
             `,
           }}
         />
+      </head>
+      <body className="min-h-full flex flex-col bg-gray-50">
+        <MetaPixel />
+        {children}
       </body>
     </html>
   );
