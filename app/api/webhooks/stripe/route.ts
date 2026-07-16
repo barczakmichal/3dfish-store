@@ -4,6 +4,7 @@ import { stripe } from '@/lib/stripe';
 import { prisma } from '@/lib/prisma';
 import { sendOrderNotificationToSlack } from '@/lib/notifications';
 import { sendOrderEmail } from '@/lib/email/send';
+import { sendPurchaseEvent } from '@/lib/meta-capi';
 
 export async function POST(req: NextRequest) {
   if (!stripe) {
@@ -112,6 +113,15 @@ export async function POST(req: NextRequest) {
           sendOrderNotificationToSlack(paidOrder).catch((err) =>
             console.error('Nie udało się wysłać powiadomienia:', err)
           );
+
+          sendPurchaseEvent({
+            orderId: paidOrder.id,
+            value: Number(paidOrder.total),
+            email: customerEmail,
+            phone: paidOrder.customerPhone || undefined,
+            contentIds: paidOrder.items.map((i) => i.productId),
+            numItems: paidOrder.items.reduce((sum, i) => sum + i.quantity, 0),
+          }).catch((err) => console.error('[meta-capi] Purchase event error:', err));
         }
       } catch (error) {
         console.error('Błąd aktualizacji zamówienia:', error);

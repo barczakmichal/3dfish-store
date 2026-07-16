@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useCartStore } from '@/lib/store';
+import { trackAddToCart } from '@/lib/meta-pixel';
 
 interface AddToCartButtonProps {
   product: {
@@ -26,6 +27,7 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
       image: product.image,
       slug: product.slug,
     });
+    trackAddToCart({ id: product.id, name: product.name, price: product.price, quantity: 1 });
   };
 
   return (

@@ -1,17 +1,29 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useCartStore } from '@/lib/store';
+import { trackPurchase } from '@/lib/meta-pixel';
 import { Suspense } from 'react';
 
 function OrderSuccessInner() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session_id');
-  const clearCart = useCartStore((state) => state.clearCart);
+  const orderId = searchParams.get('order_id');
+  const { items, clearCart, getTotalPrice } = useCartStore();
+  const trackedRef = useRef(false);
 
   useEffect(() => {
+    if (!trackedRef.current && items.length > 0) {
+      trackedRef.current = true;
+      trackPurchase({
+        value: getTotalPrice(),
+        orderId: orderId || sessionId || 'unknown',
+        contentIds: items.map((i) => i.id),
+        numItems: items.reduce((sum, i) => sum + i.quantity, 0),
+      });
+    }
     clearCart();
   }, [clearCart]);
 

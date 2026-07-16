@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Geist } from 'next/font/google';
+import MetaPixel from '@/components/MetaPixel';
 import './globals.css';
 
 const geistSans = Geist({
@@ -40,7 +41,36 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pl" className={`${geistSans.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-gray-50">{children}</body>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('consent', 'default', {
+                'ad_storage': 'denied',
+                'ad_user_data': 'denied',
+                'ad_personalization': 'denied',
+                'analytics_storage': 'denied',
+                'functionality_storage': 'denied',
+                'personalization_storage': 'denied',
+                'security_storage': 'granted',
+                'wait_for_update': 500
+              });
+            `,
+          }}
+        />
+        <script
+          id="Cookiebot"
+          src="https://consent.cookiebot.com/uc.js"
+          data-cbid="8786bee1-006e-4187-9a2d-7605ac80b9f4"
+          data-blockingmode="auto"
+        />
+      </head>
+      <body className="min-h-full flex flex-col bg-gray-50">
+        <MetaPixel />
+        {children}
+      </body>
     </html>
   );
 }

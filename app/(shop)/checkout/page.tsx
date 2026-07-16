@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useCartStore } from '@/lib/store';
 import { SHIPPING_COST_PLN } from '@/lib/shipping';
+import { trackInitiateCheckout } from '@/lib/meta-pixel';
 import DiscountCodeInput from '@/components/shop/DiscountCodeInput';
 
 interface DiscountInfo {
@@ -91,6 +92,16 @@ function CheckoutContent() {
         .then((data) => { if (data) setDiscount(data); });
     }
   }, [searchParams, getTotalPrice]);
+
+  useEffect(() => {
+    if (items.length > 0) {
+      trackInitiateCheckout({
+        value: getTotalPrice(),
+        numItems: items.reduce((sum, i) => sum + i.quantity, 0),
+        contentIds: items.map((i) => i.id),
+      });
+    }
+  }, []);
 
   const openPointMap = async () => {
     setError('');

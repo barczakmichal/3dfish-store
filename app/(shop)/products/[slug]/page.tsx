@@ -4,6 +4,7 @@ import Link from 'next/link';
 import prisma from '@/lib/prisma';
 import AddToCartButton from './AddToCartButton';
 import ProductGallery from '@/components/ProductGallery';
+import MetaPixelViewContent from '@/components/MetaPixelViewContent';
 import { publicProductWhere } from '@/lib/catalog';
 
 export async function generateMetadata({
@@ -102,6 +103,15 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               {product.stock > 0 ? `Dostępny (${product.stock} szt.)` : 'Brak w magazynie'}
             </span>
           </div>
+
+          <MetaPixelViewContent
+            product={{
+              id: product.id,
+              name: product.name,
+              price: Number(product.price),
+              category: product.category,
+            }}
+          />
 
           <AddToCartButton
             product={{
