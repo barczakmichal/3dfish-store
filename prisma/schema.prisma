@@ -79,20 +79,20 @@ enum OrderStatus {
 }
 
 model Order {
-  id              String      @id @default(cuid())
-  stripeSessionId String?     @unique
+  id              String        @id @default(cuid())
+  stripeSessionId String?       @unique
   customerEmail   String
   customerName    String
   customerPhone   String?
   street          String?
   city            String?
   postalCode      String?
-  country         String?     @default("PL")
-  total           Decimal     @db.Decimal(10, 2)
-  status          OrderStatus @default(PENDING)
+  country         String?       @default("PL")
+  total           Decimal       @db.Decimal(10, 2)
+  status          OrderStatus   @default(PENDING)
   shippingMethod  String?
   shippingCarrier String?
-  shippingCost    Decimal?    @db.Decimal(10, 2)
+  shippingCost    Decimal?      @db.Decimal(10, 2)
   trackingNumber  String?
   pickupPointId   String?
   pickupPointName String?
@@ -100,10 +100,10 @@ model Order {
   furgonetkaId    String?
   discountCodeId  String?
   discountCode    DiscountCode? @relation(fields: [discountCodeId], references: [id])
-  discountAmount  Decimal?    @db.Decimal(10, 2)
+  discountAmount  Decimal?      @db.Decimal(10, 2)
   notes           String?
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
   items           OrderItem[]
   emails          EmailLog[]
   events          OrderEvent[]
@@ -117,6 +117,52 @@ model OrderItem {
   price     Decimal @db.Decimal(10, 2)
   order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
   product   Product @relation(fields: [productId], references: [id])
+}
+
+enum EmailType {
+  ORDER_CONFIRMATION
+  PAYMENT_CONFIRMATION
+  SHIPPING_NOTIFICATION
+  DELIVERY_CONFIRMATION
+  PAYMENT_REMINDER
+  CUSTOM_MESSAGE
+}
+
+enum EmailStatus {
+  SENT
+  DELIVERED
+  FAILED
+  BOUNCED
+}
+
+model EmailLog {
+  id        String      @id @default(cuid())
+  orderId   String
+  order     Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  type      EmailType
+  status    EmailStatus @default(SENT)
+  to        String
+  subject   String
+  body      String
+  errorMsg  String?
+  sentAt    DateTime    @default(now())
+  messageId String?
+
+  @@index([orderId])
+}
+
+model OrderEvent {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  type      String
+  fromValue String?
+  toValue   String?
+  note      String?
+  actor     String   @default("system")
+  createdAt DateTime @default(now())
+
+  @@index([orderId])
 }
 
 // Przechowuje konfigurację integracji TikTok Ads (token OAuth, advertiser ID)
