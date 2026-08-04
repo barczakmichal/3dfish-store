@@ -5,7 +5,7 @@ FROM base AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
 COPY prisma ./prisma/
-RUN npm ci
+RUN npm install
 
 # --- Build ---
 FROM base AS builder
@@ -26,7 +26,7 @@ FROM base AS proddeps
 WORKDIR /app
 COPY package.json package-lock.json ./
 COPY prisma ./prisma/
-RUN npm ci --omit=dev
+RUN npm install --omit=dev --no-save
 RUN npx prisma generate
 
 # --- Production ---
