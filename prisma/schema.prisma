@@ -1,4 +1,4 @@
-// Schemat bazy danych dla WędkarskaFabryka3D
+// Schemat bazy danych dla treefish
 // https://pris.ly/d/prisma-schema
 
 generator client {
@@ -10,18 +10,64 @@ datasource db {
   provider = "postgresql"
 }
 
+enum LicenseType {
+  CC0
+  CC_BY
+  CC_BY_SA
+  CC_BY_NC
+  CC_BY_NC_SA
+  CC_BY_ND
+  CC_BY_NC_ND
+  STANDARD_DIGITAL_FILE
+  OWN_MODEL
+  UNKNOWN
+}
+
 model Product {
-  id          String      @id @default(cuid())
-  name        String
-  description String
-  price       Decimal     @db.Decimal(10, 2)
-  images      String[]
-  stock       Int         @default(0)
-  category    String
-  slug        String      @unique
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  orderItems  OrderItem[]
+  id                    String      @id @default(cuid())
+  name                  String
+  description           String
+  price                 Decimal     @db.Decimal(10, 2)
+  images                String[]
+  stock                 Int         @default(0)
+  category              String
+  slug                  String      @unique
+  sourceUrl             String?
+  sourceFileUrl         String?
+  printedImageUrl       String?
+  licenseType           LicenseType @default(UNKNOWN)
+  commercialUseOverride Boolean?
+  licenseVerifiedAt     DateTime?
+  licenseVerifiedBy     String?
+  marketingImageUrl     String?
+  packshotImageUrl      String?
+  weightGrams           Int?
+  widthMm               Int?
+  heightMm              Int?
+  depthMm               Int?
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+  orderItems            OrderItem[]
+}
+
+enum DiscountType {
+  PERCENTAGE
+  FIXED_AMOUNT
+}
+
+model DiscountCode {
+  id             String       @id @default(cuid())
+  code           String       @unique
+  type           DiscountType
+  value          Decimal      @db.Decimal(10, 2)
+  isActive       Boolean      @default(true)
+  expiresAt      DateTime?
+  usageLimit     Int?
+  usageCount     Int          @default(0)
+  minOrderAmount Decimal?     @db.Decimal(10, 2)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  orders         Order[]
 }
 
 enum OrderStatus {
@@ -33,14 +79,34 @@ enum OrderStatus {
 }
 
 model Order {
-  id              String      @id @default(cuid())
-  stripeSessionId String?     @unique
+  id              String        @id @default(cuid())
+  stripeSessionId String?       @unique
   customerEmail   String
   customerName    String
-  total           Decimal     @db.Decimal(10, 2)
-  status          OrderStatus @default(PENDING)
-  createdAt       DateTime    @default(now())
+  customerPhone   String?
+  street          String?
+  city            String?
+  postalCode      String?
+  country         String?       @default("PL")
+  total           Decimal       @db.Decimal(10, 2)
+  status          OrderStatus   @default(PENDING)
+  shippingMethod  String?
+  shippingCarrier String?
+  shippingCost    Decimal?      @db.Decimal(10, 2)
+  trackingNumber  String?
+  pickupPointId   String?
+  pickupPointName String?
+  labelUrl        String?
+  furgonetkaId    String?
+  discountCodeId  String?
+  discountCode    DiscountCode? @relation(fields: [discountCodeId], references: [id])
+  discountAmount  Decimal?      @db.Decimal(10, 2)
+  notes           String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
   items           OrderItem[]
+  emails          EmailLog[]
+  events          OrderEvent[]
 }
 
 model OrderItem {
@@ -51,6 +117,52 @@ model OrderItem {
   price     Decimal @db.Decimal(10, 2)
   order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
   product   Product @relation(fields: [productId], references: [id])
+}
+
+enum EmailType {
+  ORDER_CONFIRMATION
+  PAYMENT_CONFIRMATION
+  SHIPPING_NOTIFICATION
+  DELIVERY_CONFIRMATION
+  PAYMENT_REMINDER
+  CUSTOM_MESSAGE
+}
+
+enum EmailStatus {
+  SENT
+  DELIVERED
+  FAILED
+  BOUNCED
+}
+
+model EmailLog {
+  id        String      @id @default(cuid())
+  orderId   String
+  order     Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  type      EmailType
+  status    EmailStatus @default(SENT)
+  to        String
+  subject   String
+  body      String
+  errorMsg  String?
+  sentAt    DateTime    @default(now())
+  messageId String?
+
+  @@index([orderId])
+}
+
+model OrderEvent {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  type      String
+  fromValue String?
+  toValue   String?
+  note      String?
+  actor     String   @default("system")
+  createdAt DateTime @default(now())
+
+  @@index([orderId])
 }
 
 // Przechowuje konfigurację integracji TikTok Ads (token OAuth, advertiser ID)
