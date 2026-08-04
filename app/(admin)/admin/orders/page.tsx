@@ -86,29 +86,23 @@ export default async function AdminOrdersPage({ searchParams }: Props) {
           <table className="w-full">
             <thead className="bg-gray-50 border-b border-gray-200">
               <tr>
-                <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-3">ID</th>
                 <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-3">Klient</th>
                 <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-3">Kwota</th>
                 <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-3">Status</th>
                 <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-3">Wysyłka</th>
                 <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-3">Data</th>
-                <th className="text-right text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-3">Zmień status</th>
+                <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-3">Zmień status</th>
+                <th className="text-right text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-3">Akcje</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
               {orders.map((order) => (
                 <tr key={order.id} className="hover:bg-gray-50 transition-colors">
                   <td className="px-6 py-4">
-                    <Link
-                      href={`/admin/orders/${order.id}`}
-                      className="font-mono text-xs text-orange-600 hover:underline"
-                    >
-                      {order.id.slice(0, 8)}...
+                    <Link href={`/admin/orders/${order.id}`} className="block hover:text-orange-600">
+                      <p className="font-medium text-gray-900">{order.customerName}</p>
+                      <p className="text-sm text-gray-500">{order.customerEmail}</p>
                     </Link>
-                  </td>
-                  <td className="px-6 py-4">
-                    <p className="font-medium text-gray-900">{order.customerName}</p>
-                    <p className="text-sm text-gray-500">{order.customerEmail}</p>
                   </td>
                   <td className="px-6 py-4 font-medium text-gray-900">
                     {Number(order.total).toFixed(2)} PLN
@@ -134,8 +128,23 @@ export default async function AdminOrdersPage({ searchParams }: Props) {
                       minute: '2-digit',
                     })}
                   </td>
-                  <td className="px-6 py-4 text-right">
+                  <td className="px-6 py-4">
                     <OrderStatusSelect orderId={order.id} currentStatus={order.status} />
+                  </td>
+                  <td className="px-6 py-4 text-right space-x-3">
+                    <Link
+                      href={`/admin/orders/${order.id}`}
+                      className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                    >
+                      Szczegóły
+                    </Link>
+                    <Link
+                      href={`/admin/orders/${order.id}/print`}
+                      target="_blank"
+                      className="text-gray-500 hover:text-gray-700 text-sm font-medium"
+                    >
+                      Drukuj
+                    </Link>
                   </td>
                 </tr>
               ))}

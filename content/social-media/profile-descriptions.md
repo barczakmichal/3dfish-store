@@ -1,4 +1,4 @@
-﻿# treefish — Opisy Profili Social Media
+# treefish — Opisy Profili Social Media
 
 ## Ujednolicona nazwa marki
 - **Nazwa:** treefish

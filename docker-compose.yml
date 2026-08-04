@@ -1,0 +1,68 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: treefish
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: treefish
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U treefish"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  app:
+    build: .
+    restart: unless-stopped
+    expose:
+      - "3000"
+    environment:
+      DATABASE_URL: "postgresql://treefish:${DB_PASSWORD}@db:5432/treefish"
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      NEXTAUTH_URL: "https://treefish.pl"
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+      NODE_ENV: production
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - internal
+      - webproxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.treefish.rule=Host(`treefish.pl`) || Host(`www.treefish.pl`)"
+      - "traefik.http.routers.treefish.entrypoints=websecure"
+      - "traefik.http.routers.treefish.tls.certresolver=letsencrypt"
+      - "traefik.http.services.treefish.loadbalancer.server.port=3000"
+      - "traefik.docker.network=webproxy"
+
+  migrate:
+    build:
+      context: .
+      target: builder
+    environment:
+      DATABASE_URL: "postgresql://treefish:${DB_PASSWORD}@db:5432/treefish"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - internal
+    command: >
+      sh -c "npx prisma migrate deploy && npx prisma db seed || true"
+    profiles:
+      - init
+
+networks:
+  internal:
+  webproxy:
+    external: true
+
+volumes:
+  pgdata:

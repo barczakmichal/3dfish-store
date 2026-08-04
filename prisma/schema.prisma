@@ -119,48 +119,9 @@ model OrderItem {
   product   Product @relation(fields: [productId], references: [id])
 }
 
-enum EmailType {
-  ORDER_CONFIRMATION
-  PAYMENT_CONFIRMATION
-  SHIPPING_NOTIFICATION
-  DELIVERY_CONFIRMATION
-  PAYMENT_REMINDER
-  CUSTOM_MESSAGE
-}
-
-enum EmailStatus {
-  SENT
-  DELIVERED
-  FAILED
-  BOUNCED
-}
-
-model EmailLog {
-  id        String      @id @default(cuid())
-  orderId   String
-  order     Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  type      EmailType
-  status    EmailStatus @default(SENT)
-  to        String
-  subject   String
-  body      String
-  errorMsg  String?
-  sentAt    DateTime    @default(now())
-  messageId String?
-
-  @@index([orderId])
-}
-
-model OrderEvent {
-  id        String   @id @default(cuid())
-  orderId   String
-  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  type      String
-  fromValue String?
-  toValue   String?
-  note      String?
-  actor     String   @default("system")
-  createdAt DateTime @default(now())
-
-  @@index([orderId])
+// Przechowuje konfigurację integracji TikTok Ads (token OAuth, advertiser ID)
+model SiteSettings {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
 }
