@@ -1,8 +1,9 @@
 FROM node:20-alpine AS base
 
-# --- Dependencies ---
+# --- Dependencies (all, for build) ---
 FROM base AS deps
 WORKDIR /app
+ENV DATABASE_URL="postgresql://build:build@localhost:5432/build"
 COPY package.json package-lock.json ./
 COPY prisma ./prisma/
 RUN npm install --ignore-scripts
@@ -25,6 +26,7 @@ RUN npm run build
 # --- Production runtime deps ---
 FROM base AS proddeps
 WORKDIR /app
+ENV DATABASE_URL="postgresql://build:build@localhost:5432/build"
 COPY package.json package-lock.json ./
 COPY prisma ./prisma/
 RUN npm install --omit=dev --ignore-scripts
