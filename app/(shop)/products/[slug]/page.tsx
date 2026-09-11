@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
 import prisma from '@/lib/prisma';
 import AddToCartButton from './AddToCartButton';
 import ProductGallery from '@/components/ProductGallery';
@@ -83,17 +82,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        {/* Product image */}
-        <div className="relative aspect-square bg-blue-50 rounded-2xl overflow-hidden">
-          <Image
-            src={product.images[0] || `/images/products/${product.slug}.svg`}
-            alt={product.name}
-            fill
-            className="object-cover"
-            sizes="(max-width: 1024px) 100vw, 50vw"
-            priority
-          />
-        </div>
+        {/* Product gallery */}
+        <ProductGallery key={product.slug} images={dedupedImages} productName={product.name} slug={product.slug} />
 
         {/* Product details */}
         <div>
@@ -129,7 +119,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               name: product.name,
               price: Number(product.price),
               slug: product.slug,
-              image: product.images[0] || `/images/products/${product.slug}.svg`,
+              image: product.marketingImageUrl ?? product.images[0] ?? `/images/products/${product.slug}.svg`,
               stock: product.stock,
             }}
           />
