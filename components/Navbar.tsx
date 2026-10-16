@@ -4,6 +4,17 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useCartStore } from '@/lib/store';
 
+const CATEGORIES = [
+  'Uchwyty na wędki',
+  'Organizery i skrzynki',
+  'Przynęty sztuczne',
+  'Akcesoria do montażu',
+  'Pudełka na przynęty',
+  'Akcesoria drobne',
+  'Lurki i przynęty',
+  'Połowy muchowe',
+];
+
 function CartBadge() {
   const [mounted, setMounted] = useState(false);
   const totalItems = useCartStore((state) => state.getTotalItems());
@@ -22,8 +33,25 @@ function CartBadge() {
 }
 
 export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    function onScroll() {
+      setScrolled(window.scrollY > 10);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
+    <header
+      className={`sticky top-0 z-50 transition-all duration-200 ${
+        scrolled
+          ? 'backdrop-blur-md bg-white/95 shadow-md'
+          : 'bg-white shadow-sm'
+      }`}
+    >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -41,12 +69,47 @@ export default function Navbar() {
             >
               Strona główna
             </Link>
-            <Link
-              href="/products"
-              className="text-gray-600 hover:text-blue-700 font-medium transition-colors"
+
+            {/* Products dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setDropdownOpen(true)}
+              onMouseLeave={() => setDropdownOpen(false)}
             >
-              Produkty
-            </Link>
+              <Link
+                href="/products"
+                className="text-gray-600 hover:text-blue-700 font-medium transition-colors flex items-center gap-1"
+              >
+                Produkty
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  className="w-3.5 h-3.5 mt-0.5"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                </svg>
+              </Link>
+
+              {dropdownOpen && (
+                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 bg-white shadow-lg rounded-lg p-4 z-50 border border-gray-100">
+                  <div className="grid grid-cols-1 gap-1">
+                    {CATEGORIES.map((cat) => (
+                      <Link
+                        key={cat}
+                        href={`/products?category=${encodeURIComponent(cat)}`}
+                        className="text-sm text-gray-600 hover:text-blue-700 hover:bg-blue-50 px-3 py-1.5 rounded-md transition-colors"
+                      >
+                        {cat}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
             <Link
               href="/blog"
               className="text-gray-600 hover:text-blue-700 font-medium transition-colors"
