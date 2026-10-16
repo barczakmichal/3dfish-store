@@ -59,6 +59,21 @@ services:
     profiles:
       - init
 
+  fix-images:
+    build:
+      context: .
+      target: builder
+    environment:
+      DATABASE_URL: "postgresql://treefish:${DB_PASSWORD}@db:5432/treefish"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - internal
+    command: npm run db:fix-images
+    profiles:
+      - fix-images
+
 networks:
   internal:
   webproxy:
