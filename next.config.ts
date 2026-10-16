@@ -34,6 +34,9 @@ const nextConfig: NextConfig = {
         hostname: 'makerworld.bblmw.com',
       },
     ],
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment' as const,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
 };
 

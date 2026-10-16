@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { connection } from 'next/server';
 import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
 import prisma from '@/lib/prisma';
@@ -23,6 +24,8 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
+  await connection();
+
   let featuredProducts: Awaited<ReturnType<typeof prisma.product.findMany>> = [];
 
   try {
@@ -141,7 +144,7 @@ export default async function HomePage() {
                 id={product.id}
                 name={product.name}
                 price={Number(product.price)}
-                image={product.packshotImageUrl || product.marketingImageUrl || product.images[0] || ''}
+                image={product.packshotImageUrl || product.marketingImageUrl || product.images[0] || `/images/products/${product.slug}.svg`}
                 category={product.category}
                 slug={product.slug}
               />

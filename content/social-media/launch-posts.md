@@ -1,4 +1,4 @@
-﻿# Posty na Otwarcie Sklepu treefish
+# Posty na Otwarcie Sklepu treefish
 
 ## Post 1: Oficjalne otwarcie sklepu (FB + IG)
 
