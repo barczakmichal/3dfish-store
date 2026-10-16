@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState } from 'react';
 
 interface ProductCardProps {
   id: string;
@@ -13,23 +14,36 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ id, name, price, image, category, slug }: ProductCardProps) {
+  const [imgSrc, setImgSrc] = useState(image);
+  const [imgError, setImgError] = useState(false);
+
   const formattedPrice = new Intl.NumberFormat('pl-PL', {
     style: 'currency',
     currency: 'PLN',
   }).format(price);
+
+  const handleError = () => {
+    if (!imgError) {
+      setImgError(true);
+      setImgSrc(`/images/products/${slug}.svg`);
+    } else {
+      setImgSrc('/images/products/placeholder.svg');
+    }
+  };
 
   return (
     <Link href={`/products/${slug}`} className="group">
       <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
         {/* Product image */}
         <div className="relative aspect-square bg-gray-100 overflow-hidden">
-          {image ? (
+          {imgSrc ? (
             <Image
-              src={image}
+              src={imgSrc}
               alt={name}
               fill
               className="object-cover group-hover:scale-105 transition-transform duration-300"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              onError={handleError}
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center bg-blue-50">
