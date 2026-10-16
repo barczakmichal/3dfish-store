@@ -1,4 +1,4 @@
-﻿# Opisy Produktowe — Top 10 Produktow treefish
+# Opisy Produktowe — Top 10 Produktow treefish
 
 ---
 

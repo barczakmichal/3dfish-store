@@ -79,8 +79,8 @@ enum OrderStatus {
 }
 
 model Order {
-  id              String      @id @default(cuid())
-  stripeSessionId String?     @unique
+  id              String        @id @default(cuid())
+  stripeSessionId String?       @unique
   customerEmail   String
   customerName    String
   customerPhone   String?
@@ -163,4 +163,11 @@ model OrderEvent {
   createdAt DateTime @default(now())
 
   @@index([orderId])
+}
+
+// Przechowuje konfigurację integracji TikTok Ads (token OAuth, advertiser ID)
+model SiteSettings {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
 }

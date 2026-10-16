@@ -1,4 +1,4 @@
-﻿# Szablony Postów Social Media — treefish
+# Szablony Postów Social Media — treefish
 
 ## Szablon 1: Prezentacja produktu (FB/IG)
 

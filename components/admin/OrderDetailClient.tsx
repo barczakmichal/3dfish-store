@@ -179,6 +179,13 @@ export default function OrderDetailClient({ order }: Props) {
           <OrderStatusBadge status={status} />
         </div>
         <div className="flex items-center gap-2">
+          <a
+            href={`/admin/orders/${order.id}/print`}
+            target="_blank"
+            className="bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-semibold px-3 py-1.5 rounded-lg transition-colors"
+          >
+            Drukuj
+          </a>
           <label className="text-sm text-gray-600">Zmień status:</label>
           <select
             value={status}

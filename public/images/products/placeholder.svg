@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a5f"/>
+      <stop offset="100%" style="stop-color:#2563eb"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="600" fill="url(#bg)"/>
+  <circle cx="300" cy="260" r="120" fill="rgba(255,255,255,0.08)"/>
+  <circle cx="300" cy="260" r="80" fill="rgba(255,255,255,0.06)"/>
+  <!-- Fish icon -->
+  <g transform="translate(300,255)" fill="none" stroke="#f97316" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M-70,0 C-50,-40 50,-40 70,0 C50,40 -50,40 -70,0 Z" fill="rgba(249,115,22,0.15)" stroke="#f97316"/>
+    <circle cx="45" cy="-12" r="6" fill="#f97316" stroke="none"/>
+    <path d="M-70,0 L-100,-30 L-90,0 L-100,30 Z" fill="rgba(249,115,22,0.2)" stroke="#f97316" stroke-width="3"/>
+  </g>
+  <text x="300" y="420" text-anchor="middle" font-family="system-ui,sans-serif" font-size="20" font-weight="700" fill="#ffffff">Akcesorium wedkarskie</text>
+  <text x="300" y="450" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" fill="rgba(255,255,255,0.6)">Druk 3D</text>
+  <text x="300" y="500" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" fill="rgba(255,255,255,0.4)" letter-spacing="3">treefish</text>
+</svg>
