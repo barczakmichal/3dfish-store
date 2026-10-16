@@ -21,6 +21,8 @@ ENV ADMIN_PASSWORD="build_placeholder"
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npx prisma generate
+ARG NEXT_PUBLIC_META_PIXEL_ID
+ENV NEXT_PUBLIC_META_PIXEL_ID=$NEXT_PUBLIC_META_PIXEL_ID
 RUN npm run build
 
 # --- Production runtime deps ---
